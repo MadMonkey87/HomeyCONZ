@@ -3,10 +3,16 @@
   "title": {
     "en": "A device has become unreachable"
   },
-  "args": [
+  "tokens": [
     {
       "name": "device",
-      "type": "text"
+      "type": "string",
+      "title": {
+        "en": "Device"
+      },
+      "example": {
+        "en": "Humidity Sensor Living Room"
+      }
     }
   ]
 }
