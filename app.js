@@ -16,6 +16,7 @@ class deCONZ extends Homey.App {
 		}
 
 		this.initializeActions()
+		this.initializeTriggers()
 
 		this.host = Homey.ManagerSettings.get('host')
 		this.port = Homey.ManagerSettings.get('port')
@@ -413,7 +414,16 @@ class deCONZ extends Homey.App {
 		}
 
 		if (state.hasOwnProperty('reachable')) {
-			(state.reachable || device.getSetting('ignore-reachable') === true) ? device.setAvailable() : device.setUnavailable('Unreachable')
+			let ignoreReachable = device.getSetting('ignore-reachable') === true;
+			if(!ignoreReachable){
+				if(state.reachable === true && !device.getAvailable()){
+					this.deviceReachableTrigger.trigger(this, {device: device.getName()})
+				} else if (state.reachable === false && device.getAvailable()){
+					this.deviceUnreachableTrigger.trigger(this, {device: device.getName()})
+				}
+			}
+
+			(state.reachable || ignoreReachable) ? device.setAvailable() : device.setUnavailable('Unreachable')
 		}
 
 		if (state.hasOwnProperty('water')) {
@@ -664,8 +674,12 @@ class deCONZ extends Homey.App {
 					});
 				});
 		
-		}
+	}
 
+	initializeTriggers(){
+		this.deviceReachableTrigger = new Homey.FlowCardTrigger('device_on_reachable').register();
+		this.deviceUnreachableTrigger = new Homey.FlowCardTrigger('device_on_unreachable').register();
+	}
 }
 
 module.exports = deCONZ

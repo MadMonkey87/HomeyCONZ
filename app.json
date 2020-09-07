@@ -1,6 +1,6 @@
 {
   "id": "de.dresden-elektronik.deconz",
-  "version": "1.12.0",
+  "version": "1.12.1",
   "compatibility": ">=4.0.0",
   "brandColor": "#55626b",
   "sdk": 2,
@@ -128,6 +128,30 @@
             "name": "device",
             "type": "device",
             "filter": "driver_id=mi-button"
+          }
+        ]
+      },
+      {
+        "id": "device_on_reachable",
+        "title": {
+          "en": "A device has become reachable (after it was unreachable)"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "id": "device_on_unreachable",
+        "title": {
+          "en": "A device has become unreachable"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "text"
           }
         ]
       },

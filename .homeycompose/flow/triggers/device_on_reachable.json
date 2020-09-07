@@ -1,0 +1,12 @@
+{
+  "id": "device_on_reachable",
+  "title": {
+    "en": "A device has become reachable (after it was unreachable)"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "text"
+    }
+  ]
+}

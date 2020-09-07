@@ -1,0 +1,12 @@
+{
+  "id": "device_on_unreachable",
+  "title": {
+    "en": "A device has become unreachable"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "text"
+    }
+  ]
+}
