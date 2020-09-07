@@ -3,6 +3,7 @@
 const Homey = require('homey')
 const { http, https } = require('./nbhttp')
 const WebSocketClient = require('ws')
+const { util } = require('./util')
 
 class deCONZ extends Homey.App {
 
@@ -156,13 +157,117 @@ class deCONZ extends Homey.App {
 		})
 	}
 
+	getFullState(callback) {
+		const wsState = this.websocket && this.websocket.readyState === 1
+		http.get(`http://${this.host}:${this.port}/api/${this.apikey}`, (error, response) => {
+			if(!!error){
+				callback(error, null)
+			} else {
+				let state = JSON.parse(response)
+				state.wsConnected = wsState
+				return callback(null, state)
+			}
+		})
+	}
+
+	test(host, port, apikey, callback) {
+		const wsState = this.websocket && this.websocket.readyState === 1
+		http.get(`http://${host}:${port}/api/${apikey}`, (error, response) => {
+			if(!!error){
+				callback(error, null)
+			} else {
+				let state = JSON.parse(response)
+				state.wsConnected = wsState
+				return callback(null, state)
+			}
+		})
+	}
+
 	getDiscoveryData(callback) {
 		http.get(`http://phoscon.de/discover`, (error, response) => {
 			callback(error, !!error ? null : JSON.parse(response)[0])
 		})
 	}
 
+	discover(callback) {
+		this.log('[SETTINGS-API] start discovery')
+		this.getDiscoveryData((error, discoveryResponse) => {
+			if(error || discoveryResponse == null){
+				this.log('[SETTINGS-API] discovery failed', error)
+				callback('Unable to find a deCONZ gateway', null)
+			} else {
+				this.log('[SETTINGS-API] discovery successfull, starting registration')
+				http.post(discoveryResponse.internalipaddress, discoveryResponse.internalport, '/api',{ "devicetype": "homeyCONZ" }, (error, registerResponse,  statusCode) => {
+					if(error){
+						this.log('[SETTINGS-API] registration failed', error)
+						callback('Found a unreachable gateway', null)
+					} else if (statusCode === 403) {
+						this.log('[SETTINGS-API] registration incomplete, authorization needed')
+						callback(null, { host: discoveryResponse.internalipaddress, port: discoveryResponse.internalport, message: 'Successfuly discovered the deCONZ gateway! Please open up Phoscon, go to settings→gateway→advanced and click on authenticate in the phoscon app. Finalize the setup by clicking on "connect" bellow.'})
+					} else if (statusCode === 200) {
+						this.log('[SETTINGS-API] registration successful')
+						this.completeAuthentication(discoveryResponse.internalipaddress, discoveryResponse.internalport, JSON.parse(registerResponse)[0].success.username, callback)
+					} else if (statusCode === 404) {
+						this.log('[SETTINGS-API] gateway discovered but not accessible')
+						callback('The gateway was discovered but failed to connect. Note to docker users: if you did not set up your docker container correctly (with the --net=host parameter) you have disabled autodiscovery actively. You can continue but you must enter all configurations bellow manually!', null)
+					} else {
+						this.log('[SETTINGS-API] registration failed with unknown status code', statusCode)
+						callback('Unknown error', null)
+					}
+				})
+			}
+		})
+	}
+
+	authenticate(host, port, callback){
+		this.log('[SETTINGS-API] start authenticate', host, port)
+
+		http.post(host, port,'/api', { "devicetype": "homeyCONZ" }, (error, response,  statusCode) => {
+			if (statusCode === 403) {
+				this.log('[SETTINGS-API] authenticate failed, authorization needed')
+				callback(null, { host: host, port: port, message: 'Please open up Phoscon, go to settings→gateway→advanced and click on authenticate in the phoscon app. Finalize the setup by clicking on "connect" bellow.'})
+			} else if (statusCode === 200) {
+				this.log('[SETTINGS-API] authenticate successful')
+				this.completeAuthentication(host, port, JSON.parse(response)[0].success.username, callback)
+			} else {
+				this.log('[SETTINGS-API] authenticate failed', statusCode)
+				callback('Unknown error', null)
+			}
+		})
+	}
+
+	completeAuthentication(host, port, apikey, callback){
+		this.log('[SETTINGS-API] fetch config')
+		http.get(`http://${host}:${port}/api/${apikey}/config`, (error, result) => {
+			if (error){
+				this.log('[SETTINGS-API] error getting config', error)
+				callback('Error getting WS port', null)
+			} else {
+
+				Homey.ManagerSettings.set('host', host, (err, settings) => {
+					if (err) return callback(err, null)
+				})
+				Homey.ManagerSettings.set('port', port, (err, settings) => {
+					if (err) return callback(err, null)
+				})
+				Homey.ManagerSettings.set('wsport', JSON.parse(result).websocketport, (err, settings) => {
+					if (err) return callback(err, null)
+				})
+				Homey.ManagerSettings.set('apikey', apikey, (err, settings) => {
+					if (err) return callback(err, null)
+				})
+				
+				this.log('[SETTINGS-API] successfully persisted config')
+				callback(null, 'Successfuly discovered and authenticated the deCONZ gateway!')
+			}
+		})
+	}
+
 	setInitialStates() {
+
+		if (!this.host || !this.port || !this.apikey) {
+			return this.log('Go to the app settings page and fill all the fields')
+		}
 
 		this.getLightsList((error, lights) => {
 			if (error) {
@@ -341,6 +446,7 @@ class deCONZ extends Homey.App {
 			}
 		}
 
+		// todo: check, should be okay
 		if (state.hasOwnProperty('colormode')) {
 			if (deviceSupports('light_mode')) {
 				device.setCapabilityValue('light_mode', (state.colormode == 'xy' || state.colormode == 'hs') ? 'color': 'temperature')
@@ -418,6 +524,13 @@ class deCONZ extends Homey.App {
 		if (state.hasOwnProperty('sat') && state.hasOwnProperty('colormode') && state.colormode === 'hs') {
 			if (!deviceSupports('light_saturation')) return
 			device.setCapabilityValue('light_saturation', parseFloat((state.sat / 255).toFixed(2)))
+		}
+
+		if (state.hasOwnProperty('xy') && state.hasOwnProperty('colormode') && state.colormode === 'xy') {
+			if (!deviceSupports('light_hue') || !deviceSupports('light_saturation')) return
+			var hs = util.xyToHs(state.xy[0], state.xy[1], 255)
+			device.setCapabilityValue('light_hue', parseFloat((hs.hue).toFixed(2)))
+			device.setCapabilityValue('light_saturation', parseFloat((hs.sat).toFixed(2)))
 		}
 
 		if (state.hasOwnProperty('tampered')) {
@@ -499,8 +612,7 @@ class deCONZ extends Homey.App {
 	}
 
 	getWSport(callback) {
-		let link = `http://${this.host}:${this.port}/api/${this.apikey}/config`
-		this.get(link, (error, result) => {
+		this.get(`http://${this.host}:${this.port}/api/${this.apikey}/config`, (error, result) => {
 			callback(error, !!error ? null : result.websocketport)
 		})
 	}
@@ -551,7 +663,7 @@ class deCONZ extends Homey.App {
 						}
 					});
 				});
-			
+		
 		}
 
 }

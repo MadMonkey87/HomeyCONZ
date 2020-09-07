@@ -2,6 +2,7 @@
 
 const Homey = require('homey')
 const { http } = require('../nbhttp')
+const { util } = require('../util')
 
 class Light extends Homey.Device {
 
@@ -24,7 +25,6 @@ class Light extends Homey.Device {
 		}
 
 		if (capabilities.includes('dim')) {
-			this.dimDuration = this.getSetting('dim_duration') || 1
 			this.registerDimListener()
 		}
 
@@ -36,7 +36,24 @@ class Light extends Homey.Device {
 			this.registerColorListener()
 		}
 
+		this.updateSettings()
+
 		this.setInitialState()
+	}
+
+	onSettings(oldSettingsObj, newSettingsObj, changedKeysArr, callback) {
+		if (newSettingsObj.colormode !== undefined) {
+			this.xycolormode = newSettingsObj.colormode
+		} else if (newSettingsObj['dim_duration'] !== undefined) {
+			this.dimDuration = newSettingsObj['dim_duration']
+		}
+		callback(null, true)
+	}
+
+	updateSettings(){
+		this.dimDuration = this.getSetting('dim_duration') || 4
+		this.xycolormode = this.getSetting('colormode') || false
+		this.log('settings updated',this.dimDuration ,this.xycolormode )
 	}
 
 	registerInApp() {
@@ -82,6 +99,7 @@ class Light extends Homey.Device {
 	}
 
 	registerColorListener() {
+		// todo: check in detail how this works
 		this.registerCapabilityListener('light_hue', (hue, _, callback) => {
 			this.hue = hue
 			callback(null, true)
@@ -103,7 +121,7 @@ class Light extends Homey.Device {
 	}
 
 	dim(level, duration, callback) {
-		this.put(this.address, {on: true, bri: level * 255, transitiontime: duration}, callback)
+		this.put(this.address, { on: true, bri: level * 255, transitiontime: duration }, callback)
 	}
 
 	setColorTemperature(value, callback) {
@@ -111,7 +129,14 @@ class Light extends Homey.Device {
 	}
 
 	setColor(hue, sat, hue_callback, saturation_callback) {
-		this.put(this.address, {hue: hue * 65534, sat: sat * 255}, hue_callback, saturation_callback)
+		if(!hue || !sat){
+			return
+		}
+		else if (this.xycolormode === true){
+			this.put(this.address, {xy: util.hsToXy(hue, sat),transitiontime: 0}, hue_callback, saturation_callback)
+		} else {
+			this.put(this.address, {hue: hue * 65534, sat: sat * 255, transitiontime: 0}, hue_callback, saturation_callback)
+		}
 	}
 
 }

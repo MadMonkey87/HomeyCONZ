@@ -52,5 +52,14 @@
   },
   "1.11.0":{
     "en": "Improved connection setup, ability to test the connection, display gateway details, support page, setting ignore when a device becomes unreachable, show more device details"
+  },
+  "1.11.2":{
+    "en": "Improved settings page, all setup connections are now performed by homey directly, improved motion sensor behavior"
+  },
+  "1.11.3":{
+    "en": "xy colormode for lights and groups"
+  },
+  "1.12.0":{
+    "en": "Support for Aqare Opple switches, support Aqara D1 Wireless Remote Switch (single & double rocker), support for new Aqara water leakage sensor, app configuration has a dedicated button to request an api key"
   }
 }
