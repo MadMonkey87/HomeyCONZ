@@ -415,11 +415,12 @@ class deCONZ extends Homey.App {
 
 		if (state.hasOwnProperty('reachable')) {
 			let ignoreReachable = device.getSetting('ignore-reachable') === true;
+			
 			if(!ignoreReachable){
 				if(state.reachable === true && !device.getAvailable()){
-					this.deviceReachableTrigger.trigger(this, {device: device.getName()})
+					this.deviceReachableTrigger.trigger({device: device.getName()})
 				} else if (state.reachable === false && device.getAvailable()){
-					this.deviceUnreachableTrigger.trigger(this, {device: device.getName()})
+					this.deviceUnreachableTrigger.trigger({device: device.getName()})
 				}
 			}
 
