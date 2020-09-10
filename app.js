@@ -549,6 +549,10 @@ class deCONZ extends Homey.App {
 				device.setCapabilityValue('alarm_tamper', state.tampered)
 			}
 		}
+
+		if (data.hasOwnProperty('lastUpdated') && device.getSetting('lastUpdated') != null) {
+			device.setSettings({ lastUpdated: data.lastUpdated });
+		}
 	}
 
 	updateConfig(device, config, initial = false) {

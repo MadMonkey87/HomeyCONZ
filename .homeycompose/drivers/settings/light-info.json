@@ -52,6 +52,14 @@
                 "en": "MAC"
             },
             "value": "Unknown"
+        },
+        {
+            "id": "lastupdated",
+            "type": "label",
+            "label": {
+                "en": "Last Updated"
+            },
+            "value": "Unknown"
         }
     ]
 }
