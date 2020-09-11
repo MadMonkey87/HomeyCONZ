@@ -110,7 +110,7 @@ class deCONZ extends Homey.App {
 				} else if (data.config) {
 					this.updateConfig(device, data.config)
 				}
-			} else {
+			} else if(data.attr && data.attr.modelid !== 'ConBee') {
 				this.log('Update for unregistered device', data)
 			}
 		})
@@ -550,8 +550,8 @@ class deCONZ extends Homey.App {
 			}
 		}
 
-		if (data.hasOwnProperty('lastUpdated') && device.getSetting('lastUpdated') != null) {
-			device.setSettings({ lastUpdated: data.lastUpdated });
+		if (state.hasOwnProperty('lastupdated') && device.getSetting('lastUpdated') != null) {
+			device.setSettings({ lastUpdated: state.lastupdated });
 		}
 	}
 
@@ -612,6 +612,10 @@ class deCONZ extends Homey.App {
 
 		if (data.hasOwnProperty('uniqueid') && device.getSetting('mac') != null) {
 			device.setSettings({ mac: data.uniqueid.split('-')[0] });
+		}
+
+		if (data.hasOwnProperty('lastseen') && device.getSetting('lastseen') != null) {
+			device.setSettings({ lastseen: data.lastseen });
 		}
 	}
 

@@ -54,7 +54,15 @@
             "value": "Unknown"
         },
         {
-            "id": "lastupdated",
+            "id": "lastseen",
+            "type": "label",
+            "label": {
+                "en": "Last Seen"
+            },
+            "value": "Unknown"
+        },
+        {
+            "id": "lastUpdated",
             "type": "label",
             "label": {
                 "en": "Last Updated"

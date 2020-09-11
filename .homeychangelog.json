@@ -63,6 +63,6 @@
     "en": "Support for Aqare Opple switches, support Aqara D1 Wireless Remote Switch (single & double rocker), support for new Aqara water leakage sensor, app configuration has a dedicated button to request an api key"
   },
   "1.12.1":{
-    "en": "Flow card that notifies when a device becomes reachable/unreachable, show last updated date in the device infos"
+    "en": "Flow card that notifies when a device becomes reachable/unreachable, show last updated/seen date in the device infos"
   }
 }
