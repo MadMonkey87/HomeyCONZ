@@ -64,5 +64,8 @@
   },
   "1.12.1":{
     "en": "Flow card that notifies when a device becomes reachable/unreachable, show last updated/seen date in the device infos"
+  },
+  "1.12.2":{
+    "en": "Fix for the 'recal a scene' flow card"
   }
 }
