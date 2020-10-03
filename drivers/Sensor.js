@@ -2,6 +2,7 @@
 
 const Homey = require('homey')
 const { http, https } = require('./../nbhttp')
+const DeconzDevice = require('../DeconzDevice')
 
 class Sensor extends DeconzDevice {
 	

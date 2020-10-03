@@ -3,6 +3,7 @@
 const Homey = require('homey')
 const { http } = require('../nbhttp')
 const { util } = require('../util')
+const DeconzDevice = require('../DeconzDevice')
 
 class Light extends DeconzDevice {
 
