@@ -35,9 +35,9 @@ class DeconzDevice extends Homey.Device {
 			this.initializeTimeout = setTimeout(() => {
 				this.log("add repair capability")
 
-				this.addCapability("button.repair")
+				this.addCapability("button.updateState")
 				this.setCapabilityOptions(
-					"button.repair", 
+					"button.updateState", 
 					{     
 						"maintenanceAction": true,
 						"title": { 
