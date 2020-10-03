@@ -8,6 +8,8 @@ const DeconzDevice = require('../drivers/DeconzDevice')
 class Light extends DeconzDevice {
 
 	onInit() {
+		super.onInit()
+
 		this.host = Homey.ManagerSettings.get('host')
 		this.apikey = Homey.ManagerSettings.get('apikey')
 		this.port = Homey.ManagerSettings.get('port')
