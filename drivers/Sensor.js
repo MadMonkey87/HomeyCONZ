@@ -3,7 +3,7 @@
 const Homey = require('homey')
 const { http, https } = require('./../nbhttp')
 
-class Sensor extends Homey.Device {
+class Sensor extends DeconzDevice {
 	
 	onInit() {
 		this.host = Homey.ManagerSettings.get('host')
