@@ -32,6 +32,13 @@ class Sensor extends DeconzDevice {
 		}
 	}
 
+	registerUpdateStateTrigger() {
+		this.registerCapabilityListener('button.updateState', async () => {
+			this.log("update sensor state manually")
+			this.setInitialState()
+        });
+	}
+
 	setInitialState() {
 		Homey.app.getSensorState(this, (error, state) => {
 			if (error) {

@@ -113,6 +113,13 @@ class Light extends DeconzDevice {
 		})
 	}
 
+	registerUpdateStateTrigger() {
+		this.registerCapabilityListener('button.updateState', async () => {
+			this.log("update light state manually")
+			this.setInitialState()
+        });
+	}
+
 	put(path, data, callback) {
 		http.put(this.host, this.port, `/api/${this.apikey}${path}`, data, (error, data) => {
 			callback(error, !!error ? null : JSON.parse(data))

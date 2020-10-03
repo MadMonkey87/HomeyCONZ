@@ -62,15 +62,6 @@ class DeconzDevice extends Homey.Device {
 			return Promise.resolve();
         });
 	}
-
-	registerUpdateStateTrigger() {
-		this.registerCapabilityListener('button.updateState', async () => {
-            
-            // Maintenance action button was pressed, return a promise
-			//throw new Error('Something went wrong');
-			return Promise.resolve();
-        });
-	}
 }
 
 module.exports = DeconzDevice
