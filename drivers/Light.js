@@ -149,6 +149,11 @@ class Light extends DeconzDevice {
 		}
 	}
 
+	handleRepairRequest(candidateDevice){
+		super.handleRepairRequest()
+		this.id = this.getSetting('id')
+		this.address = `/lights/${this.id}/state`
+	}
 }
 
 module.exports = Light

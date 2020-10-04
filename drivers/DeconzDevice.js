@@ -24,7 +24,7 @@ class DeconzDevice extends Homey.Device {
 						}
 					})
 					this.registerRepairTrigger();
-			}, Math.random() * 30 * 1000)
+			}, Math.random() * 15 * 1000)
 		} else {
 			this.registerRepairTrigger();
 		}
@@ -48,7 +48,7 @@ class DeconzDevice extends Homey.Device {
 						}
 					})
 					this.registerUpdateStateTrigger();
-			}, Math.random() * 30 * 1000)
+			}, Math.random() * 15 * 1000)
 		} else {
 			this.registerUpdateStateTrigger();
 		}
@@ -56,11 +56,36 @@ class DeconzDevice extends Homey.Device {
 
 	registerRepairTrigger() {
 		this.registerCapabilityListener('button.repair', async () => {
-            
-            // Maintenance action button was pressed, return a promise
-			//throw new Error('Something went wrong');
-			return Promise.resolve();
+
+			const mac = this.getSetting('mac')
+			this.log('attempting to repair ' + this.getName() + ' ' + mac)
+
+			this.getDriver().onPairListDevices(null,(error,success)=>{
+				if (error) {
+					throw new Error(error);
+				} else {
+					this.log('retrieved candidates', success)
+					for (let candidateDevice of success) {
+						if(candidateDevice.data.id.split('-')[0] !== mac)
+						{
+							continue;
+						}
+						else {
+							this.log('found a matching candidate ' + candidateDevice.name);
+							this.handleRepairRequest(candidateDevice)
+							this.setInitialState()
+							return Promise.resolve();
+						}
+					}
+
+					throw new Error('no candidate matched the device to repair');
+				}
+			})
         });
+	}
+
+	handleRepairRequest(candidateDevice){
+		device.setSettings(candidateDevice.settings);
 	}
 }
 
