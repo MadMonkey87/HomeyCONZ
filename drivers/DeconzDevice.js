@@ -85,7 +85,7 @@ class DeconzDevice extends Homey.Device {
 	}
 
 	handleRepairRequest(candidateDevice){
-		device.setSettings(candidateDevice.settings);
+		this.setSettings(candidateDevice.settings);
 	}
 }
 
