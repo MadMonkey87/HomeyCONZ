@@ -7,6 +7,8 @@ class DeconzDevice extends Homey.Device {
 	onInit() {
 		if(!this.hasCapability("button.repair"))
 		{
+			this.setAvailable() // needed as homey won't add the capability if the device is unavailable
+
 			// randomize the setup a little as we will get cpu warnings otherwise
 			this.initializeTimeout = setTimeout(() => {
 				this.log("add repair capability")
@@ -31,6 +33,8 @@ class DeconzDevice extends Homey.Device {
 
 		if(!this.hasCapability("button.updateState"))
 		{
+			this.setAvailable() // needed as homey won't add the capability if the device is unavailable
+
 			// randomize the setup a little as we will get cpu warnings otherwise
 			this.initializeTimeout = setTimeout(() => {
 				this.log("add repair capability")
