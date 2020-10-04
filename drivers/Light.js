@@ -153,6 +153,7 @@ class Light extends DeconzDevice {
 		super.handleRepairRequest(candidateDevice)
 		this.id = this.getSetting('id')
 		this.address = `/lights/${this.id}/state`
+		this.registerInApp()
 	}
 }
 

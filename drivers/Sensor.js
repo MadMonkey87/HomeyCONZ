@@ -104,6 +104,11 @@ class Sensor extends DeconzDevice {
 			callback(error, !!error ? null : JSON.parse(response))
 		})
 	}
+
+	handleRepairRequest(candidateDevice){
+		super.handleRepairRequest(candidateDevice)
+		this.registerInApp()
+	}
 }
 
 module.exports = Sensor

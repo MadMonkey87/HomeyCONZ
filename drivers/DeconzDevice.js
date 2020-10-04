@@ -75,7 +75,7 @@ class DeconzDevice extends Homey.Device {
 							continue;
 						}
 						else {
-							this.log('found a matching candidate ' + candidateDevice.name);
+							this.log('found a matching candidate ' + candidateDevice.name, candidateDevice.settings);
 							this.handleRepairRequest(candidateDevice)
 							this.setInitialState()
 							return Promise.resolve();
@@ -90,6 +90,14 @@ class DeconzDevice extends Homey.Device {
 
 	handleRepairRequest(candidateDevice){
 		this.setSettings(candidateDevice.settings);
+
+		if (this.getSetting('ids') != null && this.getSetting('id') != null) {
+			this.setSettings({ ids: JSON.stringify(this.getSetting('id')) });
+		}
+
+		if (this.getSetting('sensorids') != null && this.getSetting('sensors') != null) {
+			this.setSettings({ sensorids: JSON.stringify(this.getSetting('sensors')) });
+		}
 	}
 }
 
