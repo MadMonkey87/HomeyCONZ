@@ -2,10 +2,13 @@
 
 const Homey = require('homey')
 const { http, https } = require('./../nbhttp')
+const DeconzDevice = require('../drivers/DeconzDevice')
 
-class Sensor extends Homey.Device {
+class Sensor extends DeconzDevice {
 	
 	onInit() {
+		super.onInit()
+
 		this.host = Homey.ManagerSettings.get('host')
 		this.apikey = Homey.ManagerSettings.get('apikey')
 		this.port = Homey.ManagerSettings.get('port')
@@ -27,6 +30,13 @@ class Sensor extends Homey.Device {
 		} else {
 			Homey.app.devices.sensors[this.id] = this
 		}
+	}
+
+	registerUpdateStateTrigger() {
+		this.registerCapabilityListener('button.updateState', async () => {
+			this.log("update sensor state manually")
+			this.setInitialState()
+        });
 	}
 
 	setInitialState() {
@@ -93,6 +103,11 @@ class Sensor extends Homey.Device {
 		http.put(this.host, this.port, `/api/${this.apikey}/sensors/${this.id}`, data, (error, response) => {
 			callback(error, !!error ? null : JSON.parse(response))
 		})
+	}
+
+	handleRepairRequest(candidateDevice){
+		super.handleRepairRequest(candidateDevice)
+		this.registerInApp()
 	}
 }
 

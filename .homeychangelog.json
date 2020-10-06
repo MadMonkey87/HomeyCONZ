@@ -67,5 +67,8 @@
   },
   "1.12.2":{
     "en": "Fix for the 'recal a scene' flow card"
+  },
+  "1.13.0":{
+    "en": "Maintenance actions to update or repair a device"
   }
 }

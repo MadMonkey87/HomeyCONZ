@@ -3,10 +3,13 @@
 const Homey = require('homey')
 const { http } = require('../nbhttp')
 const { util } = require('../util')
+const DeconzDevice = require('../drivers/DeconzDevice')
 
-class Light extends Homey.Device {
+class Light extends DeconzDevice {
 
 	onInit() {
+		super.onInit()
+
 		this.host = Homey.ManagerSettings.get('host')
 		this.apikey = Homey.ManagerSettings.get('apikey')
 		this.port = Homey.ManagerSettings.get('port')
@@ -110,6 +113,13 @@ class Light extends Homey.Device {
 		})
 	}
 
+	registerUpdateStateTrigger() {
+		this.registerCapabilityListener('button.updateState', async () => {
+			this.log("update light state manually")
+			this.setInitialState()
+        });
+	}
+
 	put(path, data, callback) {
 		http.put(this.host, this.port, `/api/${this.apikey}${path}`, data, (error, data) => {
 			callback(error, !!error ? null : JSON.parse(data))
@@ -139,6 +149,12 @@ class Light extends Homey.Device {
 		}
 	}
 
+	handleRepairRequest(candidateDevice){
+		super.handleRepairRequest(candidateDevice)
+		this.id = this.getSetting('id')
+		this.address = `/lights/${this.id}/state`
+		this.registerInApp()
+	}
 }
 
 module.exports = Light
