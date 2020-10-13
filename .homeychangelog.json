@@ -70,5 +70,8 @@
   },
   "1.13.0":{
     "en": "Maintenance actions to update or repair a device"
+  },
+  "1.13.1":{
+    "en": "Small fixes and optimizations"
   }
 }
