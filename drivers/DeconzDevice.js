@@ -94,6 +94,10 @@ class DeconzDevice extends Homey.Device {
 			this.setSettings({ sensorids: JSON.stringify(this.getSetting('sensors')) });
 		}
 	}
+
+	fireEvent(event, state){
+		throw new Error('unhandled fireEvent for the device ' + JSON.stringify(this.getDriver().getManifest()))
+	}
 }
 
 module.exports = DeconzDevice
