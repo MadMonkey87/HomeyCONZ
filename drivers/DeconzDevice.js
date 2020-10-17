@@ -9,49 +9,44 @@ class DeconzDevice extends Homey.Device {
 		// randomize the setup a little as we will get cpu warnings otherwise
 		this.initializeTimeout = setTimeout(() => {
 			this.log("add repair capability")
-
 			this.addCapability("button.repair")
-			this.setCapabilityOptions(
-				"button.repair",
-				{
-					"maintenanceAction": true,
-					"title": {
-						"en": "Repair"
-					},
-					"desc": {
-						"en": "Attempts to repair a device after it has been re-added to deconz (i.e if there were connectivity issues and you needed to remove and pair the device again)."
-					}
-				})
-			this.registerRepairTrigger();
+			this.initializeTimeout = setTimeout(() => {
+				this.setCapabilityOptions(
+					"button.repair",
+					{
+						"maintenanceAction": true,
+						"title": {
+							"en": "Repair"
+						},
+						"desc": {
+							"en": "Attempts to repair a device after it has been re-added to deconz (i.e if there were connectivity issues and you needed to remove and pair the device again)."
+						}
+					})
+			}, 3000)
 		}, Math.random() * 15 * 1000)
 
-
-		if (this.hasCapability("button.repair")) {
-			this.registerRepairTrigger();
-		}
+		this.registerRepairTrigger();
 
 		// randomize the setup a little as we will get cpu warnings otherwise
 		this.initializeTimeout = setTimeout(() => {
 			this.log("add repair capability")
-
 			this.addCapability("button.updateState")
-			this.setCapabilityOptions(
-				"button.updateState",
-				{
-					"maintenanceAction": true,
-					"title": {
-						"en": "Update manually"
-					},
-					"desc": {
-						"en": "The state of the device gets updated in real time, and also periodically, but you can use this action to force the update immediately"
-					}
-				})
-			this.registerUpdateStateTrigger();
+			this.initializeTimeout = setTimeout(() => {
+				this.setCapabilityOptions(
+					"button.updateState",
+					{
+						"maintenanceAction": true,
+						"title": {
+							"en": "Update manually"
+						},
+						"desc": {
+							"en": "The state of the device gets updated in real time, and also periodically, but you can use this action to force the update immediately"
+						}
+					})
+			}, 3000)
 		}, Math.random() * 15 * 1000)
 
-		if (this.hasCapability("button.updateState")) {
-			this.registerUpdateStateTrigger();
-		}
+		this.registerUpdateStateTrigger();
 	}
 
 	registerRepairTrigger() {
