@@ -119,18 +119,14 @@
             clearErrors()
             repairButton.disabled = true
             Homey.emit('repair', null, function (error, result) {
-
-                Homey.alert(error)
-                Homey.alert(result)
-
-                if (error) {
+                if (result.error) {
                     repairSuccess.style.display = 'none'
                     repairFailure.style.display = 'inline'
-                    showError(false, error)
+                    showError(false, result.message)
                 } else {
                     repairSuccess.style.display = 'inline'
                     repairFailure.style.display = 'none'
-                    showSuccess(false, result)
+                    showSuccess(false, result.message)
                     Homey.nextView()
                 }
             })

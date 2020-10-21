@@ -25,7 +25,8 @@ class DeconzDevice extends Homey.Device {
 
 		this.getDriver().onPairListDevices(null, (error, success) => {
 			if (error) {
-				callback(error, null)
+				callback(null, { message: 'Unknown error: ' + error, error: true })
+				return Promise.resolve()
 			} else {
 				this.log('retrieved candidates', success)
 				for (let candidateDevice of success) {
@@ -51,7 +52,8 @@ class DeconzDevice extends Homey.Device {
 
 						if (isSameDevice) {
 							this.log('The matching candidate is the same device', originalId, candidateDevice.settings.id)
-							callback('Could not repair the device as there is no new binding in DeConz (did you really remove the device and re-add it?)', null)
+							callback(null, { message: 'Could not repair the device as there is no new binding in DeConz (did you really remove the device and re-add it?)', error: true })
+							return Promise.resolve()
 						} else {
 							this.setSettings(candidateDevice.settings)
 
@@ -66,12 +68,14 @@ class DeconzDevice extends Homey.Device {
 							this.setInitialState()
 
 							this.log('repaired successfully ' + this.getName() + ' ' + mac + ' ' + this.getSetting('id'))
-							callback(null, 'Successfully repaired the device!')
+							callback(null, { message: 'Successfully repaired the device!', error: false })
+							return Promise.resolve()
 						}
 					}
 				}
 				this.log('no candidate matched the device to repair')
-				callback('Could not find any device with the same MAC address!', null)
+				callback(null, { message: 'Could not find any device with the same MAC address!', error: true })
+				return Promise.resolve()
 			}
 		})
 	}
