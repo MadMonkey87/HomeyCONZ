@@ -1,38 +1,48 @@
 <html>
-	<head>
-        <script type="text/javascript" src="/homey.js" data-origin="settings"></script>
-        <!--<script src='https://cdn.staticaly.com/gh/robertklep/homey-mocks/v0.0.4/homey-settings-mock.js'></script>-->
-		<!--<script src="js/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+
+<head>
+    <script type="text/javascript" src="/homey.js" data-origin="settings"></script>
+    <!--<script src='https://cdn.staticaly.com/gh/robertklep/homey-mocks/v0.0.4/homey-settings-mock.js'></script>-->
+    <!--<script src="js/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>-->
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="css/bootstrap.css">
-	</head>
-	<body>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/bootstrap.css">
+</head>
 
-		<nav>
-		  <div class="nav nav-tabs" id="nav-tab" role="tablist">
-			<a class="nav-item nav-link active" id="nav-connection-tab" data-toggle="tab" href="#nav-connection" role="tab" aria-controls="nav-connection" aria-selected="true">Connection</a>
+<body>
+
+    <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active" id="nav-connection-tab" data-toggle="tab" href="#nav-connection"
+                role="tab" aria-controls="nav-connection" aria-selected="true">Connection</a>
             <!--<a class="nav-item nav-link" id="nav-advanced-tab" data-toggle="tab" href="#nav-advanced" role="tab" aria-controls="nav-advanced" aria-selected="false">Advanced</a>-->
-            <a class="nav-item nav-link" id="nav-support-tab" data-toggle="tab" href="#nav-support" role="tab" aria-controls="nav-support" aria-selected="false">Support</a>
-			<a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-controls="nav-contact" aria-selected="false">About</a>
-		  </div>
-		</nav>
-		<div class="tab-content" id="nav-tabContent">
-		  <div class="tab-pane fade show active" id="nav-connection" role="tabpanel" aria-labelledby="nav-connection-tab">
+            <a class="nav-item nav-link" id="nav-support-tab" data-toggle="tab" href="#nav-support" role="tab"
+                aria-controls="nav-support" aria-selected="false">Support</a>
+            <a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab"
+                aria-controls="nav-contact" aria-selected="false">About</a>
+        </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-connection" role="tabpanel" aria-labelledby="nav-connection-tab">
             <!--connection tab begin-->
-			<div class="card" style="margin-top: 10px;">
-				<div class="card-body">
+            <div class="card" style="margin-top: 10px;">
+                <div class="card-body">
 
-					<div class="alert alert-danger" role="alert" id="apiError" style="display: none">
-						<div class="ApiErrorShow"></div>
-					</div>
+                    <div class="alert alert-danger" role="alert" id="apiError" style="display: none">
+                        <div class="ApiErrorShow"></div>
+                    </div>
 
                     <h1>automatic configuration</h1>
 
                     <div class="row">
-						<div class="col-sm">
-                            <button type="button" class="btn btn-primary" id="discoverButton" style="width: 125px;">1. Discover</button>
+                        <div class="col-sm">
+                            <button type="button" class="btn btn-primary" id="discoverButton" style="width: 125px;">1.
+                                Discover</button>
                             <img src="images/ok.svg" style="display: none;" id="discoverSuccess">
                             <img src="images/cancel.svg" style="display: none;" id="discoverFailure">
                         </div>
@@ -41,447 +51,460 @@
                     </br>
 
                     <div class="row">
-						<div class="col-sm">
-                            <button type="button" class="btn btn-primary" id="authenticateButton" disabled style="width: 125px;">2. Connect</button>
+                        <div class="col-sm">
+                            <button type="button" class="btn btn-primary" id="authenticateButton" disabled
+                                style="width: 125px;">2. Connect</button>
                             <img src="images/lock.svg" style="display: none;" id="authenticateFailure">
                             <img src="images/padlock.svg" style="display: none;" id="authenticateSuccess">
                         </div>
                     </div>
 
                     </br>
-                    
+
                     <h1>manual configuration</h1>
 
-					<div class="row">
-						<div class="col-sm">
-							<div class="btn-group d-flex" role="group">
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="btn-group d-flex" role="group">
                                 <button type="button" class="btn btn-secondary" id="testButton">Test</button>
                                 <button type="button" class="btn btn-primary" id="saveButton">Save</button>
-							</div>
-						</div>
+                            </div>
+                        </div>
                     </div>
-                    
+
                     </br>
 
                     <div class="row">
-					<div class="col-sm">
-                        <div class="form-group">
-                            <label>ip/hostname</label>
-							<div class="input-group">
-								<input type="text" class="form-control" placeholder="192.168.xxx.xxx" id="deconzIPAdress">
-							</div>
-                        </div>
-                    </div>
-                </div>
-                    <div class="row">
-					<div class="col-sm">
-                        <div class="form-group">
-                            <label>port</label>
-							<div class="input-group">
-								<input type="number" class="form-control" placeholder="" id="deconzPort">
-							</div>
-                        </div>
-                    </div>
-                </div>
-                    <div class="row">
-					<div class="col-sm">
-                        <div class="form-group">
-                            <label>api key</label>
-							<div class="input-group">
-                                <input type="text" class="form-control" placeholder="" id="apiKey">
-                                <div class="input-group-append">
-                                    <button type="button" class="btn btn-secondary" id="getApiKeyButton">request key</button>
-                                  </div>
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <label>ip/hostname</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="192.168.xxx.xxx"
+                                        id="deconzIPAdress">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                     <div class="row">
-					<div class="col-sm">
-                        <div class="form-group">
-                            <label>websocket port</label>
-							<div class="input-group">
-								<input type="number" class="form-control" placeholder="" id="wsPort">
-							</div>
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <label>port</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" placeholder="" id="deconzPort">
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <label>api key</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="" id="apiKey">
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-secondary" id="getApiKeyButton">request
+                                            key</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <label>websocket port</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" placeholder="" id="wsPort">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-				</div>
-			</div>
-			<!--connection tab end-->
-		  </div>
-          <!--<div class="tab-pane fade" id="nav-advanced" role="tabpanel" aria-labelledby="nav-advanced-tab">Advanced</div>-->
-          <div class="tab-pane fade" id="nav-support" role="tabpanel" aria-labelledby="nav-support-tab">
-                <!--support tab begin-->
-                <div class="card" style="margin-top: 10px;">
-                    <div class="card-body">
-                        <h5 class="card-title">Request device support</h5>
-                        <p class="card-text">Do you have a device that is not yet supported? Or is your device not supported properly? Please create a ticket in <a href="https://github.com/madmonkey87/HomeyCONZ/issues">github</a>. If asked please provide the following details:</p>
-                        <div class="row col-9">
-                            <div class="col-sm">
-                                <div class="btn-group d-flex" role="group">
-                                    <button type="button" class="btn btn-primary" id="loadButton">Reload</button>
-                                    <button type="button" class="btn btn-primary" id="copyButton">Copy to clipboard</button>
-                                </div>
+                </div>
+            </div>
+            <!--connection tab end-->
+        </div>
+        <!--<div class="tab-pane fade" id="nav-advanced" role="tabpanel" aria-labelledby="nav-advanced-tab">Advanced</div>-->
+        <div class="tab-pane fade" id="nav-support" role="tabpanel" aria-labelledby="nav-support-tab">
+            <!--support tab begin-->
+            <div class="card" style="margin-top: 10px;">
+                <div class="card-body">
+                    <h5 class="card-title">Request device support</h5>
+                    <p class="card-text">Do you have a device that is not yet supported? Or is your device not supported
+                        properly? Please create a ticket in <a
+                            href="https://github.com/madmonkey87/HomeyCONZ/issues">github</a>. If asked please provide
+                        the following details:</p>
+                    <div class="row col-9">
+                        <div class="col-sm">
+                            <div class="btn-group d-flex" role="group">
+                                <button type="button" class="btn btn-primary" id="loadButton">Reload</button>
+                                <button type="button" class="btn btn-primary" id="copyButton">Copy to clipboard</button>
                             </div>
                         </div>
-                        <p id="supportDetails" style="font-style:italic; padding: 15px; background: #6c757d; color: white; border-radius: 0.25rem; margin-top: 15px"></p>
                     </div>
+                    <p id="supportDetails"
+                        style="font-style:italic; padding: 15px; background: #6c757d; color: white; border-radius: 0.25rem; margin-top: 15px">
+                    </p>
                 </div>
-                <!--support tab end-->
-          </div>
-		  <div class="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
-              <!--about tab begin-->
-              <div class="card" style="margin-top: 10px;">
-                    <img class="card-img-top" src="images/conbee.svg" style="padding-left: 15px; padding-right: 15px; padding-top: 15px;">
-                    <div class="card-body">
-                        <h5 class="card-title">deCONZ for Homey v1.13.2</h5>
-                        <p class="card-text">Thank you for using this app! Please feel free to discuss in the <a href="https://homey.app/en-GB/app/de.dresden-elektronik.deconz/deCONZ/">community</a> or report bugs or request device support at <a href="https://github.com/madmonkey87/HomeyCONZ">github.</a>
-                        </p>
+            </div>
+            <!--support tab end-->
+        </div>
+        <div class="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
+            <!--about tab begin-->
+            <div class="card" style="margin-top: 10px;">
+                <img class="card-img-top" src="images/conbee.svg"
+                    style="padding-left: 15px; padding-right: 15px; padding-top: 15px;">
+                <div class="card-body">
+                    <h5 class="card-title">deCONZ for Homey v1.14.0</h5>
+                    <p class="card-text">Thank you for using this app! Please feel free to discuss in the <a
+                            href="https://homey.app/en-GB/app/de.dresden-elektronik.deconz/deCONZ/">community</a> or
+                        report bugs or request device support at <a
+                            href="https://github.com/madmonkey87/HomeyCONZ">github.</a>
+                    </p>
                 </div>
-              </div>
-                </br>
-                <div class="card">
-                    <div class="card-body">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                <div class="form-group">
-                                    <small class="form-text text-muted">gateway</small>
-                                    <label id="infoGateway" style="font-weight: bold; font-size: 18px;">-</label>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="form-group">
-                                    <small class="form-text text-muted">live updates</small>
-                                    <label id="infoSocketConnection" style="font-weight: bold; font-size: 18px;">-</label>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="form-group">
-                                    <small class="form-text text-muted">version</small>
-                                    <label id="infoVersion" style="font-weight: bold; font-size: 18px;">-</label>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="form-group">
-                                    <small class="form-text text-muted">MAC address</small>
-                                    <label id="infoMac" style="font-weight: bold; font-size: 18px;">-</label>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="form-group">
-                                    <small class="form-text text-muted">device</small>
-                                    <label id="infoDevice" style="font-weight: bold; font-size: 18px;">-</label>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="form-group">
-                                    <small class="form-text text-muted">firmware</small>
-                                    <label id="infoFirmware" style="font-weight: bold; font-size: 18px;">-</label>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="form-group">
-                                    <small class="form-text text-muted">ZigBee pan id</small>
-                                    <label id="infoPanId" style="font-weight: bold; font-size: 18px;">-</label>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="form-group">
-                                    <small class="form-text text-muted">ZigBee channel</small>
-                                    <label id="infoChannel" style="font-weight: bold; font-size: 18px;">-</label>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+            </div>
             </br>
-              <!--about tab end-->
-          </div>
-		</div>
+            <div class="card">
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="form-group">
+                                <small class="form-text text-muted">gateway</small>
+                                <label id="infoGateway" style="font-weight: bold; font-size: 18px;">-</label>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="form-group">
+                                <small class="form-text text-muted">live updates</small>
+                                <label id="infoSocketConnection" style="font-weight: bold; font-size: 18px;">-</label>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="form-group">
+                                <small class="form-text text-muted">version</small>
+                                <label id="infoVersion" style="font-weight: bold; font-size: 18px;">-</label>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="form-group">
+                                <small class="form-text text-muted">MAC address</small>
+                                <label id="infoMac" style="font-weight: bold; font-size: 18px;">-</label>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="form-group">
+                                <small class="form-text text-muted">device</small>
+                                <label id="infoDevice" style="font-weight: bold; font-size: 18px;">-</label>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="form-group">
+                                <small class="form-text text-muted">firmware</small>
+                                <label id="infoFirmware" style="font-weight: bold; font-size: 18px;">-</label>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="form-group">
+                                <small class="form-text text-muted">ZigBee pan id</small>
+                                <label id="infoPanId" style="font-weight: bold; font-size: 18px;">-</label>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="form-group">
+                                <small class="form-text text-muted">ZigBee channel</small>
+                                <label id="infoChannel" style="font-weight: bold; font-size: 18px;">-</label>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            </br>
+            <!--about tab end-->
+        </div>
+    </div>
 
-        <script type="text/javascript">
+    <script type="text/javascript">
 
-            function onHomeyReady(Homey) {
-			
-				if(Homey.isMock){
-					Homey.alert('Warning: Homey is mocked only!!!')
-				}
-			
-                const ip = document.getElementById('deconzIPAdress')
-                const port = document.getElementById('deconzPort')
-                const apiKey = document.getElementById('apiKey')
-                const wsPort = document.getElementById('wsPort')
-                const saveButton = document.getElementById('saveButton')
-				const testButton = document.getElementById('testButton')
-                const discoverButton = document.getElementById('discoverButton')
-                const authenticateButton = document.getElementById('authenticateButton')
-                const getApiKeyButton = document.getElementById('getApiKeyButton')
-                const advancedsettings = document.getElementById('advancedsettings')
-                const apiError = document.getElementById('apiError')
-                const title = document.getElementsByClassName('ApiErrorShow')[0]
-                const copyButton = document.getElementById('copyButton')
-                const loadButton = document.getElementById('loadButton')
+        function onHomeyReady(Homey) {
 
-				function showError(alert, message){
-				    apiError.style.display = 'grid'
-                    apiError.classList.remove('alert-success')
-                    apiError.classList.add('alert-danger')
-                    title.innerHTML = message
-					if (alert){
-						Homey.alert(message)
-					}
-				}
-				
-				function showSuccess(alert, message){
-                    apiError.style.display = 'grid'
-                    apiError.classList.remove('alert-danger')
-                    apiError.classList.add('alert-success')
-					title.innerHTML = message
-					if(alert){
-						Homey.alert(message)
-					}
-				}
-				
-				function clearErrors(){
-					apiError.style.display = 'none'
-				}
-				
-				function validateFields (show) {
-					clearErrors()
-					let errors = []
-                    if (!ip.value) {
-						errors.push('IP address is missing')
-					}
-                    if (!port.value) {
-                        errors.push('port is missing')
-					}
-                    if (!apiKey.value) {
-                        errors.push('api key is missing')
-					}
-                    if (!wsPort.value) {
-                        errors.push('WS port is missing')
-                    }
-					if(errors.length > 0){
-						let message = 'Please fix the following errors:'
-						for (var i = 0; i < errors.length; i++) {
-							message += '</br> - ' + errors[i]  
-						}
-						if(show){
-							showError(false, message)
-						}
-						return false
-					}else{
-						return true
-					}
+            if (Homey.isMock) {
+                Homey.alert('Warning: Homey is mocked only!!!')
+            }
+
+            const ip = document.getElementById('deconzIPAdress')
+            const port = document.getElementById('deconzPort')
+            const apiKey = document.getElementById('apiKey')
+            const wsPort = document.getElementById('wsPort')
+            const saveButton = document.getElementById('saveButton')
+            const testButton = document.getElementById('testButton')
+            const discoverButton = document.getElementById('discoverButton')
+            const authenticateButton = document.getElementById('authenticateButton')
+            const getApiKeyButton = document.getElementById('getApiKeyButton')
+            const advancedsettings = document.getElementById('advancedsettings')
+            const apiError = document.getElementById('apiError')
+            const title = document.getElementsByClassName('ApiErrorShow')[0]
+            const copyButton = document.getElementById('copyButton')
+            const loadButton = document.getElementById('loadButton')
+
+            function showError(alert, message) {
+                apiError.style.display = 'grid'
+                apiError.classList.remove('alert-success')
+                apiError.classList.add('alert-danger')
+                title.innerHTML = message
+                if (alert) {
+                    Homey.alert(message)
                 }
+            }
 
-                function validateBasicFields (show) {
-					clearErrors()
-					let errors = []
-                    if (!ip.value) {
-						errors.push('IP address is missing')
-					}
-                    if (!port.value) {
-                        errors.push('port is missing')
-					}
-					if(errors.length > 0){
-						let message = 'Please fix the following errors:'
-						for (var i = 0; i < errors.length; i++) {
-							message += '</br> - ' + errors[i]  
-						}
-						if(show){
-							showError(false, message)
-						}
-						return false
-					}else{
-						return true
-					}
+            function showSuccess(alert, message) {
+                apiError.style.display = 'grid'
+                apiError.classList.remove('alert-danger')
+                apiError.classList.add('alert-success')
+                title.innerHTML = message
+                if (alert) {
+                    Homey.alert(message)
                 }
-				
-                function updateDetails(){
-                    if(validateFields(false) === true){
-                        Homey.api('GET', '/state', { }, function( error, data ) {
-                            if (!!error) {
-                                document.getElementById('infoGateway').innerHTML = 'error'
-                                document.getElementById('infoSocketConnection').innerHTML = 'error'
-                                document.getElementById('infoVersion').innerHTML = 'error'
-                                document.getElementById('infoMac').innerHTML = 'error'
-                                document.getElementById('infoDevice').innerHTML = 'error'
-                                document.getElementById('infoFirmware').innerHTML = 'error'
-                                document.getElementById('infoPanId').innerHTML = 'error'
-                                document.getElementById('infoChannel').innerHTML = 'error'
+            }
 
-                                document.getElementById('supportDetails').innerHTML = 'error'
-                            } else {
-                                document.getElementById('infoGateway').innerHTML = data.config.name
-                                document.getElementById('infoSocketConnection').innerHTML = data.wsConnected ? 'connected':'not connected'
-                                document.getElementById('infoVersion').innerHTML = data.config.swversion
-                                document.getElementById('infoMac').innerHTML = data.config.mac
-                                document.getElementById('infoDevice').innerHTML = data.config.devicename
-                                document.getElementById('infoFirmware').innerHTML = data.config.fwversion
-                                document.getElementById('infoPanId').innerHTML = data.config.panid
-                                document.getElementById('infoChannel').innerHTML = data.config.zigbeechannel
+            function clearErrors() {
+                apiError.style.display = 'none'
+            }
 
-                                document.getElementById('supportDetails').innerHTML = JSON.stringify(data)
-                            }
-                        })
-                    } else {
-                        document.getElementById('infoGateway').innerHTML = '-'
-                        document.getElementById('infoSocketConnection').innerHTML = '-'
-                                document.getElementById('infoVersion').innerHTML = '-'
-                                document.getElementById('infoMac').innerHTML = '-'
-                                document.getElementById('infoDevice').innerHTML = '-'
-                                document.getElementById('infoFirmware').innerHTML = '-'
-                                document.getElementById('infoPanId').innerHTML = '-'
-                                document.getElementById('infoChannel').innerHTML = '-'
-
-                                document.getElementById('supportDetails').innerHTML = '-'
-                    }
+            function validateFields(show) {
+                clearErrors()
+                let errors = []
+                if (!ip.value) {
+                    errors.push('IP address is missing')
                 }
+                if (!port.value) {
+                    errors.push('port is missing')
+                }
+                if (!apiKey.value) {
+                    errors.push('api key is missing')
+                }
+                if (!wsPort.value) {
+                    errors.push('WS port is missing')
+                }
+                if (errors.length > 0) {
+                    let message = 'Please fix the following errors:'
+                    for (var i = 0; i < errors.length; i++) {
+                        message += '</br> - ' + errors[i]
+                    }
+                    if (show) {
+                        showError(false, message)
+                    }
+                    return false
+                } else {
+                    return true
+                }
+            }
 
-                saveButton.addEventListener('click', (e) => {
-					if (validateFields(true) === true) {
-                        saveAll()
-                        showSuccess(false, 'Successfuly saved!')
+            function validateBasicFields(show) {
+                clearErrors()
+                let errors = []
+                if (!ip.value) {
+                    errors.push('IP address is missing')
+                }
+                if (!port.value) {
+                    errors.push('port is missing')
+                }
+                if (errors.length > 0) {
+                    let message = 'Please fix the following errors:'
+                    for (var i = 0; i < errors.length; i++) {
+                        message += '</br> - ' + errors[i]
                     }
-                })
-				
-				testButton.addEventListener('click', (e) => {
-                    if (validateFields(true) === true) {
-                        Homey.api('POST', '/test', {host: ip.value, port: port.value, apikey: apiKey.value }, function( err, result ) {
-                            if( err ){
-                                showError(false, 'Error while connecting!')
-                            } else {
-                                if (result.wsConnected){
-                                    showSuccess(false, 'Connected successfuly!')
-                                } else {
-                                    showError(false, "Connected successfuly, but you won't receive live updates as the websocket port seems wrong!")
-                                }
-                            }
-                        })
+                    if (show) {
+                        showError(false, message)
                     }
-                })
-                
-                discoverButton.addEventListener('click', (e) => {
-                    Homey.api('GET', '/discover', { }, function( err, result ) {
-                        if(err){
-                            document.getElementById('discoverSuccess').style.display = 'none'
-                            document.getElementById('discoverFailure').style.display = 'inline'
-                            document.getElementById('authenticateSuccess').style.display = 'none'
-                            document.getElementById('authenticateFailure').style.display = 'none'
-                            showError(false, err)
-                        } else if (!result.host && !result.port){
-                            this.loadSettings()
-                            document.getElementById('discoverSuccess').style.display = 'inline'
-                            document.getElementById('discoverFailure').style.display = 'none'
-                            document.getElementById('authenticateSuccess').style.display = 'none'
-                            document.getElementById('authenticateFailure').style.display = 'none'
-                            showSuccess(false, result.message)
+                    return false
+                } else {
+                    return true
+                }
+            }
+
+            function updateDetails() {
+                if (validateFields(false) === true) {
+                    Homey.api('GET', '/state', {}, function (error, data) {
+                        if (!!error) {
+                            document.getElementById('infoGateway').innerHTML = 'error'
+                            document.getElementById('infoSocketConnection').innerHTML = 'error'
+                            document.getElementById('infoVersion').innerHTML = 'error'
+                            document.getElementById('infoMac').innerHTML = 'error'
+                            document.getElementById('infoDevice').innerHTML = 'error'
+                            document.getElementById('infoFirmware').innerHTML = 'error'
+                            document.getElementById('infoPanId').innerHTML = 'error'
+                            document.getElementById('infoChannel').innerHTML = 'error'
+
+                            document.getElementById('supportDetails').innerHTML = 'error'
                         } else {
-                            ip.value = result.host
-                            port.value = result.port
-                            document.getElementById('discoverSuccess').style.display = 'inline'
-                            document.getElementById('discoverFailure').style.display = 'none'
-                            document.getElementById('authenticateSuccess').style.display = 'none'
-                            document.getElementById('authenticateFailure').style.display = 'inline'
-                            authenticateButton.disabled = false;
-                            showSuccess(false, result.message)
+                            document.getElementById('infoGateway').innerHTML = data.config.name
+                            document.getElementById('infoSocketConnection').innerHTML = data.wsConnected ? 'connected' : 'not connected'
+                            document.getElementById('infoVersion').innerHTML = data.config.swversion
+                            document.getElementById('infoMac').innerHTML = data.config.mac
+                            document.getElementById('infoDevice').innerHTML = data.config.devicename
+                            document.getElementById('infoFirmware').innerHTML = data.config.fwversion
+                            document.getElementById('infoPanId').innerHTML = data.config.panid
+                            document.getElementById('infoChannel').innerHTML = data.config.zigbeechannel
+
+                            document.getElementById('supportDetails').innerHTML = JSON.stringify(data)
                         }
                     })
-                })
+                } else {
+                    document.getElementById('infoGateway').innerHTML = '-'
+                    document.getElementById('infoSocketConnection').innerHTML = '-'
+                    document.getElementById('infoVersion').innerHTML = '-'
+                    document.getElementById('infoMac').innerHTML = '-'
+                    document.getElementById('infoDevice').innerHTML = '-'
+                    document.getElementById('infoFirmware').innerHTML = '-'
+                    document.getElementById('infoPanId').innerHTML = '-'
+                    document.getElementById('infoChannel').innerHTML = '-'
 
-                authenticateButton.addEventListener('click', (e) => {
-                    authenticate()
-                })
-
-                getApiKeyButton.addEventListener('click', (e) => {
-                    authenticate()
-                })
-
-                function authenticate(){
-                    if(validateBasicFields(true) === true){
-                        Homey.api('PUT', '/authenticate', { host:ip.value, port: port.value }, function( err, result ) {
-                            if(err){
-                                document.getElementById('authenticateSuccess').style.display = 'none'
-                                document.getElementById('authenticateFailure').style.display = 'inline'
-                                showError(false, err)
-                            } else if (!result.host && !result.port){
-                                document.getElementById('authenticateSuccess').style.display = 'inline'
-                                document.getElementById('authenticateFailure').style.display = 'none'
-                                loadSettings()
-                                showSuccess(false, result)
-                            } else {
-                                document.getElementById('authenticateSuccess').style.display = 'none'
-                                document.getElementById('authenticateFailure').style.display = 'inline'
-                                ip.value = result.host
-                                port.value = result.port
-                                showError(false, result.message)
-                            }
-                        })
-                    }
+                    document.getElementById('supportDetails').innerHTML = '-'
                 }
-			
-                copyButton.addEventListener('click', (e) => {
-                    const el = document.createElement('textarea')
-                    el.value = document.getElementById('supportDetails').innerHTML
-                    document.body.appendChild(el)
-                    el.select()
-                    document.execCommand('copy')
-                    document.body.removeChild(el)
-                })
-
-                loadButton.addEventListener('click', (e) => {
-                    updateDetails()
-                })
-
-                function saveAll() {
-                    Homey.set('host', ip.value, (err, settings) => {
-                        if (err) return Homey.alert(err)
-                    })
-                    Homey.set('port', port.value, (err, settings) => {
-                        if (err) return Homey.alert(err)
-                    })
-                    Homey.set('wsport', wsPort.value, (err, settings) => {
-                        if (err) return Homey.alert(err)
-                    })
-                    Homey.set('apikey', apiKey.value, (err, settings) => {
-                        if (err) return Homey.alert(err)
-                    })
-
-                    updateDetails()
-                }
-
-                function loadSettings() {
-                    Homey.get('host', (err, host) => {
-                        if (err) return Homey.alert(err)
-                        ip.value = host
-                    })
-                    
-                    Homey.get('port', (err, storedPort) => {
-                        if (err) return Homey.alert(err)
-                        port.value = storedPort
-                    })
-
-                    Homey.get('wsport', (err, storedWSPort) => {
-                        if (err) return Homey.alert(err)
-                        wsPort.value = storedWSPort
-                    })
-                    
-                    Homey.get('apikey', (err, apikey) => {
-                        if (err) return Homey.alert(err)
-                        apiKey.value = apikey
-                    })
-                }
-                
-                loadSettings()
-                
-                Homey.ready()
-
-                setTimeout(function(){ updateDetails() }, 1000);
             }
-            
-        </script>
-	</body>
+
+            saveButton.addEventListener('click', (e) => {
+                if (validateFields(true) === true) {
+                    saveAll()
+                    showSuccess(false, 'Successfuly saved!')
+                }
+            })
+
+            testButton.addEventListener('click', (e) => {
+                if (validateFields(true) === true) {
+                    Homey.api('POST', '/test', { host: ip.value, port: port.value, apikey: apiKey.value }, function (err, result) {
+                        if (err) {
+                            showError(false, 'Error while connecting!')
+                        } else {
+                            if (result.wsConnected) {
+                                showSuccess(false, 'Connected successfuly!')
+                            } else {
+                                showError(false, "Connected successfuly, but you won't receive live updates as the websocket port seems wrong!")
+                            }
+                        }
+                    })
+                }
+            })
+
+            discoverButton.addEventListener('click', (e) => {
+                Homey.api('GET', '/discover', {}, function (err, result) {
+                    if (err) {
+                        document.getElementById('discoverSuccess').style.display = 'none'
+                        document.getElementById('discoverFailure').style.display = 'inline'
+                        document.getElementById('authenticateSuccess').style.display = 'none'
+                        document.getElementById('authenticateFailure').style.display = 'none'
+                        showError(false, err)
+                    } else if (!result.host && !result.port) {
+                        this.loadSettings()
+                        document.getElementById('discoverSuccess').style.display = 'inline'
+                        document.getElementById('discoverFailure').style.display = 'none'
+                        document.getElementById('authenticateSuccess').style.display = 'none'
+                        document.getElementById('authenticateFailure').style.display = 'none'
+                        showSuccess(false, result.message)
+                    } else {
+                        ip.value = result.host
+                        port.value = result.port
+                        document.getElementById('discoverSuccess').style.display = 'inline'
+                        document.getElementById('discoverFailure').style.display = 'none'
+                        document.getElementById('authenticateSuccess').style.display = 'none'
+                        document.getElementById('authenticateFailure').style.display = 'inline'
+                        authenticateButton.disabled = false;
+                        showSuccess(false, result.message)
+                    }
+                })
+            })
+
+            authenticateButton.addEventListener('click', (e) => {
+                authenticate()
+            })
+
+            getApiKeyButton.addEventListener('click', (e) => {
+                authenticate()
+            })
+
+            function authenticate() {
+                if (validateBasicFields(true) === true) {
+                    Homey.api('PUT', '/authenticate', { host: ip.value, port: port.value }, function (err, result) {
+                        if (err) {
+                            document.getElementById('authenticateSuccess').style.display = 'none'
+                            document.getElementById('authenticateFailure').style.display = 'inline'
+                            showError(false, err)
+                        } else if (!result.host && !result.port) {
+                            document.getElementById('authenticateSuccess').style.display = 'inline'
+                            document.getElementById('authenticateFailure').style.display = 'none'
+                            loadSettings()
+                            showSuccess(false, result)
+                        } else {
+                            document.getElementById('authenticateSuccess').style.display = 'none'
+                            document.getElementById('authenticateFailure').style.display = 'inline'
+                            ip.value = result.host
+                            port.value = result.port
+                            showError(false, result.message)
+                        }
+                    })
+                }
+            }
+
+            copyButton.addEventListener('click', (e) => {
+                const el = document.createElement('textarea')
+                el.value = document.getElementById('supportDetails').innerHTML
+                document.body.appendChild(el)
+                el.select()
+                document.execCommand('copy')
+                document.body.removeChild(el)
+            })
+
+            loadButton.addEventListener('click', (e) => {
+                updateDetails()
+            })
+
+            function saveAll() {
+                Homey.set('host', ip.value, (err, settings) => {
+                    if (err) return Homey.alert(err)
+                })
+                Homey.set('port', port.value, (err, settings) => {
+                    if (err) return Homey.alert(err)
+                })
+                Homey.set('wsport', wsPort.value, (err, settings) => {
+                    if (err) return Homey.alert(err)
+                })
+                Homey.set('apikey', apiKey.value, (err, settings) => {
+                    if (err) return Homey.alert(err)
+                })
+
+                updateDetails()
+            }
+
+            function loadSettings() {
+                Homey.get('host', (err, host) => {
+                    if (err) return Homey.alert(err)
+                    ip.value = host
+                })
+
+                Homey.get('port', (err, storedPort) => {
+                    if (err) return Homey.alert(err)
+                    port.value = storedPort
+                })
+
+                Homey.get('wsport', (err, storedWSPort) => {
+                    if (err) return Homey.alert(err)
+                    wsPort.value = storedWSPort
+                })
+
+                Homey.get('apikey', (err, apikey) => {
+                    if (err) return Homey.alert(err)
+                    apiKey.value = apikey
+                })
+            }
+
+            loadSettings()
+
+            Homey.ready()
+
+            setTimeout(function () { updateDetails() }, 1000);
+        }
+
+    </script>
+</body>
+
 </html>

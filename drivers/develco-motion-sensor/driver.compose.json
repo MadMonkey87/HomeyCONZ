@@ -27,6 +27,11 @@
       "template": "add_devices"
     }
   ],
+  "repair": [
+    {
+      "id": "repair"
+    }
+  ],
   "energy": {
     "batteries": [
       "AA",

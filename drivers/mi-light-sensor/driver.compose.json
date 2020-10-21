@@ -31,6 +31,11 @@
       "template": "add_devices"
     }
   ],
+  "repair": [
+    {
+      "id": "repair"
+    }
+  ],
   "settings":[
     {
       "$extends":  "ignore-reachable"
