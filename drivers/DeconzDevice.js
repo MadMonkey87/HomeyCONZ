@@ -91,7 +91,7 @@ class DeconzDevice extends Homey.Device {
 	}
 
 	fireEvent(event, state){
-		throw new Error('unhandled fireEvent for the device ' + JSON.stringify(this.getDriver().getManifest()))
+		throw new Error('unhandled fireEvent for the device ' + device.getSetting('modelid')+ ' ### ' + JSON.stringify(event) + ' ### ' + JSON.stringify(state) + JSON.stringify(this.getDriver().getManifest()))
 	}
 }
 
