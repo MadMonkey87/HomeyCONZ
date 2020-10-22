@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "de.dresden-elektronik.deconz",
-  "version": "1.13.0",
+  "version": "1.14.1",
   "compatibility": ">=4.0.0",
   "brandColor": "#55626b",
   "sdk": 2,
@@ -3132,6 +3132,11 @@
           "template": "add_devices"
         }
       ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
       "settings": [
         {
           "id": "deconz",
@@ -3250,6 +3255,11 @@
         {
           "id": "add_devices",
           "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "repair"
         }
       ],
       "settings": [
@@ -3478,6 +3488,11 @@
           "template": "add_devices"
         }
       ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
       "id": "aqara-cube"
     },
     {
@@ -3510,6 +3525,11 @@
         {
           "id": "add_devices",
           "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "repair"
         }
       ],
       "settings": [
@@ -3643,6 +3663,11 @@
         {
           "id": "add_devices",
           "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "repair"
         }
       ],
       "settings": [
@@ -3792,6 +3817,11 @@
           "template": "add_devices"
         }
       ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
       "settings": [
         {
           "id": "deconz",
@@ -3911,6 +3941,11 @@
         {
           "id": "add_devices",
           "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "repair"
         }
       ],
       "settings": [
@@ -4034,6 +4069,11 @@
           "template": "add_devices"
         }
       ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
       "settings": [
         {
           "id": "deconz",
@@ -4154,6 +4194,11 @@
         {
           "id": "add_devices",
           "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "repair"
         }
       ],
       "settings": [
@@ -4305,6 +4350,11 @@
           "template": "add_devices"
         }
       ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
       "settings": [
         {
           "id": "deconz",
@@ -4426,6 +4476,11 @@
         {
           "id": "add_devices",
           "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "repair"
         }
       ],
       "settings": [
@@ -4592,6 +4647,11 @@
         {
           "id": "add_devices",
           "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "repair"
         }
       ],
       "settings": [
@@ -4762,6 +4822,11 @@
           "template": "add_devices"
         }
       ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
       "settings": [
         {
           "id": "deconz",
@@ -4873,6 +4938,11 @@
         {
           "id": "add_devices",
           "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "repair"
         }
       ],
       "settings": [
@@ -4996,6 +5066,11 @@
           "template": "add_devices"
         }
       ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
       "settings": [
         {
           "id": "deconz",
@@ -5114,6 +5189,11 @@
         {
           "id": "add_devices",
           "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "repair"
         }
       ],
       "settings": [
@@ -5236,6 +5316,11 @@
           "template": "add_devices"
         }
       ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
       "settings": [
         {
           "id": "deconz",
@@ -5356,6 +5441,11 @@
           "template": "add_devices"
         }
       ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
       "settings": [
         {
           "id": "deconz",
@@ -5471,6 +5561,11 @@
         {
           "id": "add_devices",
           "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "repair"
         }
       ],
       "energy": {
@@ -5653,6 +5748,11 @@
           "template": "add_devices"
         }
       ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
       "settings": [
         {
           "id": "invert_alarm",
@@ -5777,6 +5877,11 @@
           "template": "add_devices"
         }
       ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
       "settings": [
         {
           "id": "deconz",
@@ -5893,6 +5998,11 @@
           "template": "add_devices"
         }
       ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
       "settings": [
         {
           "id": "deconz",
@@ -6004,6 +6114,11 @@
         {
           "id": "add_devices",
           "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "repair"
         }
       ],
       "settings": [
@@ -6160,6 +6275,11 @@
           "template": "add_devices"
         }
       ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
       "settings": [
         {
           "id": "invert_alarm",
@@ -6292,6 +6412,11 @@
           "template": "add_devices"
         }
       ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
       "settings": [
         {
           "id": "deconz",
@@ -6410,6 +6535,11 @@
         {
           "id": "add_devices",
           "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "repair"
         }
       ],
       "settings": [
@@ -6593,6 +6723,11 @@
           "template": "add_devices"
         }
       ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
       "settings": [
         {
           "id": "deconz",
@@ -6712,6 +6847,11 @@
         {
           "id": "add_devices",
           "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "repair"
         }
       ],
       "settings": [
@@ -6835,6 +6975,11 @@
           "template": "add_devices"
         }
       ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
       "settings": [
         {
           "id": "deconz",
@@ -6955,6 +7100,11 @@
           "template": "add_devices"
         }
       ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
       "settings": [
         {
           "id": "deconz",
@@ -7071,6 +7221,11 @@
         {
           "id": "add_devices",
           "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "repair"
         }
       ],
       "energy": {
@@ -7293,6 +7448,11 @@
           "template": "add_devices"
         }
       ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
       "energy": {
         "batteries": [
           "AAA",
@@ -7508,6 +7668,11 @@
           "template": "add_devices"
         }
       ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
       "settings": [
         {
           "id": "deconz",
@@ -7627,6 +7792,11 @@
         {
           "id": "add_devices",
           "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "repair"
         }
       ],
       "settings": [
@@ -7760,6 +7930,11 @@
           "template": "add_devices"
         }
       ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
       "settings": [
         {
           "id": "deconz",
@@ -7882,6 +8057,11 @@
           "template": "add_devices"
         }
       ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
       "settings": [
         {
           "id": "deconz",
@@ -8000,6 +8180,11 @@
         {
           "id": "add_devices",
           "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "repair"
         }
       ],
       "settings": [
@@ -8132,6 +8317,11 @@
         {
           "id": "add_devices",
           "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "repair"
         }
       ],
       "settings": [
@@ -8282,6 +8472,11 @@
           "template": "add_devices"
         }
       ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
       "settings": [
         {
           "id": "deconz",
@@ -8404,6 +8599,11 @@
           "template": "add_devices"
         }
       ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
       "settings": [
         {
           "id": "deconz",
@@ -8524,6 +8724,11 @@
         {
           "id": "add_devices",
           "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "repair"
         }
       ],
       "settings": [
@@ -8678,6 +8883,11 @@
           "template": "add_devices"
         }
       ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
       "settings": [
         {
           "id": "deconz",
@@ -8796,6 +9006,11 @@
         {
           "id": "add_devices",
           "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "repair"
         }
       ],
       "settings": [
@@ -8919,6 +9134,11 @@
           "template": "add_devices"
         }
       ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
       "settings": [
         {
           "id": "deconz",
@@ -9034,6 +9254,11 @@
         {
           "id": "add_devices",
           "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "repair"
         }
       ],
       "energy": {
@@ -9190,6 +9415,11 @@
           "template": "add_devices"
         }
       ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
       "settings": [
         {
           "id": "deconz",
@@ -9310,6 +9540,11 @@
           "template": "add_devices"
         }
       ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
       "settings": [
         {
           "id": "deconz",
@@ -9422,6 +9657,11 @@
         {
           "id": "add_devices",
           "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "repair"
         }
       ],
       "settings": [
@@ -9541,6 +9781,11 @@
         {
           "id": "add_devices",
           "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "repair"
         }
       ],
       "settings": [
@@ -9663,6 +9908,11 @@
           "template": "add_devices"
         }
       ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
       "settings": [
         {
           "id": "deconz",
@@ -9783,6 +10033,11 @@
         {
           "id": "add_devices",
           "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "repair"
         }
       ],
       "settings": [
@@ -9916,6 +10171,11 @@
         {
           "id": "add_devices",
           "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "repair"
         }
       ],
       "settings": [
@@ -10064,6 +10324,11 @@
           "template": "add_devices"
         }
       ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
       "settings": [
         {
           "id": "deconz",
@@ -10185,6 +10450,11 @@
           "template": "add_devices"
         }
       ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
       "settings": [
         {
           "id": "deconz",
@@ -10303,6 +10573,11 @@
         {
           "id": "add_devices",
           "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "repair"
         }
       ],
       "settings": [

@@ -83,7 +83,7 @@ class deCONZ extends Homey.App {
 		setInterval(() => {
 			try {
 				this.websocket.ping()
-			} catch(error) {
+			} catch (error) {
 				this.error('Can\'t ping websocket')
 				this.error(error)
 			}
@@ -110,7 +110,7 @@ class deCONZ extends Homey.App {
 				} else if (data.config) {
 					this.updateConfig(device, data.config)
 				}
-			} else if(data.attr && data.attr.modelid !== 'ConBee') {
+			} else if (data.attr && data.attr.modelid !== 'ConBee') {
 				this.log('Update for unregistered device', data)
 			}
 		})
@@ -161,7 +161,7 @@ class deCONZ extends Homey.App {
 	getFullState(callback) {
 		const wsState = this.websocket && this.websocket.readyState === 1
 		http.get(`http://${this.host}:${this.port}/api/${this.apikey}`, (error, response) => {
-			if(!!error){
+			if (!!error) {
 				callback(error, null)
 			} else {
 				let state = JSON.parse(response)
@@ -174,7 +174,7 @@ class deCONZ extends Homey.App {
 	test(host, port, apikey, callback) {
 		const wsState = this.websocket && this.websocket.readyState === 1
 		http.get(`http://${host}:${port}/api/${apikey}`, (error, response) => {
-			if(!!error){
+			if (!!error) {
 				callback(error, null)
 			} else {
 				let state = JSON.parse(response)
@@ -193,18 +193,18 @@ class deCONZ extends Homey.App {
 	discover(callback) {
 		this.log('[SETTINGS-API] start discovery')
 		this.getDiscoveryData((error, discoveryResponse) => {
-			if(error || discoveryResponse == null){
+			if (error || discoveryResponse == null) {
 				this.log('[SETTINGS-API] discovery failed', error)
 				callback('Unable to find a deCONZ gateway', null)
 			} else {
 				this.log('[SETTINGS-API] discovery successfull, starting registration')
-				http.post(discoveryResponse.internalipaddress, discoveryResponse.internalport, '/api',{ "devicetype": "homeyCONZ" }, (error, registerResponse,  statusCode) => {
-					if(error){
+				http.post(discoveryResponse.internalipaddress, discoveryResponse.internalport, '/api', { "devicetype": "homeyCONZ" }, (error, registerResponse, statusCode) => {
+					if (error) {
 						this.log('[SETTINGS-API] registration failed', error)
 						callback('Found a unreachable gateway', null)
 					} else if (statusCode === 403) {
 						this.log('[SETTINGS-API] registration incomplete, authorization needed')
-						callback(null, { host: discoveryResponse.internalipaddress, port: discoveryResponse.internalport, message: 'Successfuly discovered the deCONZ gateway! Please open up Phoscon, go to settings→gateway→advanced and click on authenticate in the phoscon app. Finalize the setup by clicking on "connect" bellow.'})
+						callback(null, { host: discoveryResponse.internalipaddress, port: discoveryResponse.internalport, message: 'Successfuly discovered the deCONZ gateway! Please open up Phoscon, go to settings→gateway→advanced and click on authenticate in the phoscon app. Finalize the setup by clicking on "connect" bellow.' })
 					} else if (statusCode === 200) {
 						this.log('[SETTINGS-API] registration successful')
 						this.completeAuthentication(discoveryResponse.internalipaddress, discoveryResponse.internalport, JSON.parse(registerResponse)[0].success.username, callback)
@@ -220,13 +220,13 @@ class deCONZ extends Homey.App {
 		})
 	}
 
-	authenticate(host, port, callback){
+	authenticate(host, port, callback) {
 		this.log('[SETTINGS-API] start authenticate', host, port)
 
-		http.post(host, port,'/api', { "devicetype": "homeyCONZ" }, (error, response,  statusCode) => {
+		http.post(host, port, '/api', { "devicetype": "homeyCONZ" }, (error, response, statusCode) => {
 			if (statusCode === 403) {
 				this.log('[SETTINGS-API] authenticate failed, authorization needed')
-				callback(null, { host: host, port: port, message: 'Please open up Phoscon, go to settings→gateway→advanced and click on authenticate in the phoscon app. Finalize the setup by clicking on "connect" bellow.'})
+				callback(null, { host: host, port: port, message: 'Please open up Phoscon, go to settings→gateway→advanced and click on authenticate in the phoscon app. Finalize the setup by clicking on "connect" bellow.' })
 			} else if (statusCode === 200) {
 				this.log('[SETTINGS-API] authenticate successful')
 				this.completeAuthentication(host, port, JSON.parse(response)[0].success.username, callback)
@@ -237,10 +237,10 @@ class deCONZ extends Homey.App {
 		})
 	}
 
-	completeAuthentication(host, port, apikey, callback){
+	completeAuthentication(host, port, apikey, callback) {
 		this.log('[SETTINGS-API] fetch config')
 		http.get(`http://${host}:${port}/api/${apikey}/config`, (error, result) => {
-			if (error){
+			if (error) {
 				this.log('[SETTINGS-API] error getting config', error)
 				callback('Error getting WS port', null)
 			} else {
@@ -257,7 +257,7 @@ class deCONZ extends Homey.App {
 				Homey.ManagerSettings.set('apikey', apikey, (err, settings) => {
 					if (err) return callback(err, null)
 				})
-				
+
 				this.log('[SETTINGS-API] successfully persisted config')
 				callback(null, 'Successfuly discovered and authenticated the deCONZ gateway!')
 			}
@@ -281,7 +281,7 @@ class deCONZ extends Homey.App {
 				if (device && light.state) {
 					this.updateState(device, light.state)
 				}
-				if(device){
+				if (device) {
 					this.updateDeviceInfo(device, light)
 				}
 			})
@@ -351,13 +351,13 @@ class deCONZ extends Homey.App {
 	updateState(device, state, initial = false) {
 		let deviceCapabilities = device.getCapabilities()
 		let deviceSupports = (capabilities) => {
-			if (typeof(capabilities) == 'string') capabilities = [capabilities]
+			if (typeof (capabilities) == 'string') capabilities = [capabilities]
 			return !capabilities.map(capability => {
 				return deviceCapabilities.includes(capability)
 			}).includes(false)
 		}
 
-		this.log('state update for', device.getSetting('id'), device.getName()/*, state*/)
+		// this.log('state update for', device.getSetting('id'), device.getName()/*, state*/)
 
 		if (state.hasOwnProperty('on')) {
 			if (deviceSupports('onoff')) {
@@ -415,12 +415,12 @@ class deCONZ extends Homey.App {
 
 		if (state.hasOwnProperty('reachable')) {
 			let ignoreReachable = device.getSetting('ignore-reachable') === true;
-			
-			if(!ignoreReachable){
-				if(state.reachable === true && !device.getAvailable()){
-					this.deviceReachableTrigger.trigger({device: device.getName()})
-				} else if (state.reachable === false && device.getAvailable()){
-					this.deviceUnreachableTrigger.trigger({device: device.getName()})
+
+			if (!ignoreReachable) {
+				if (state.reachable === true && !device.getAvailable()) {
+					this.deviceReachableTrigger.trigger({ device: device.getName() })
+				} else if (state.reachable === false && device.getAvailable()) {
+					this.deviceUnreachableTrigger.trigger({ device: device.getName() })
 				}
 			}
 
@@ -430,7 +430,7 @@ class deCONZ extends Homey.App {
 		if (state.hasOwnProperty('water')) {
 			if (deviceSupports('alarm_water')) {
 				const invert = device.getSetting('invert_alarm') == null ? false : device.getSetting('invert_alarm')
-				if (invert === true){
+				if (invert === true) {
 					device.setCapabilityValue('alarm_water', !state.water)
 				} else {
 					device.setCapabilityValue('alarm_water', state.water)
@@ -441,7 +441,7 @@ class deCONZ extends Homey.App {
 		if (state.hasOwnProperty('buttonevent') && !initial) {
 			device.fireEvent(state.buttonevent, state)
 		}
-		
+
 		if (state.hasOwnProperty('buttonevent') && state.hasOwnProperty('gesture')) {
 			device.fireEvent(state.buttonevent, initial, state.gesture, state)
 		}
@@ -449,7 +449,7 @@ class deCONZ extends Homey.App {
 		if (state.hasOwnProperty('open')) {
 			if (deviceSupports('alarm_contact')) {
 				const invert = device.getSetting('invert_alarm') == null ? false : device.getSetting('invert_alarm')
-				if (invert === true){
+				if (invert === true) {
 					device.setCapabilityValue('alarm_contact', !state.open)
 				} else {
 					device.setCapabilityValue('alarm_contact', state.open)
@@ -460,7 +460,7 @@ class deCONZ extends Homey.App {
 		// todo: check, should be okay
 		if (state.hasOwnProperty('colormode')) {
 			if (deviceSupports('light_mode')) {
-				device.setCapabilityValue('light_mode', (state.colormode == 'xy' || state.colormode == 'hs') ? 'color': 'temperature')
+				device.setCapabilityValue('light_mode', (state.colormode == 'xy' || state.colormode == 'hs') ? 'color' : 'temperature')
 			}
 		}
 
@@ -557,7 +557,7 @@ class deCONZ extends Homey.App {
 
 	updateConfig(device, config, initial = false) {
 
-		this.log('config update for', device.getSetting('id'), device.getName()/*, config*/)
+		// this.log('config update for', device.getSetting('id'), device.getName()/*, config*/)
 
 		let deviceСapabilities = device.getCapabilities()
 
@@ -588,25 +588,38 @@ class deCONZ extends Homey.App {
 
 	updateDeviceInfo(device, data) {
 
-		this.log('device info update for', device.getSetting('id'), device.getName()/*, data*/)
+		// this.log('device info update for', device.getSetting('id'), device.getName()/*, data*/)
 
-		if (data.hasOwnProperty('modelid') && device.getSetting('modelid') != null) {
+		let modelId = device.getSetting('modelid')
+		if (data.hasOwnProperty('modelid') && modelId != null && modelId != data.modelid) {
 			device.setSettings({ modelid: data.modelid });
 		}
 
-		if (data.hasOwnProperty('manufacturername') && device.getSetting('manufacturername') != null) {
+		let manufacturername = device.getSetting('manufacturername')
+		if (data.hasOwnProperty('manufacturername') && manufacturername != null && manufacturername != data.manufacturername) {
 			device.setSettings({ manufacturername: data.manufacturername });
 		}
 
-		if (data.hasOwnProperty('swversion') && device.getSetting('swversion') != null) {
-			device.setSettings({ swversion: data.swversion });
+		let swversion = device.getSetting('swversion')
+		if (data.hasOwnProperty('swversion') && swversion != null && swversion != data.swversion) {
+			if (typeof data.swversion !== 'string') {
+				device.setSettings({ swversion: JSON.stringify(data.swversion) });
+			} else {
+				device.setSettings({ swversion: data.swversion });
+			}
 		}
 
 		if (device.getSetting('ids') != null && device.getSetting('id') != null) {
+			if (typeof device.getSetting('ids') !== 'string') {
+				device.setSettings({ ids: null });
+			}
 			device.setSettings({ ids: JSON.stringify(device.getSetting('id')) });
 		}
 
 		if (device.getSetting('sensorids') != null && device.getSetting('sensors') != null) {
+			if (typeof device.getSetting('sensorids') !== 'string') {
+				device.setSettings({ sensorids: null });
+			}
 			device.setSettings({ sensorids: JSON.stringify(device.getSetting('sensors')) });
 		}
 
@@ -614,8 +627,13 @@ class deCONZ extends Homey.App {
 			device.setSettings({ mac: data.uniqueid.split('-')[0] });
 		}
 
-		if (data.hasOwnProperty('lastseen') && device.getSetting('lastseen') != null) {
-			device.setSettings({ lastseen: data.lastseen });
+		let lastseen = device.getSetting('lastseen')
+		if (data.hasOwnProperty('lastseen') && lastseen != null && lastseen != data.lastseen) {
+			if (typeof data.lastseen !== 'string') {
+				device.setSettings({ lastseen: JSON.stringify(data.lastseen) });
+			} else {
+				device.setSettings({ lastseen: data.lastseen });
+			}
 		}
 	}
 
@@ -641,51 +659,50 @@ class deCONZ extends Homey.App {
 		let updateAllDevicesManuallyAction = new Homey.FlowCardAction('update_all_devices');
 		updateAllDevicesManuallyAction
 			.register()
-			.registerRunListener(async ( args, state ) => {
+			.registerRunListener(async (args, state) => {
 				return new Promise((resolve) => {
-					try{
+					try {
 						this.log('update all devices manually')
 						this.setInitialStates()
-					} catch(error){
+					} catch (error) {
 						return this.error(error);
 					}
 				});
 			});
 
-			let updateIpAddressAction = new Homey.FlowCardAction('update_ip_address');
-			updateIpAddressAction
-				.register()
-				.registerRunListener(async ( args, state ) => {
-					return new Promise((resolve) => {
-						try{
-							this.log('update ip address')
-							this.getDiscoveryData((error, response) => {
-								if (error) {
-									this.log(error)
-									return this.error(error)
-								}
+		let updateIpAddressAction = new Homey.FlowCardAction('update_ip_address');
+		updateIpAddressAction
+			.register()
+			.registerRunListener(async (args, state) => {
+				return new Promise((resolve) => {
+					try {
+						this.log('update ip address')
+						this.getDiscoveryData((error, response) => {
+							if (error) {
+								this.log(error)
+								return this.error(error)
+							}
 
-								if( Object.keys(response).length > 0 && response.internalipaddress && this.host !== response.internalipaddress)
-								{
-									this.log('ip address has changed', this.host, response.internalipaddress)
-									Homey.set('host', response.internalipaddress, (err, settings) => {
-										if (err) this.error(err)
-									})
-									this.startWebSocketConnection()
-									this.log('ip address updated successfully')
-								}else{
-									this.log('no deconz changed gateway found')
-								}
-							})
-						} catch(error){
-							return this.error(error);
-						}
-					});
+							if (Object.keys(response).length > 0 && response.internalipaddress && this.host !== response.internalipaddress) {
+								this.log('ip address has changed', this.host, response.internalipaddress)
+								Homey.set('host', response.internalipaddress, (err, settings) => {
+									if (err) this.error(err)
+								})
+								this.startWebSocketConnection()
+								this.log('ip address updated successfully')
+							} else {
+								this.log('no deconz changed gateway found')
+							}
+						})
+					} catch (error) {
+						return this.error(error);
+					}
 				});
-		
+			});
+
 	}
 
-	initializeTriggers(){
+	initializeTriggers() {
 		this.deviceReachableTrigger = new Homey.FlowCardTrigger('device_on_reachable').register();
 		this.deviceUnreachableTrigger = new Homey.FlowCardTrigger('device_on_unreachable').register();
 	}

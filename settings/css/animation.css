@@ -1,0 +1,81 @@
+.glass {
+    backdrop-filter: blur(3px);
+    background-color:rgba(255, 255, 255,0.75);
+}
+
+.glass-dark {
+    backdrop-filter: blur(6px);
+    background-color:rgba(47, 62, 73, 0.25);
+}
+
+.transparent {
+    background-color: transparent;
+}
+
+.homeyAnimation:before {
+    display: block;
+    content: "";
+    width: 250vw;
+    height: 250vw;
+    z-index: 0;
+    background: url(../images/homey.svg) no-repeat 50%;
+    background-size: contain;
+    -webkit-animation: rotate 20s linear infinite;
+    animation: rotate 20s linear infinite;
+    /*background-attachment: fixed;*/
+}
+
+.homeyAnimation {
+    overflow: hidden;
+    position: absolute;
+    left: -55vw;
+    top: -40vw;
+    /*bottom: 0;*/
+    right: 0;
+}
+
+.rotate {
+	-webkit-animation: rotate 2s linear infinite;
+	animation: rotate 2s linear infinite
+}
+
+.counterrotate {
+	-webkit-animation: counterrotate 2s linear infinite;
+	animation: counterrotate 2s linear infinite
+}
+
+@-webkit-keyframes rotate {
+	0% {
+		transform: rotate(0deg)
+	}
+	to {
+		transform: rotate(1turn)
+	}
+}
+
+@-webkit-keyframes counterrotate {
+	0% {
+		transform: rotate(1turn)
+	}
+	to {
+		transform: rotate(0deg)
+	}
+}
+
+@keyframes rotate {
+	0% {
+		transform: rotate(0deg)
+	}
+	to {
+		transform: rotate(1turn)
+	}
+}
+
+@keyframes counterrotate {
+	0% {
+		transform: rotate(1turn)
+	}
+	to {
+		transform: rotate(0deg)
+	}
+}

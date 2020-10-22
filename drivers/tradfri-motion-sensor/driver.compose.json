@@ -26,6 +26,11 @@
       "template": "add_devices"
     }
   ],
+  "repair": [
+    {
+      "id": "repair"
+    }
+  ],
   "energy": {
     "batteries": [
       "CR2032",

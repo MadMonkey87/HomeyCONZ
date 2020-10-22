@@ -116,7 +116,7 @@ class Driver extends Homey.Driver {
 
 					}
 					let capabilities = (matchTable[light.type] || ['onoff']).concat(additionalCapabilities)
-					
+
 					return {
 						name: light.name,
 						data: {
@@ -150,32 +150,63 @@ class Driver extends Homey.Driver {
 			let knownMacAddresses = []
 
 			let filtered = sensorsEntries.filter(entry => {
-					let sensor = entry[1]
-					if (!condition(sensor)) {
-						return false
-					}
-					let mac = sensor.uniqueid.split('-')[0]
-					let isNew = !knownMacAddresses.includes(mac)
-					knownMacAddresses.push(mac)
-					return isNew
-				}).map((entry, _index, _array) => {
+				let sensor = entry[1]
+				if (!condition(sensor)) {
+					return false
+				}
+				let mac = sensor.uniqueid.split('-')[0]
+				let isNew = !knownMacAddresses.includes(mac)
+				knownMacAddresses.push(mac)
+				return isNew
+			}).map((entry, _index, _array) => {
 
-					const sensor = entry[1]
-					const mac = sensor.uniqueid.split('-')[0]
+				const sensor = entry[1]
+				const mac = sensor.uniqueid.split('-')[0]
 
-					return {
-						name: sensor.name,
-						data: {
-							id: mac,
-							model_id: sensor.model_id
-						},
-						settings: {
-							id: sensorsEntries.filter(d => d[1].uniqueid.startsWith(mac)).map(d => d[0])
+				return {
+					name: sensor.name,
+					data: {
+						id: mac,
+						model_id: sensor.model_id
+					},
+					settings: {
+						id: sensorsEntries.filter(d => d[1].uniqueid.startsWith(mac)).map(d => d[0])
 					}
 
 				}
 			})
 			callback(null, filtered)
+		})
+	}
+
+	onRepair(socket, device) {
+		socket.on('repair', (data, callback) => {
+			device.repair(callback)
+		})
+		socket.on('ignore', (data, callback) => {
+			device.setAvailable()
+			callback(null, 'Success!')
+		})
+		socket.on('ignorePermanent', (data, callback) => {
+			device.setAvailable()
+			device.setSettings({ 'ignore-reachable': true })
+			device.setInitialState()
+			callback(null, 'Success!')
+		})
+		socket.on('getDeviceInfo', (data, callback) => {
+			this.log('get device info for the repair view')
+			callback(null, {
+				device: device.getName(),
+				model: device.getSetting('modelid'),
+				apiId: device.getSetting('ids'),
+				mac: device.getSetting('mac'),
+				ignoreReachable: device.getSetting('ignore-reachable'),
+				lastSeen: device.getSetting('lastseen'),
+				lastUpdate: device.getSetting('lastUpdated'),
+			})
+		})
+		socket.on('repair', (data, callback) => {
+			device.repair(callback)
 		})
 	}
 

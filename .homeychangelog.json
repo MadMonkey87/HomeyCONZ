@@ -70,5 +70,14 @@
   },
   "1.13.0":{
     "en": "Maintenance actions to update or repair a device"
+  },
+  "1.13.1":{
+    "en": "Small fixes and optimizations"
+  },
+  "1.13.2":{
+    "en": "Small fixes and optimizations"
+  },
+  "1.14.1":{
+    "en": "New repair mode that is better integrated into the homey environment, fancy UI"
   }
 }
