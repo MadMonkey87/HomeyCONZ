@@ -12,12 +12,15 @@
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/animation.css">
 </head>
 
 <body>
 
+    <div class="homeyAnimation"></div>
+
     <nav>
-        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <div class="nav nav-tabs glass-dark" id="nav-tab" role="tablist">
             <a class="nav-item nav-link active" id="nav-connection-tab" data-toggle="tab" href="#nav-connection"
                 role="tab" aria-controls="nav-connection" aria-selected="true">Connection</a>
             <!--<a class="nav-item nav-link" id="nav-advanced-tab" data-toggle="tab" href="#nav-advanced" role="tab" aria-controls="nav-advanced" aria-selected="false">Advanced</a>-->
@@ -29,8 +32,9 @@
     </nav>
     <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade show active" id="nav-connection" role="tabpanel" aria-labelledby="nav-connection-tab">
+
             <!--connection tab begin-->
-            <div class="card" style="margin-top: 10px;">
+            <div class="card glass" style="margin-top: 10px;">
                 <div class="card-body">
 
                     <div class="alert alert-danger" role="alert" id="apiError" style="display: none">
@@ -126,8 +130,9 @@
         </div>
         <!--<div class="tab-pane fade" id="nav-advanced" role="tabpanel" aria-labelledby="nav-advanced-tab">Advanced</div>-->
         <div class="tab-pane fade" id="nav-support" role="tabpanel" aria-labelledby="nav-support-tab">
+
             <!--support tab begin-->
-            <div class="card" style="margin-top: 10px;">
+            <div class="card glass" style="margin-top: 10px;">
                 <div class="card-body">
                     <h5 class="card-title">Request device support</h5>
                     <p class="card-text">Do you have a device that is not yet supported? Or is your device not supported
@@ -150,12 +155,13 @@
             <!--support tab end-->
         </div>
         <div class="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
+
             <!--about tab begin-->
-            <div class="card" style="margin-top: 10px;">
+            <div class="card glass" style="margin-top: 10px;">
                 <img class="card-img-top" src="images/conbee.svg"
                     style="padding-left: 15px; padding-right: 15px; padding-top: 15px;">
                 <div class="card-body">
-                    <h5 class="card-title">deCONZ for Homey v1.14.0</h5>
+                    <h5 class="card-title">deCONZ for Homey v1.14.1</h5>
                     <p class="card-text">Thank you for using this app! Please feel free to discuss in the <a
                             href="https://homey.app/en-GB/app/de.dresden-elektronik.deconz/deCONZ/">community</a> or
                         report bugs or request device support at <a
@@ -164,52 +170,52 @@
                 </div>
             </div>
             </br>
-            <div class="card">
+            <div class="card glass">
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
+                        <li class="list-group-item transparent">
                             <div class="form-group">
                                 <small class="form-text text-muted">gateway</small>
                                 <label id="infoGateway" style="font-weight: bold; font-size: 18px;">-</label>
                             </div>
                         </li>
-                        <li class="list-group-item">
+                        <li class="list-group-item transparent">
                             <div class="form-group">
                                 <small class="form-text text-muted">live updates</small>
                                 <label id="infoSocketConnection" style="font-weight: bold; font-size: 18px;">-</label>
                             </div>
                         </li>
-                        <li class="list-group-item">
+                        <li class="list-group-item transparent">
                             <div class="form-group">
                                 <small class="form-text text-muted">version</small>
                                 <label id="infoVersion" style="font-weight: bold; font-size: 18px;">-</label>
                             </div>
                         </li>
-                        <li class="list-group-item">
+                        <li class="list-group-item transparent">
                             <div class="form-group">
                                 <small class="form-text text-muted">MAC address</small>
                                 <label id="infoMac" style="font-weight: bold; font-size: 18px;">-</label>
                             </div>
                         </li>
-                        <li class="list-group-item">
+                        <li class="list-group-item transparent">
                             <div class="form-group">
                                 <small class="form-text text-muted">device</small>
                                 <label id="infoDevice" style="font-weight: bold; font-size: 18px;">-</label>
                             </div>
                         </li>
-                        <li class="list-group-item">
+                        <li class="list-group-item transparent">
                             <div class="form-group">
                                 <small class="form-text text-muted">firmware</small>
                                 <label id="infoFirmware" style="font-weight: bold; font-size: 18px;">-</label>
                             </div>
                         </li>
-                        <li class="list-group-item">
+                        <li class="list-group-item transparent">
                             <div class="form-group">
                                 <small class="form-text text-muted">ZigBee pan id</small>
                                 <label id="infoPanId" style="font-weight: bold; font-size: 18px;">-</label>
                             </div>
                         </li>
-                        <li class="list-group-item">
+                        <li class="list-group-item transparent">
                             <div class="form-group">
                                 <small class="form-text text-muted">ZigBee channel</small>
                                 <label id="infoChannel" style="font-weight: bold; font-size: 18px;">-</label>
@@ -219,6 +225,7 @@
                 </div>
             </div>
             </br>
+
             <!--about tab end-->
         </div>
     </div>

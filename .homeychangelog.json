@@ -77,7 +77,7 @@
   "1.13.2":{
     "en": "Small fixes and optimizations"
   },
-  "1.14.0":{
-    "en": "New repair mode that is better integrated into the homey environment"
+  "1.14.1":{
+    "en": "New repair mode that is better integrated into the homey environment, fancy UI"
   }
 }

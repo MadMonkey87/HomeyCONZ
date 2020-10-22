@@ -3891,7 +3891,8 @@ input[type="button"].btn-block {
 }
 
 .nav-tabs {
-  border-bottom: 1px solid #dee2e6;
+  border: 1px solid rgb(47, 62, 73);
+  border-radius: 4px;
 }
 
 .nav-tabs .nav-item {
@@ -3899,9 +3900,10 @@ input[type="button"].btn-block {
 }
 
 .nav-tabs .nav-link {
-  border: 1px solid transparent;
-  border-top-left-radius: 0.25rem;
-  border-top-right-radius: 0.25rem;
+  /*border: 1px solid transparent;
+  border-bottom-left-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;*/
+  background-color: rgba(255,255,255, 0.35);
 }
 
 .nav-tabs .nav-link:hover, .nav-tabs .nav-link:focus {
@@ -3916,9 +3918,9 @@ input[type="button"].btn-block {
 
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-item.show .nav-link {
-  color: #495057;
-  background-color: #fff;
-  border-color: #dee2e6 #dee2e6 #fff;
+  color: #fff;
+  background-color: rgba(47, 62, 73, 0.8);
+  border-color: rgb(47, 62, 73);
 }
 
 .nav-tabs .dropdown-menu {
