@@ -23,6 +23,10 @@ class GenericPlug extends Light {
 		}
 		super.setCapabilityValue(name, value)
 	}
+
+	fireEvent(event, state) {
+		// ignore
+	}
 	
 }
 
