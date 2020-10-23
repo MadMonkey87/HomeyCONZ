@@ -79,5 +79,8 @@
   },
   "1.14.1":{
     "en": "New repair mode that is better integrated into the homey environment, fancy UI"
+  },
+  "1.14.2":{
+    "en": "Updated/removed packages"
   }
 }
