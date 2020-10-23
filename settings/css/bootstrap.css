@@ -9038,3 +9038,34 @@ a.text-dark:hover, a.text-dark:focus {
 .input-group-append .btn{
   height: 38px !important;
 }
+
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+  background-color: rgb(47, 62, 73) !important;
+  border-color: rgb(47, 62, 73);
+  border-width: 1px;
+  border-style: solid;
+}
+
+.custom-checkbox .custom-control-input:checked:focus ~ .custom-control-label::before {
+  box-shadow: 0 0 0 1px rgb(47, 62, 73), 0 0 0 0.2rem rgba(5, 94, 191, 0.5)
+}
+.custom-checkbox .custom-control-input:focus ~ .custom-control-label::before {
+  box-shadow: 0 0 0 1px rgb(47, 62, 73), 0 0 0 0.2rem rgba(5, 94, 191, 0.5)
+}
+.custom-checkbox .custom-control-input:active ~ .custom-control-label::before {
+  background-color: rgb(108,117,125); 
+
+}
+
+.custom-checkbox .custom-control-label::before {
+  border-color: rgb(47, 62, 73);
+  border-width: 1px;
+  border-style: solid;
+  width: 18px !important;
+  height: 18px !important;
+}
+
+.custom-checkbox .custom-control-label::after {
+  width: 18px !important;
+  height: 18px !important;
+}
