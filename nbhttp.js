@@ -1,6 +1,5 @@
 const http = require('http')
 const https = require('https')
-const urlParser = require('url')
 
 module.exports.http = {}
 module.exports.https = {}
