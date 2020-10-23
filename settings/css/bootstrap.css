@@ -3895,10 +3895,6 @@ input[type="button"].btn-block {
   border-radius: 4px;
 }
 
-.nav-tabs .nav-item {
-  margin-bottom: -1px;
-}
-
 .nav-tabs .nav-link {
   /*border: 1px solid transparent;
   border-bottom-left-radius: 0.25rem;
@@ -3907,7 +3903,7 @@ input[type="button"].btn-block {
 }
 
 .nav-tabs .nav-link:hover, .nav-tabs .nav-link:focus {
-  border-color: #e9ecef #e9ecef #dee2e6;
+  border-color: rgba(47, 62, 73, 0.65) !important;
 }
 
 .nav-tabs .nav-link.disabled {
@@ -3919,8 +3915,10 @@ input[type="button"].btn-block {
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-item.show .nav-link {
   color: #fff;
-  background-color: rgba(47, 62, 73, 0.8);
-  border-color: rgb(47, 62, 73);
+  background-color: rgba(47, 62, 73, 0.65);
+  border-color: rgba(47, 62, 73, 0.65);
+  border-style: solid;
+  margin-top: -1px;
 }
 
 .nav-tabs .dropdown-menu {
@@ -9073,4 +9071,8 @@ a.text-dark:hover, a.text-dark:focus {
 .card.glass{
   margin-left: 5px;
   margin-right: 5px;
+}
+
+input[type="checkbox"]:not(.hy-nostyle), .hy-input-checkbox{
+  background-image: none !important;
 }

@@ -8,6 +8,9 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
@@ -20,12 +23,14 @@
     <div class="homeyAnimation"></div>
 
     <nav>
-        <div class="nav nav-tabs glass-dark" id="nav-tab" role="tablist">
+        <div class="nav nav-tabs glass-dark" id="nav-tab" role="tablist"
+            style="margin-left: 5px; margin-top: 5px; margin-right: 5px;">
             <a class="nav-item nav-link active" id="nav-connection-tab" data-toggle="tab" href="#nav-connection"
-                role="tab" aria-controls="nav-connection" aria-selected="true">Connection</a>
+                role="tab" aria-controls="nav-connection" aria-selected="true"
+                style="border-top-left-radius: 3px; border-bottom-left-radius: 3px;">Connection</a>
             <!--<a class="nav-item nav-link" id="nav-advanced-tab" data-toggle="tab" href="#nav-advanced" role="tab" aria-controls="nav-advanced" aria-selected="false">Advanced</a>-->
             <a class="nav-item nav-link" id="nav-support-tab" data-toggle="tab" href="#nav-support" role="tab"
-                aria-controls="nav-support" aria-selected="false">Support</a>
+                aria-controls="nav-support" aria-selected="false">Advanced</a>
             <a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab"
                 aria-controls="nav-contact" aria-selected="false">About</a>
         </div>
@@ -135,17 +140,45 @@
 
             <div class="card glass" style="margin-top: 10px;">
                 <div class="card-body">
-                    <h5 class="card-title">Usage data</h5>
-                    <p class="card-text">Support the developement by allowing that the app periodically sends data to
-                        the developers to help improve and extend the app.</p>
-                    <p class="card-text" style="font-weight: bold;">All data is sent anonimized! Only the data shown
-                        bellow is sent</p>
+                    <h5 class="card-title">Auto-Repair Connection</h5>
+                    <p class="card-text">Depending on your network it might be that the address of DeConz changes.
+                        Enabling this option will automatically detect this and try to update your configuration
+                        automatically.</p>
+                    <p>Note: this only works if discovery is properly enabled in DeConz. For exmaple if you're using the
+                        docker image and haven't set the --net=host parameter this wont work.</p>
                     <div class="row col-9" style="max-width: 100%;">
                         <div class="col-sm">
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="sendUsageDataCheckbox" disabled>
-                                <label class="custom-control-label" for="sendUsageDataCheckbox"
-                                    id="sendUsageDataCheckboxLabel">Send usage data</label>
+                                <input type="checkbox" class="custom-control-input" id="autoRepairConnectionCheckbox">
+                                <label class="custom-control-label" for="autoRepairConnectionCheckbox">Auto-Repair
+                                    Connection</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card glass" style="margin-top: 10px;">
+                <div class="card-body">
+                    <h5 class="card-title">Polling</h5>
+                    <p class="card-text">Most of the events are received in real time from DeConz. To improve your
+                        expirience it is recommended to enable the additional polling which will help in some
+                        situations, i.e newly added devices or readings that do not update very often.</p>
+                    <div class="row col-9">
+                        <div class="col-sm">
+                            <div class="dropdown dropup">
+                                <button class="btn btn-primary dropdown-toggle" type="button" id="pollingDropDown"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    every 15 min
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="pollingDropDown">
+                                    <a class="dropdown-item" href="#">every 5 minutes</a>
+                                    <a class="dropdown-item" href="#">every 15 min (recommended)</a>
+                                    <a class="dropdown-item" href="#">every hour</a>
+                                    <a class="dropdown-item" href="#">every day</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">disabled</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -159,21 +192,41 @@
                     <p class="card-text">Do you have a device that is not yet supported? Or is your device not supported
                         properly? Please create a ticket in <a
                             href="https://github.com/madmonkey87/HomeyCONZ/issues">github</a>. If asked please provide
-                        the following details:</p>
+                        the data that you can optain by pressing the button bellow</p>
                     <div class="row col-9">
                         <div class="col-sm">
                             <div class="btn-group d-flex" role="group">
-                                <button type="button" class="btn btn-primary" id="loadButton">Reload</button>
+                                <!--<button type="button" class="btn btn-primary" id="loadButton">Reload</button>-->
                                 <button type="button" class="btn btn-primary" id="copyButton">Copy to clipboard</button>
                             </div>
                         </div>
                     </div>
                     <p id="supportDetails"
-                        style="font-style:italic; padding: 15px; background: #6c757d; color: white; border-radius: 0.25rem; margin-top: 15px">
+                        style="font-style:italic; padding: 15px; background: #6c757d; color: white; border-radius: 0.25rem; margin-top: 15px; display: none">
                     </p>
                 </div>
 
             </div>
+
+            <div class="card glass" style="margin-top: 10px;">
+                <div class="card-body">
+                    <h5 class="card-title">Usage data</h5>
+                    <p class="card-text">Support the developement by allowing that the app periodically sends data to
+                        the developers to help improve and extend the app.</p>
+                    <p class="card-text" style="font-weight: bold;">All data is sent anonymized and will only be used
+                        for developement purposes. No personal data gets sent (we don't have any personal data)</p>
+                    <div class="row col-9" style="max-width: 100%;">
+                        <div class="col-sm">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="sendUsageDataCheckbox">
+                                <label class="custom-control-label" for="sendUsageDataCheckbox"
+                                    id="sendUsageDataCheckboxLabel">Send usage data</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!--support tab end-->
         </div>
         <div class="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
@@ -273,8 +326,9 @@
             const apiError = document.getElementById('apiError')
             const title = document.getElementsByClassName('ApiErrorShow')[0]
             const copyButton = document.getElementById('copyButton')
-            const loadButton = document.getElementById('loadButton')
+            // const loadButton = document.getElementById('loadButton')
             const sendUsageDataCheckbox = document.getElementById('sendUsageDataCheckbox')
+            const autoRepairConnectionCheckbox = document.getElementById('autoRepairConnectionCheckbox')
 
             function showError(alert, message) {
                 apiError.style.display = 'grid'
@@ -484,12 +538,19 @@
                 document.body.removeChild(el)
             })
 
-            loadButton.addEventListener('click', (e) => {
+            /*loadButton.addEventListener('click', (e) => {
                 updateDetails()
-            })
+            })*/
 
             sendUsageDataCheckbox.addEventListener('click', (e) => {
                 Homey.set('sendUsageData', sendUsageDataCheckbox.checked, (err, settings) => {
+                    if (err) return Homey.alert(err)
+                })
+                loadSettings()
+            })
+
+            autoRepairConnectionCheckbox.addEventListener('click', (e) => {
+                Homey.set('autoRepairConnection', autoRepairConnectionCheckbox.checked, (err, settings) => {
                     if (err) return Homey.alert(err)
                 })
                 loadSettings()
@@ -536,12 +597,18 @@
                 Homey.get('sendUsageData', (err, sendUsageData) => {
                     if (err) return Homey.alert(err)
 
-                    sendUsageDataCheckbox.checked = sendUsageData === true
-                    if (sendUsageData === true) {
+                    sendUsageDataCheckbox.checked = sendUsageData !== false
+                    if (sendUsageData !== false) {
                         document.getElementById('sendUsageDataCheckboxLabel').innerHTML = 'Send usage data - Thank you 😍!'
                     } else {
                         document.getElementById('sendUsageDataCheckboxLabel').innerHTML = 'Send usage data'
                     }
+                })
+
+                Homey.get('autoRepairConnection', (err, autoRepairConnection) => {
+                    if (err) return Homey.alert(err)
+
+                    autoRepairConnectionCheckbox.checked = autoRepairConnection !== false
                 })
             }
 
