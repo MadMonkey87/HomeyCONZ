@@ -22,6 +22,11 @@ class deCONZ extends Homey.App {
 		this.port = Homey.ManagerSettings.get('port')
 		this.apikey = Homey.ManagerSettings.get('apikey')
 		this.wsPort = Homey.ManagerSettings.get('wsport')
+		this.sendUsageData = Homey.ManagerSettings.get('sendUsageData')
+		if (this.sendUsageData !== false && this.sendUsageData !== true) {
+			Homey.ManagerSettings.setSettings({ sendUsageData: true })
+			this.sendUsageData = true
+		}
 
 		Homey.ManagerSettings.on('set', this.onSettingsChanged.bind(this))
 
@@ -61,6 +66,9 @@ class deCONZ extends Homey.App {
 		this.port = Homey.ManagerSettings.get('port')
 		this.apikey = Homey.ManagerSettings.get('apikey')
 		this.wsPort = Homey.ManagerSettings.get('wsport')
+
+		this.sendUsageData = Homey.ManagerSettings.get('sendUsageData')
+
 		if (!!this.host && !!this.port && !!this.apikey && !!this.wsPort) {
 			this.startWebSocketConnection()
 		}

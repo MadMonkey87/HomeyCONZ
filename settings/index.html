@@ -133,21 +133,24 @@
 
             <!--support tab begin-->
 
-            <!--<div class="card glass" style="margin-top: 10px;">
+            <div class="card glass" style="margin-top: 10px;">
                 <div class="card-body">
                     <h5 class="card-title">Usage data</h5>
-                    <p class="card-text">Support the developement by allowing that the app periodically sends data to the developers to help improve and extend the app.</p>
-                    <p class="card-text" style="font-weight: bold;">All data is sent anonimized! Only the data shown bellow is sent</p>
+                    <p class="card-text">Support the developement by allowing that the app periodically sends data to
+                        the developers to help improve and extend the app.</p>
+                    <p class="card-text" style="font-weight: bold;">All data is sent anonimized! Only the data shown
+                        bellow is sent</p>
                     <div class="row col-9" style="max-width: 100%;">
                         <div class="col-sm">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="sendUsageDataCheckbox">
-                                    <label class="custom-control-label" for="sendUsageDataCheckbox">Send usage data - Thank you 😍!</label>
-                                </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="sendUsageDataCheckbox" disabled>
+                                <label class="custom-control-label" for="sendUsageDataCheckbox"
+                                    id="sendUsageDataCheckboxLabel">Send usage data</label>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>-->
+            </div>
 
             <div class="card glass" style="margin-top: 10px;">
 
@@ -271,6 +274,7 @@
             const title = document.getElementsByClassName('ApiErrorShow')[0]
             const copyButton = document.getElementById('copyButton')
             const loadButton = document.getElementById('loadButton')
+            const sendUsageDataCheckbox = document.getElementById('sendUsageDataCheckbox')
 
             function showError(alert, message) {
                 apiError.style.display = 'grid'
@@ -484,6 +488,13 @@
                 updateDetails()
             })
 
+            sendUsageDataCheckbox.addEventListener('click', (e) => {
+                Homey.set('sendUsageData', sendUsageDataCheckbox.checked, (err, settings) => {
+                    if (err) return Homey.alert(err)
+                })
+                loadSettings()
+            })
+
             function saveAll() {
                 Homey.set('host', ip.value, (err, settings) => {
                     if (err) return Homey.alert(err)
@@ -521,13 +532,25 @@
                     if (err) return Homey.alert(err)
                     apiKey.value = apikey
                 })
+
+                Homey.get('sendUsageData', (err, sendUsageData) => {
+                    if (err) return Homey.alert(err)
+
+                    sendUsageDataCheckbox.checked = sendUsageData === true
+                    if (sendUsageData === true) {
+                        document.getElementById('sendUsageDataCheckboxLabel').innerHTML = 'Send usage data - Thank you 😍!'
+                    } else {
+                        document.getElementById('sendUsageDataCheckboxLabel').innerHTML = 'Send usage data'
+                    }
+                })
             }
 
             loadSettings()
 
+            setTimeout(function () { updateDetails() }, 1000);
+
             Homey.ready()
 
-            setTimeout(function () { updateDetails() }, 1000);
         }
 
     </script>

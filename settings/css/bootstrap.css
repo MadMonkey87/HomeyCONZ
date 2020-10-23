@@ -9069,3 +9069,8 @@ a.text-dark:hover, a.text-dark:focus {
   width: 18px !important;
   height: 18px !important;
 }
+
+.card.glass{
+  margin-left: 5px;
+  margin-right: 5px;
+}
