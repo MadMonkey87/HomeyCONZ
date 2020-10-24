@@ -58,10 +58,10 @@ class deCONZ extends Homey.App {
 		}, 15 * 60 * 1000)
 	}
 
-	startSendUsageDataUpdate(){
-		setInterval(() => {
+	startSendUsageDataUpdate() {
+		/*setInterval(() => {
 			// todo
-		}, 5000)
+		}, 5000)*/
 	}
 
 	onSettingsChanged(modifiedKey) {
@@ -77,7 +77,7 @@ class deCONZ extends Homey.App {
 		if (this.sendUsageData !== false && this.sendUsageData !== true) {
 			this.sendUsageData = true
 		}
-		
+
 		if (!!this.host && !!this.port && !!this.apikey && !!this.wsPort) {
 			this.startWebSocketConnection()
 		}
@@ -376,6 +376,49 @@ class deCONZ extends Homey.App {
 
 		// this.log('state update for', device.getSetting('id'), device.getName()/*, state*/)
 
+		if (state.hasOwnProperty('buttonevent') && !initial) {
+			device.fireEvent(state.buttonevent, state)
+		}
+
+		if (state.hasOwnProperty('buttonevent') && state.hasOwnProperty('gesture')) {
+			device.fireEvent(state.buttonevent, initial, state.gesture, state)
+		}
+
+		if (state.hasOwnProperty('open')) {
+			if (deviceSupports('alarm_contact')) {
+				const invert = device.getSetting('invert_alarm') == null ? false : device.getSetting('invert_alarm')
+				if (invert === true) {
+					device.setCapabilityValue('alarm_contact', !state.open)
+				} else {
+					device.setCapabilityValue('alarm_contact', state.open)
+				}
+			}
+		}
+
+		if (state.hasOwnProperty('presence')) {
+			if (deviceSupports('alarm_motion')) {
+				device.setCapabilityValue('alarm_motion', state.presence)
+			}
+		}
+
+		if (state.hasOwnProperty('vibration')) {
+			if (deviceSupports('vibration_alarm')) {
+				device.setCapabilityValue('vibration_alarm', state.vibration)
+			}
+		}
+
+		if (state.hasOwnProperty('vibrationstrength')) {
+			if (deviceSupports('vibration_strength')) {
+				device.setCapabilityValue('vibration_strength', state.vibrationstrength)
+			}
+		}
+
+		if (state.hasOwnProperty('tiltangle')) {
+			if (deviceSupports('tilt_angle')) {
+				device.setCapabilityValue('tilt_angle', state.tiltangle)
+			}
+		}
+
 		if (state.hasOwnProperty('on')) {
 			if (deviceSupports('onoff')) {
 				device.setCapabilityValue('onoff', state.on)
@@ -400,33 +443,11 @@ class deCONZ extends Homey.App {
 			}
 		}
 
-		if (state.hasOwnProperty('presence')) {
-			if (deviceSupports('alarm_motion')) {
-				device.setCapabilityValue('alarm_motion', state.presence)
-			}
-		}
+
 
 		if (state.hasOwnProperty('bri')) {
 			if (deviceSupports('dim')) {
 				device.setCapabilityValue('dim', state.bri / 255)
-			}
-		}
-
-		if (state.hasOwnProperty('vibration')) {
-			if (deviceSupports('vibration_alarm')) {
-				device.setCapabilityValue('vibration_alarm', state.vibration)
-			}
-		}
-
-		if (state.hasOwnProperty('vibrationstrength')) {
-			if (deviceSupports('vibration_strength')) {
-				device.setCapabilityValue('vibration_strength', state.vibrationstrength)
-			}
-		}
-
-		if (state.hasOwnProperty('tiltangle')) {
-			if (deviceSupports('tilt_angle')) {
-				device.setCapabilityValue('tilt_angle', state.tiltangle)
 			}
 		}
 
@@ -451,25 +472,6 @@ class deCONZ extends Homey.App {
 					device.setCapabilityValue('alarm_water', !state.water)
 				} else {
 					device.setCapabilityValue('alarm_water', state.water)
-				}
-			}
-		}
-
-		if (state.hasOwnProperty('buttonevent') && !initial) {
-			device.fireEvent(state.buttonevent, state)
-		}
-
-		if (state.hasOwnProperty('buttonevent') && state.hasOwnProperty('gesture')) {
-			device.fireEvent(state.buttonevent, initial, state.gesture, state)
-		}
-
-		if (state.hasOwnProperty('open')) {
-			if (deviceSupports('alarm_contact')) {
-				const invert = device.getSetting('invert_alarm') == null ? false : device.getSetting('invert_alarm')
-				if (invert === true) {
-					device.setCapabilityValue('alarm_contact', !state.open)
-				} else {
-					device.setCapabilityValue('alarm_contact', state.open)
 				}
 			}
 		}
