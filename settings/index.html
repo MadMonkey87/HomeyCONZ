@@ -24,7 +24,7 @@
 
     <nav>
         <div class="nav nav-tabs glass-dark" id="nav-tab" role="tablist"
-            style="margin-left: 5px; margin-top: 5px; margin-right: 5px;">
+            style="margin-left: 5px; margin-top: 15px; margin-right: 5px;">
             <a class="nav-item nav-link active" id="nav-connection-tab" data-toggle="tab" href="#nav-connection"
                 role="tab" aria-controls="nav-connection" aria-selected="true"
                 style="border-top-left-radius: 3px; border-bottom-left-radius: 3px;">Connection</a>
@@ -140,6 +140,25 @@
 
             <div class="card glass" style="margin-top: 10px;">
                 <div class="card-body">
+                    <h5 class="card-title">Beta & Early Releases</h5>
+                    <p class="card-text">Before a new release of the app becomes available in the store it will be
+                        available a few days earlier already but you'll have to install it manually from the store. </p>
+                    <p>Hint: there is also an action card available that lets you check for new releases!</p>
+
+                    <div class="alert alert-info" role="alert">
+                        You have already installed the latest release <img src="images/ok.svg">
+                    </div>
+
+                    <div class="alert alert-success" role="alert">
+                        A new release is available!<br>
+                        <button type="button" class="btn btn-primary">Check Details</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="card glass" style="margin-top: 10px;">
+                <div class="card-body">
                     <h5 class="card-title">Auto-Repair Connection</h5>
                     <p class="card-text">Depending on your network it might be that the address of DeConz changes.
                         Enabling this option will automatically detect this and try to update your configuration
@@ -164,23 +183,26 @@
                     <p class="card-text">Most of the events are received in real time from DeConz. To improve your
                         expirience it is recommended to enable the additional polling which will help in some
                         situations, i.e newly added devices or readings that do not update very often.</p>
-
-                        <h1>todo: update manually button, notify about beta releases</h1>
                     <div class="row col-9">
                         <div class="col-sm">
-                            <div class="dropdown dropup">
-                                <button class="btn btn-primary dropdown-toggle" type="button" id="pollingDropDown"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    every 15 min
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="pollingDropDown">
-                                    <a class="dropdown-item" href="#">every 5 minutes</a>
-                                    <a class="dropdown-item" href="#">every 15 min (recommended)</a>
-                                    <a class="dropdown-item" href="#">every hour</a>
-                                    <a class="dropdown-item" href="#">every day</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">disabled</a>
+                            <div class="btn-group d-flex" role="group">
+                                <div class="dropdown dropup">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" id="pollingDropDown"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                        style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
+                                        every 15 min
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="pollingDropDown">
+                                        <a class="dropdown-item" href="#">every 5 minutes</a>
+                                        <a class="dropdown-item" href="#">every 15 min (recommended)</a>
+                                        <a class="dropdown-item" href="#">every hour</a>
+                                        <a class="dropdown-item" href="#">every day</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#">disabled</a>
+                                    </div>
                                 </div>
+                                <button type="button" class="btn btn-secondary" id="pollStateManuallyButton">Poll
+                                    Now</button>
                             </div>
                         </div>
                     </div>
