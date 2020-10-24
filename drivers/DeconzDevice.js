@@ -55,21 +55,30 @@ class DeconzDevice extends Homey.Device {
 							callback(null, { message: 'Could not repair the device as there is no new binding in DeConz (did you really remove the device and re-add it?)', error: true })
 							return Promise.resolve()
 						} else {
+
+							this.log('set setting to repair the device', JSON.stringify(candidateDevice.settings))
 							this.setSettings(candidateDevice.settings)
+							// for some weired reasons it seems the call above is not always successfully, therefore we simply try it again later
+							setTimeout(() => {
+								this.setSettings(candidateDevice.settings)
+	
+								if (this.getSetting('ids') != null && this.getSetting('id') != null) {
+									this.setSettings({ ids: JSON.stringify(this.getSetting('id')) })
+								}
+	
+								if (this.getSetting('sensorids') != null && this.getSetting('sensors') != null) {
+									this.setSettings({ sensorids: JSON.stringify(this.getSetting('sensors')) })
+								}
+	
+								this.log('re-register the device in the app')
+								this.registerInApp()
 
-							if (this.getSetting('ids') != null && this.getSetting('id') != null) {
-								this.setSettings({ ids: JSON.stringify(this.getSetting('id')) })
-							}
-
-							if (this.getSetting('sensorids') != null && this.getSetting('sensors') != null) {
-								this.setSettings({ sensorids: JSON.stringify(this.getSetting('sensors')) })
-							}
-
-							this.setInitialState()
-
-							this.log('repaired successfully ' + this.getName() + ' ' + mac + ' ' + this.getSetting('id'))
-							callback(null, { message: 'Successfully repaired the device!', error: false })
-							return Promise.resolve()
+								this.setInitialState()
+	
+								this.log('repaired successfully ' + this.getName() + ' ' + mac + ' ' + this.getSetting('id'))
+								callback(null, { message: 'Successfully repaired the device!', error: false })
+								return Promise.resolve()
+							}, 3000)
 						}
 					}
 				}

@@ -13,9 +13,6 @@ class Light extends DeconzDevice {
 		this.host = Homey.ManagerSettings.get('host')
 		this.apikey = Homey.ManagerSettings.get('apikey')
 		this.port = Homey.ManagerSettings.get('port')
-		this.id = this.getSetting('id')
-		this.address = `/lights/${this.id}/state`
-		this.sensors = this.getSetting('sensors')
 
 		this.isBlinds = this.getClass() === 'windowcoverings'
 
@@ -60,6 +57,10 @@ class Light extends DeconzDevice {
 	}
 
 	registerInApp() {
+		this.id = this.getSetting('id')
+		this.address = `/lights/${this.id}/state`
+		this.sensors = this.getSetting('sensors')
+		
 		Homey.app.devices.lights[this.id] = this
 		if (this.sensors) {
 			this.sensors.forEach(id => {
