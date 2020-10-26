@@ -145,6 +145,12 @@
                         available a few days earlier already but you'll have to install it manually from the store. </p>
                     <p>Hint: there is also an action card available that lets you check for new releases</p>
 
+                    <div class="row col-9">
+                        <div class="col-sm">
+                            <button type="button" class="btn btn-primary" id="copyButton">Check for Updates</button>
+                        </div>
+                    </div>
+
                     <div class="alert alert-info" role="alert">
                         You have already installed the latest release <img src="images/ok.svg">
                     </div>
@@ -157,7 +163,32 @@
                 </div>
             </div>-->
 
-            <!--<div class="card glass" style="margin-top: 10px;">
+            <div class="card glass" style="margin-top: 10px;">
+                <div class="card-body">
+                    <h5 class="card-title">DeCONZ updates</h5>
+                    <p class="card-text">Ensure that you always have an up-to-date deCONZ instance</p>
+                    <p>Hint: there is also an action card available that lets you check for new releases</p>
+
+                    <div class="row col-9">
+                        <div class="col-sm">
+                            <button type="button" class="btn btn-primary" id="checkDeConzUpdate">Check for
+                                Updates</button>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info" role="alert" style="display: none;" id="deConzUpdateNotAvailable">
+                        You have already installed the latest release <img src="images/ok.svg">
+                    </div>
+
+                    <div class="alert alert-success" role="alert" style="display: none;" id="deConzUpdateAvailable">
+                        <span id="deconzUpdateMessage"></span><br>
+                        <a class="btn btn-primary" id="deConzUpdateLink">Check Details</a>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="card glass" style="margin-top: 10px;">
                 <div class="card-body">
                     <h5 class="card-title">Auto-Repair Connection</h5>
                     <p class="card-text">Depending on your network it might be that the address of DeConz changes.
@@ -175,7 +206,7 @@
                         </div>
                     </div>
                 </div>
-            </div>-->
+            </div>
 
             <!--<div class="card glass" style="margin-top: 10px;">
                 <div class="card-body">
@@ -210,30 +241,7 @@
                 </div>
             </div>-->
 
-            <div class="card glass" style="margin-top: 10px;">
-
-                <div class="card-body">
-                    <h5 class="card-title">Request device support</h5>
-                    <p class="card-text">Do you have a device that is not yet supported? Or is your device not supported
-                        properly? Please create a ticket in <a
-                            href="https://github.com/madmonkey87/HomeyCONZ/issues">github</a>. If asked please provide
-                        the data that you can obtain by pressing the button bellow</p>
-                    <div class="row col-9">
-                        <div class="col-sm">
-                            <div class="btn-group d-flex" role="group">
-                                <!--<button type="button" class="btn btn-primary" id="loadButton">Reload</button>-->
-                                <button type="button" class="btn btn-primary" id="copyButton">Copy to clipboard</button>
-                            </div>
-                        </div>
-                    </div>
-                    <p id="supportDetails"
-                        style="font-style:italic; padding: 15px; background: #6c757d; color: white; border-radius: 0.25rem; margin-top: 15px;">
-                    </p>
-                </div>
-
-            </div>
-
-            <!--<div class="card glass" style="margin-top: 10px;">
+            <div class="card glass" style="margin-top: 10px; overflow: hidden; height: 800px;">
                 <div class="card-body">
                     <h5 class="card-title">Usage data</h5>
                     <p class="card-text">Support the developement by allowing that the app periodically sends data to
@@ -249,8 +257,19 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row col-9" style="margin-top: 10px">
+                        <div class="col-sm">
+                            <div class="btn-group d-flex" role="group">
+                                <!--<button type="button" class="btn btn-primary" id="loadButton">Reload</button>-->
+                                <button type="button" class="btn btn-primary" id="copyButton">Copy to clipboard</button>
+                            </div>
+                        </div>
+                    </div>
+                    <p id="supportDetails"
+                        style="font-style:italic; padding: 15px; background: #6c757d; color: white; border-radius: 0.25rem; margin-top: 15px; height: 100%;overflow-y: scroll">
+                    </p>
                 </div>
-            </div>-->
+            </div>
 
             <!--support tab end-->
         </div>
@@ -261,7 +280,7 @@
                 <img class="card-img-top" src="images/conbee.svg"
                     style="padding-left: 15px; padding-right: 15px; padding-top: 15px;">
                 <div class="card-body">
-                    <h5 class="card-title">deCONZ for Homey v1.14.2</h5>
+                    <h5 class="card-title">deCONZ for Homey v1.15.0</h5>
                     <p class="card-text">Thank you for using this app! Please feel free to discuss in the <a
                             style="text-decoration: underline;"
                             href="https://homey.app/en-GB/app/de.dresden-elektronik.deconz/deCONZ/">community</a> or
@@ -361,6 +380,7 @@
             // const loadButton = document.getElementById('loadButton')
             const sendUsageDataCheckbox = document.getElementById('sendUsageDataCheckbox')
             const autoRepairConnectionCheckbox = document.getElementById('autoRepairConnectionCheckbox')
+            const checkDeConzUpdate = document.getElementById('checkDeConzUpdate')
 
             function showError(alert, message) {
                 apiError.style.display = 'grid'
@@ -577,19 +597,40 @@
                 updateDetails()
             })*/
 
-            /*sendUsageDataCheckbox.addEventListener('click', (e) => {
+            sendUsageDataCheckbox.addEventListener('click', (e) => {
                 Homey.set('sendUsageData', sendUsageDataCheckbox.checked, (err, settings) => {
                     if (err) return Homey.alert(err)
                 })
                 loadSettings()
-            })*/
+            })
 
-            /*autoRepairConnectionCheckbox.addEventListener('click', (e) => {
+            autoRepairConnectionCheckbox.addEventListener('click', (e) => {
                 Homey.set('autoRepairConnection', autoRepairConnectionCheckbox.checked, (err, settings) => {
                     if (err) return Homey.alert(err)
                 })
                 loadSettings()
-            })*/
+            })
+
+            checkDeConzUpdate.addEventListener('click', (e) => {
+
+                let deConzUpdateNotAvailable = document.getElementById('deConzUpdateNotAvailable')
+                let deConzUpdateAvailable = document.getElementById('deConzUpdateAvailable')
+
+                checkDeConzUpdate.disabled = true
+                deConzUpdateNotAvailable.style.display = 'none'
+                deConzUpdateAvailable.style.display = 'none'
+
+                Homey.api('GET', '/checkDeconzUpdate', {}, function (error, data) {
+                    if (data.updateAvailable) {
+                        document.getElementById('deconzUpdateMessage').innerText = 'Update available: ' + data.current + ' ➜ ' + data.next
+                        document.getElementById('deConzUpdateLink').href = data.url
+                        deConzUpdateAvailable.style.display = 'block'
+                    } else {
+                        deConzUpdateNotAvailable.style.display = 'block'
+                    }
+                    checkDeConzUpdate.style.display = 'none'
+                })
+            })
 
             function saveAll() {
                 Homey.set('host', ip.value, (err, settings) => {

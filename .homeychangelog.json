@@ -82,5 +82,8 @@
   },
   "1.14.2":{
     "en": "Updated/removed packages, improved repair mode, fixed a but that could cause app crashes when using certain power-plugs"
+  },
+  "1.15.0":{
+    "en": "Condition card to check for DeConz updates, send usage data if you allow it"
   }
 }

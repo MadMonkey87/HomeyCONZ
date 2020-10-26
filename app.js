@@ -16,8 +16,9 @@ class deCONZ extends Homey.App {
 			groups: {}
 		}
 
-		this.initializeActions()
 		this.initializeTriggers()
+		this.initializeConditions()
+		this.initializeActions()
 
 		this.usageId = Homey.ManagerSettings.get('usageId')
 		if (!this.usageId) {
@@ -253,6 +254,17 @@ class deCONZ extends Homey.App {
 		})
 	}
 
+
+	getConfig(callback) {
+		http.get(`http://${this.host}:${this.port}/api/${this.apikey}/config`, (error, response) => {
+			if (!!error) {
+				callback(error, null)
+			} else {
+				return callback(null, JSON.parse(response))
+			}
+		})
+	}
+
 	test(host, port, apikey, callback) {
 		const wsState = this.websocket && this.websocket.readyState === 1
 		http.get(`http://${host}:${port}/api/${apikey}`, (error, response) => {
@@ -262,6 +274,46 @@ class deCONZ extends Homey.App {
 				let state = JSON.parse(response)
 				state.wsConnected = wsState
 				return callback(null, state)
+			}
+		})
+	}
+
+	getDeconzUpdates(callback) {
+		this.getConfig((configError, config) => {
+			if (!!configError) {
+				callback(configError, null)
+			} else {
+				https.get(`https://api.github.com/repos/dresden-elektronik/deconz-rest-plugin/releases/latest`, (releaseError, release) => {
+					if (!!releaseError) {
+						callback(releaseError, null)
+					} else {
+
+						let parsedRelease = JSON.parse(release)
+						let nextRaw = parsedRelease.tag_name.replace("_stable", "").replace("_", ".").replace("_", ".").replace("V", "")
+
+						this.log(nextRaw)
+
+						let nextMajor = parseInt(nextRaw.split('.')[0], 0)
+						let nextMinor = parseInt(nextRaw.split('.')[1], 0)
+						let nextBuild = parseInt(nextRaw.split('.')[2], 0)
+
+						this.log(nextMajor + '.' + nextMinor + '.' + nextBuild)
+
+						let currentMajor = parseInt(config.swversion.split('.')[0], 0)
+						let currentMinor = parseInt(config.swversion.split('.')[1], 0)
+						let currentBuild = parseInt(config.swversion.split('.')[2], 0)
+
+						this.log(currentMajor + '.' + currentMinor + '.' + currentBuild)
+
+						callback(null, {
+							updateAvailable: (currentMajor * 100 + currentMinor * 10 + currentBuild) < (nextMajor * 100 + nextMinor * 10 + nextBuild),
+							current: currentMajor + '.' + currentMinor + '.' + currentBuild,
+							next: nextMajor + '.' + nextMinor + '.' + nextBuild + ' (' + parsedRelease.name + ')',
+							description: parsedRelease.body,
+							url: parsedRelease.html_url
+						})
+					}
+				})
 			}
 		})
 	}
@@ -747,7 +799,7 @@ class deCONZ extends Homey.App {
 				return new Promise((resolve) => {
 					try {
 						this.log('update all devices manually')
-						this.setInitialStates()
+						this.getDeconzUpdates((error, success) => { })
 					} catch (error) {
 						return this.error(error);
 					}
@@ -789,6 +841,18 @@ class deCONZ extends Homey.App {
 	initializeTriggers() {
 		this.deviceReachableTrigger = new Homey.FlowCardTrigger('device_on_reachable').register();
 		this.deviceUnreachableTrigger = new Homey.FlowCardTrigger('device_on_unreachable').register();
+	}
+
+	initializeConditions() {
+		let checkDeconzUpdatesCondition = new Homey.FlowCardCondition('check_deconz_updates');
+		checkDeconzUpdatesCondition
+			.register()
+			.registerRunListener(async (args, state) => {
+				this.getDeconzUpdates((error, success) => {
+					return !error && success.updateAvailable;
+				}
+				)
+			});
 	}
 
 	sendUsageDataFullState() {
@@ -836,7 +900,6 @@ class deCONZ extends Homey.App {
 			})
 		}
 	}
-
 }
 
 module.exports = deCONZ

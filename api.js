@@ -56,5 +56,19 @@ module.exports = [
 				}
 			})
 		}
+	},
+	{
+		method: 'GET',
+		path: '/checkDeconzUpdate',
+		public: false,
+		fn: function (args, callback) {
+			Homey.app.getDeconzUpdates((err, result) => {
+				if (err) {
+					callback(err, null)
+				} else {
+					callback(null, result)
+				}
+			})
+		}
 	}
 ]
