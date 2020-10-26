@@ -81,6 +81,6 @@
     "en": "New repair mode that is better integrated into the homey environment, fancy UI"
   },
   "1.14.2":{
-    "en": "Updated/removed packages, improved repair mode"
+    "en": "Updated/removed packages, improved repair mode, fixed a but that could cause app crashes when using certain power-plugs"
   }
 }

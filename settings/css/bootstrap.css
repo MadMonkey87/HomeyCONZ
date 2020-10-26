@@ -9077,3 +9077,7 @@ a.text-dark:hover, a.text-dark:focus {
 input[type="checkbox"]:not(.hy-nostyle), .hy-input-checkbox{
   background-image: none !important;
 }
+
+label{
+  padding-top: 3px !important;
+}

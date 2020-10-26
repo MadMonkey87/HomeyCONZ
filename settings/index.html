@@ -138,7 +138,7 @@
 
             <!--support tab begin-->
 
-            <div class="card glass" style="margin-top: 10px;">
+            <!--<div class="card glass" style="margin-top: 10px;">
                 <div class="card-body">
                     <h5 class="card-title">Beta & Early Releases</h5>
                     <p class="card-text">Before a new release of the app becomes available in the store it will be
@@ -155,9 +155,9 @@
                     </div>
 
                 </div>
-            </div>
+            </div>-->
 
-            <div class="card glass" style="margin-top: 10px;">
+            <!--<div class="card glass" style="margin-top: 10px;">
                 <div class="card-body">
                     <h5 class="card-title">Auto-Repair Connection</h5>
                     <p class="card-text">Depending on your network it might be that the address of DeConz changes.
@@ -175,15 +175,15 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
 
-            <div class="card glass" style="margin-top: 10px;">
+            <!--<div class="card glass" style="margin-top: 10px;">
                 <div class="card-body">
                     <h5 class="card-title">Polling</h5>
                     <p class="card-text">Most of the events are received in real time from DeConz. To improve your
                         expirience it is recommended to enable the additional polling which will help in some
                         situations, i.e newly added devices or readings that do not update very often.</p>
-                        <p>Hint: there is also an action card available that lets you update the state whenever you want</p>
+                    <p>Hint: there is also an action card available that lets you update the state whenever you want</p>
                     <div class="row col-9">
                         <div class="col-sm">
                             <div class="btn-group d-flex" role="group">
@@ -208,7 +208,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
 
             <div class="card glass" style="margin-top: 10px;">
 
@@ -217,7 +217,7 @@
                     <p class="card-text">Do you have a device that is not yet supported? Or is your device not supported
                         properly? Please create a ticket in <a
                             href="https://github.com/madmonkey87/HomeyCONZ/issues">github</a>. If asked please provide
-                        the data that you can optain by pressing the button bellow</p>
+                        the data that you can obtain by pressing the button bellow</p>
                     <div class="row col-9">
                         <div class="col-sm">
                             <div class="btn-group d-flex" role="group">
@@ -227,13 +227,13 @@
                         </div>
                     </div>
                     <p id="supportDetails"
-                        style="font-style:italic; padding: 15px; background: #6c757d; color: white; border-radius: 0.25rem; margin-top: 15px; display: none">
+                        style="font-style:italic; padding: 15px; background: #6c757d; color: white; border-radius: 0.25rem; margin-top: 15px;">
                     </p>
                 </div>
 
             </div>
 
-            <div class="card glass" style="margin-top: 10px;">
+            <!--<div class="card glass" style="margin-top: 10px;">
                 <div class="card-body">
                     <h5 class="card-title">Usage data</h5>
                     <p class="card-text">Support the developement by allowing that the app periodically sends data to
@@ -250,7 +250,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
 
             <!--support tab end-->
         </div>
@@ -262,10 +262,11 @@
                     style="padding-left: 15px; padding-right: 15px; padding-top: 15px;">
                 <div class="card-body">
                     <h5 class="card-title">deCONZ for Homey v1.14.2</h5>
-                    <p class="card-text">Thank you for using this app! Please feel free to discuss in the <a style="text-decoration: underline;"
+                    <p class="card-text">Thank you for using this app! Please feel free to discuss in the <a
+                            style="text-decoration: underline;"
                             href="https://homey.app/en-GB/app/de.dresden-elektronik.deconz/deCONZ/">community</a> or
-                        report bugs or request device support at <a
-                            href="https://github.com/madmonkey87/HomeyCONZ" style="text-decoration: underline;">github.</a>
+                        report bugs or request device support at <a href="https://github.com/madmonkey87/HomeyCONZ"
+                            style="text-decoration: underline;">github.</a>
                     </p>
                 </div>
             </div>
@@ -319,6 +320,12 @@
                             <div class="form-group">
                                 <small class="form-text text-muted">ZigBee channel</small>
                                 <label id="infoChannel" style="font-weight: bold; font-size: 18px;">-</label>
+                            </div>
+                        </li>
+                        <li class="list-group-item transparent">
+                            <div class="form-group">
+                                <small class="form-text text-muted">id</small>
+                                <label id="infoUsageId" style="font-weight: bold; font-size: 18px;">-</label>
                             </div>
                         </li>
                     </ul>
@@ -443,17 +450,19 @@
                             document.getElementById('infoFirmware').innerHTML = 'error'
                             document.getElementById('infoPanId').innerHTML = 'error'
                             document.getElementById('infoChannel').innerHTML = 'error'
+                            document.getElementById('infoUsageId').innerHTML = 'error'
 
                             document.getElementById('supportDetails').innerHTML = 'error'
                         } else {
-                            document.getElementById('infoGateway').innerHTML = data.config.name
+                            document.getElementById('infoGateway').innerHTML = data.deCONZ.name
                             document.getElementById('infoSocketConnection').innerHTML = data.wsConnected ? 'connected' : 'not connected'
-                            document.getElementById('infoVersion').innerHTML = data.config.swversion
-                            document.getElementById('infoMac').innerHTML = data.config.mac
-                            document.getElementById('infoDevice').innerHTML = data.config.devicename
-                            document.getElementById('infoFirmware').innerHTML = data.config.fwversion
-                            document.getElementById('infoPanId').innerHTML = data.config.panid
-                            document.getElementById('infoChannel').innerHTML = data.config.zigbeechannel
+                            document.getElementById('infoVersion').innerHTML = data.deCONZ.swversion
+                            document.getElementById('infoMac').innerHTML = data.deCONZ.mac
+                            document.getElementById('infoDevice').innerHTML = data.deCONZ.devicename
+                            document.getElementById('infoFirmware').innerHTML = data.deCONZ.fwversion
+                            document.getElementById('infoPanId').innerHTML = data.deCONZ.panid
+                            document.getElementById('infoChannel').innerHTML = data.deCONZ.zigbeechannel
+                            document.getElementById('infoUsageId').innerHTML = data.usageId
 
                             document.getElementById('supportDetails').innerHTML = JSON.stringify(data)
                         }
@@ -467,6 +476,7 @@
                     document.getElementById('infoFirmware').innerHTML = '-'
                     document.getElementById('infoPanId').innerHTML = '-'
                     document.getElementById('infoChannel').innerHTML = '-'
+                    document.getElementById('infoUsageId').innerHTML = '-'
 
                     document.getElementById('supportDetails').innerHTML = '-'
                 }
@@ -567,19 +577,19 @@
                 updateDetails()
             })*/
 
-            sendUsageDataCheckbox.addEventListener('click', (e) => {
+            /*sendUsageDataCheckbox.addEventListener('click', (e) => {
                 Homey.set('sendUsageData', sendUsageDataCheckbox.checked, (err, settings) => {
                     if (err) return Homey.alert(err)
                 })
                 loadSettings()
-            })
+            })*/
 
-            autoRepairConnectionCheckbox.addEventListener('click', (e) => {
+            /*autoRepairConnectionCheckbox.addEventListener('click', (e) => {
                 Homey.set('autoRepairConnection', autoRepairConnectionCheckbox.checked, (err, settings) => {
                     if (err) return Homey.alert(err)
                 })
                 loadSettings()
-            })
+            })*/
 
             function saveAll() {
                 Homey.set('host', ip.value, (err, settings) => {

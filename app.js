@@ -8,6 +8,7 @@ const { util } = require('./util')
 class deCONZ extends Homey.App {
 
 	onInit() {
+
 		// holds all devices that we have, added when a device gets initialized (see Sensor.registerInApp for example).
 		this.devices = {
 			lights: {},
@@ -17,6 +18,12 @@ class deCONZ extends Homey.App {
 
 		this.initializeActions()
 		this.initializeTriggers()
+
+		this.usageId = Homey.ManagerSettings.get('usageId')
+		if (!this.usageId) {
+			this.usageId = util.generateGuid()
+			Homey.ManagerSettings.set('usageId', this.usageId)
+		}
 
 		this.host = Homey.ManagerSettings.get('host')
 		this.port = Homey.ManagerSettings.get('port')
@@ -59,9 +66,14 @@ class deCONZ extends Homey.App {
 	}
 
 	startSendUsageDataUpdate() {
-		/*setInterval(() => {
-			// todo
-		}, 5000)*/
+
+		setTimeout(() => {
+			this.sendUsageDataFullState()
+		}, 15 * 1000)
+
+		setInterval(() => {
+			this.sendUsageDataFullState()
+		}, 1000 * 60 * 60 * 24 * 3)
 	}
 
 	onSettingsChanged(modifiedKey) {
@@ -78,8 +90,16 @@ class deCONZ extends Homey.App {
 			this.sendUsageData = true
 		}
 
-		if (!!this.host && !!this.port && !!this.apikey && !!this.wsPort) {
-			this.startWebSocketConnection()
+		if (modifiedKey == 'sendUsageData') {
+			this.uploadUsageData('sendUsageData', { sendUsageData: this.sendUsageData })
+		}
+
+		if (modifiedKey == 'host' || modifiedKey == 'port' || modifiedKey == 'apikey' || modifiedKey == 'wsPort') {
+			if (!!this.host && !!this.port && !!this.apikey && !!this.wsPort) {
+				this.startWebSocketConnection()
+			}
+		} else {
+			this.log('update ws connection not necessary')
 		}
 	}
 
@@ -182,8 +202,53 @@ class deCONZ extends Homey.App {
 				callback(error, null)
 			} else {
 				let state = JSON.parse(response)
-				state.wsConnected = wsState
-				return callback(null, state)
+
+				let anonymizedState = {
+					wsConnected: wsState,
+					usageId: this.usageId,
+					deCONZ: {
+						apiversion: state.config.apiversion,
+						datastoreversion: state.config.datastoreversion,
+						dhcp: state.config.dhcp,
+						fwversion: state.config.fwversion,
+						swversion: state.config.swversion,
+						websocketnotifyall: state.config.websocketnotifyall,
+						name: state.config.name,
+						mac: state.config.mac,
+						zigbeechannel: state.config.zigbeechannel,
+						panid: state.config.panid,
+						devicename: state.config.devicename
+					},
+					groups: [],
+					lights: [],
+					sensors: []
+				}
+
+				Object.entries(state.groups).forEach(entry => {
+					const key = entry[0]
+					const group = entry[1]
+					group.name = undefined
+					group.etag = undefined
+					anonymizedState.groups.push(group)
+				})
+
+				Object.entries(state.lights).forEach(entry => {
+					const key = entry[0]
+					const light = entry[1]
+					light.name = undefined
+					light.etag = undefined
+					anonymizedState.lights.push(light)
+				})
+
+				Object.entries(state.sensors).forEach(entry => {
+					const key = entry[0]
+					const sensor = entry[1]
+					sensor.name = undefined
+					sensor.etag = undefined
+					anonymizedState.sensors.push(sensor)
+				})
+
+				return callback(null, anonymizedState)
 			}
 		})
 	}
@@ -725,6 +790,53 @@ class deCONZ extends Homey.App {
 		this.deviceReachableTrigger = new Homey.FlowCardTrigger('device_on_reachable').register();
 		this.deviceUnreachableTrigger = new Homey.FlowCardTrigger('device_on_unreachable').register();
 	}
+
+	sendUsageDataFullState() {
+		if (this.sendUsageData) {
+			this.getFullState((err, result) => {
+				if (err) {
+					this.log('Error while fetching full state', err)
+				} else {
+
+					this.usageDataQueue = []
+
+					result.groups.forEach(e => this.usageDataQueue.push({ type: 'fullstate-group', content: e }))
+					result.lights.forEach(e => this.usageDataQueue.push({ type: 'fullstate-light', content: e }))
+					this.usageDataQueue.push({ type: 'fullstate-deconz', content: result.deCONZ })
+					result.sensors.forEach(e => this.usageDataQueue.push({ type: 'fullstate-sensor', content: e }))
+					this.dequeueUsageData()
+				}
+			})
+		}
+	}
+
+	dequeueUsageData() {
+		if (this.usageDataQueue.length > 0) {
+			let entry = this.usageDataQueue.pop()
+			this.uploadUsageData(entry.type, entry.content)
+			setTimeout(() => {
+				this.dequeueUsageData()
+			}, 1500)
+		}
+	}
+
+	uploadUsageData(type, content) {
+		if (this.sendUsageData) {
+			this.log('upload usage data', type, this.usageId)
+			let payload = { Type: type, Content: content, Identifier: this.usageId }
+			https.post(Homey.env.USAGE_DATA_HOST, 443, Homey.env.USAGE_DATA_PATH, payload, (error, response, statusCode) => {
+				if (error) {
+					this.log('Error while sending usage data', error)
+				} else {
+					this.log('Sent usage data', type, response, statusCode)
+					if (statusCode != 200) {
+						this.log(JSON.stringify(payload))
+					}
+				}
+			})
+		}
+	}
+
 }
 
 module.exports = deCONZ
