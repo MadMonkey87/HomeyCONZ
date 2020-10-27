@@ -34,6 +34,10 @@ class deCONZ extends Homey.App {
 		if (this.sendUsageData !== false && this.sendUsageData !== true) {
 			this.sendUsageData = true
 		}
+		this.autoRepairConnection = Homey.ManagerSettings.get('autoRepairConnection')
+		if (this.autoRepairConnection !== false && this.autoRepairConnection !== true) {
+			this.autoRepairConnection = true
+		}
 
 		Homey.ManagerSettings.on('set', this.onSettingsChanged.bind(this))
 
@@ -85,10 +89,13 @@ class deCONZ extends Homey.App {
 		this.port = Homey.ManagerSettings.get('port')
 		this.apikey = Homey.ManagerSettings.get('apikey')
 		this.wsPort = Homey.ManagerSettings.get('wsport')
-
 		this.sendUsageData = Homey.ManagerSettings.get('sendUsageData')
 		if (this.sendUsageData !== false && this.sendUsageData !== true) {
 			this.sendUsageData = true
+		}
+		this.autoRepairConnection = Homey.ManagerSettings.get('autoRepairConnection')
+		if (this.autoRepairConnection !== false && this.autoRepairConnection !== true) {
+			this.autoRepairConnection = true
 		}
 
 		if (modifiedKey == 'sendUsageData') {
@@ -130,8 +137,10 @@ class deCONZ extends Homey.App {
 
 	webSocketConnectTo() {
 		this.log('Websocket connect...')
+		this.wsConnected = false
 		this.websocket = new WebSocketClient(`ws://${this.host}:${this.wsPort}`)
 		this.websocket.on('open', () => {
+			this.wsConnected = true
 			this.log('Websocket is up')
 			this.setWSKeepAlive()
 		})
@@ -153,12 +162,16 @@ class deCONZ extends Homey.App {
 			}
 		})
 		this.websocket.on('error', error => {
-			this.error(error)
+			this.error('Websocket error', error)
 		})
 		this.websocket.on('close', (reasonCode, _) => {
+			if (this.wsConnected === true && this.autoRepairConnection === true) {
+				this.attemptAutoRepair()
+			}
 			this.setAllUnavailable()
-			this.error(`Closed, error #${reasonCode}`)
+			this.error(`Closed, error #${reasonCode}, autoRepair ${this.autoRepairConnection}, isFirstFailure ${this.wsConnected === true}`)
 			this.log('Reconnection in 5 seconds...')
+			this.wsConnected = false
 			setTimeout(
 				this.webSocketConnectTo.bind(this),
 				5 * 1000
@@ -254,7 +267,6 @@ class deCONZ extends Homey.App {
 		})
 	}
 
-
 	getConfig(callback) {
 		http.get(`http://${this.host}:${this.port}/api/${this.apikey}/config`, (error, response) => {
 			if (!!error) {
@@ -291,27 +303,61 @@ class deCONZ extends Homey.App {
 						let parsedRelease = JSON.parse(release)
 						let nextRaw = parsedRelease.tag_name.replace("_stable", "").replace("_", ".").replace("_", ".").replace("V", "")
 
-						this.log(nextRaw)
-
 						let nextMajor = parseInt(nextRaw.split('.')[0], 0)
 						let nextMinor = parseInt(nextRaw.split('.')[1], 0)
 						let nextBuild = parseInt(nextRaw.split('.')[2], 0)
-
-						this.log(nextMajor + '.' + nextMinor + '.' + nextBuild)
 
 						let currentMajor = parseInt(config.swversion.split('.')[0], 0)
 						let currentMinor = parseInt(config.swversion.split('.')[1], 0)
 						let currentBuild = parseInt(config.swversion.split('.')[2], 0)
 
-						this.log(currentMajor + '.' + currentMinor + '.' + currentBuild)
-
-						callback(null, {
+						let result = {
 							updateAvailable: (currentMajor * 100 + currentMinor * 10 + currentBuild) < (nextMajor * 100 + nextMinor * 10 + nextBuild),
 							current: currentMajor + '.' + currentMinor + '.' + currentBuild,
 							next: nextMajor + '.' + nextMinor + '.' + nextBuild + ' (' + parsedRelease.name + ')',
-							description: parsedRelease.body,
+							// description: parsedRelease.body,
 							url: parsedRelease.html_url
-						})
+						}
+
+						this.log(result)
+
+						callback(null, result)
+					}
+				})
+			}
+		})
+	}
+
+	getDeconzDockerUpdates(callback) {
+		this.getConfig((configError, config) => {
+			if (!!configError) {
+				callback(configError, null)
+			} else {
+				https.get(`https://raw.githubusercontent.com/marthoc/docker-deconz/master/version.json`, (releaseError, release) => {
+					if (!!releaseError) {
+						callback(releaseError, null)
+					} else {
+
+						let parsedRelease = JSON.parse(release)
+						let nextRaw = parsedRelease.version
+
+						let nextMajor = parseInt(nextRaw.split('.')[0], 0)
+						let nextMinor = parseInt(nextRaw.split('.')[1], 0)
+						let nextBuild = parseInt(nextRaw.split('.')[2], 0)
+
+						let currentMajor = parseInt(config.swversion.split('.')[0], 0)
+						let currentMinor = parseInt(config.swversion.split('.')[1], 0)
+						let currentBuild = parseInt(config.swversion.split('.')[2], 0)
+
+						let result = {
+							updateAvailable: (currentMajor * 100 + currentMinor * 10 + currentBuild) < (nextMajor * 100 + nextMinor * 10 + nextBuild),
+							current: currentMajor + '.' + currentMinor + '.' + currentBuild,
+							next: nextMajor + '.' + nextMinor + '.' + nextBuild + ' (' + parsedRelease.channel + ')'
+						}
+
+						this.log(result)
+
+						callback(null, result)
 					}
 				})
 			}
@@ -406,7 +452,10 @@ class deCONZ extends Homey.App {
 
 		this.getLightsList((error, lights) => {
 			if (error) {
-				return this.error(error)
+				if(error.code=='EHOSTUNREACH' && this.autoRepairConnection){
+					this.attemptAutoRepair()
+				}
+				return this.error('error getting lights', error)
 			}
 			Object.entries(lights).forEach(entry => {
 				const key = entry[0]
@@ -423,7 +472,7 @@ class deCONZ extends Homey.App {
 
 		this.getSensorsList((error, sensors) => {
 			if (error) {
-				return this.error(error)
+				return this.error('error getting sensor', error)
 			}
 			Object.entries(sensors).forEach(entry => {
 				const key = entry[0]
@@ -443,7 +492,7 @@ class deCONZ extends Homey.App {
 
 		this.getGroupsList((error, groups) => {
 			if (error) {
-				return this.error(error)
+				return this.error('error getting groups', error)
 			}
 
 			Object.entries(groups).forEach(entry => {
@@ -799,7 +848,7 @@ class deCONZ extends Homey.App {
 				return new Promise((resolve) => {
 					try {
 						this.log('update all devices manually')
-						this.getDeconzUpdates((error, success) => { })
+						this.setInitialStates()
 					} catch (error) {
 						return this.error(error);
 					}
@@ -812,24 +861,7 @@ class deCONZ extends Homey.App {
 			.registerRunListener(async (args, state) => {
 				return new Promise((resolve) => {
 					try {
-						this.log('update ip address')
-						this.getDiscoveryData((error, response) => {
-							if (error) {
-								this.log(error)
-								return this.error(error)
-							}
-
-							if (Object.keys(response).length > 0 && response.internalipaddress && this.host !== response.internalipaddress) {
-								this.log('ip address has changed', this.host, response.internalipaddress)
-								Homey.set('host', response.internalipaddress, (err, settings) => {
-									if (err) this.error(err)
-								})
-								this.startWebSocketConnection()
-								this.log('ip address updated successfully')
-							} else {
-								this.log('no deconz changed gateway found')
-							}
-						})
+						this.attemptAutoRepair()
 					} catch (error) {
 						return this.error(error);
 					}
@@ -847,9 +879,19 @@ class deCONZ extends Homey.App {
 		let checkDeconzUpdatesCondition = new Homey.FlowCardCondition('check_deconz_updates');
 		checkDeconzUpdatesCondition
 			.register()
-			.registerRunListener(async (args, state) => {
+			.registerRunListener((args, state) => {
 				this.getDeconzUpdates((error, success) => {
-					return !error && success.updateAvailable;
+					return Promise.resolve(!error && success.updateAvailable === true)
+				}
+				)
+			});
+
+		let checkDeconzDockerUpdatesCondition = new Homey.FlowCardCondition('check_deconz_docker_updates');
+		checkDeconzDockerUpdatesCondition
+			.register()
+			.registerRunListener(async (args, state) => {
+				this.getDeconzDockerUpdates((error, success) => {
+					return Promise.resolve(!error && success.updateAvailable === true)
 				}
 				)
 			});
@@ -899,6 +941,27 @@ class deCONZ extends Homey.App {
 				}
 			})
 		}
+	}
+
+	attemptAutoRepair() {
+		this.log('attempt auto repair...')
+		this.getDiscoveryData((error, response) => {
+			if (error) {
+				this.log(error)
+				return this.error(error)
+			}
+
+			if (Object.keys(response).length > 0 && response.internalipaddress && this.host !== response.internalipaddress) {
+				this.log('ip address has changed', this.host, response.internalipaddress)
+				Homey.ManagerSettings.set('host', response.internalipaddress, (err, settings) => {
+					if (err) this.error(err)
+				})
+				this.startWebSocketConnection()
+				this.log('ip address updated successfully')
+			} else {
+				this.log('no deconz changed gateway found')
+			}
+		})
 	}
 }
 

@@ -2804,6 +2804,12 @@
     ],
     "conditions": [
       {
+        "id": "check_deconz_docker_updates",
+        "title": {
+          "en": "DeConz Docker image update is available"
+        }
+      },
+      {
         "id": "check_deconz_updates",
         "title": {
           "en": "DeConz update is available"

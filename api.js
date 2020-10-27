@@ -70,5 +70,19 @@ module.exports = [
 				}
 			})
 		}
+	},
+	{
+		method: 'GET',
+		path: '/checkDeconzDockerUpdate',
+		public: false,
+		fn: function (args, callback) {
+			Homey.app.getDeconzDockerUpdates((err, result) => {
+				if (err) {
+					callback(err, null)
+				} else {
+					callback(null, result)
+				}
+			})
+		}
 	}
 ]

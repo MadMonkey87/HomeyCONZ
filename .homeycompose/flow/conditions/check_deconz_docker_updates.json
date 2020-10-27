@@ -1,0 +1,6 @@
+{
+    "id": "check_deconz_docker_updates",
+    "title":{
+        "en": "DeConz Docker image update is available"
+    }
+}

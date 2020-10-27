@@ -168,11 +168,13 @@
                     <h5 class="card-title">DeCONZ updates</h5>
                     <p class="card-text">Ensure that you always have an up-to-date deCONZ instance</p>
                     <p>Hint: there is also an action card available that lets you check for new releases</p>
-
                     <div class="row col-9">
                         <div class="col-sm">
-                            <button type="button" class="btn btn-primary" id="checkDeConzUpdate">Check for
-                                Updates</button>
+                            <div class="btn-group d-flex" role="group" style="margin-bottom: 15px">
+                                <button type="button" class="btn btn-primary" id="checkDeConzUpdate">Check DeConz</button>
+                                <button type="button" class="btn btn-secondary"
+                                    id="checkDeConzDockerUpdate">Check Docker</button>
+                            </div>
                         </div>
                     </div>
 
@@ -283,7 +285,7 @@
                     <h5 class="card-title">deCONZ for Homey v1.15.0</h5>
                     <p class="card-text">Thank you for using this app! Please feel free to discuss in the <a
                             style="text-decoration: underline;"
-                            href="https://homey.app/en-GB/app/de.dresden-elektronik.deconz/deCONZ/">community</a> or
+                            href="https://community.athom.com/t/app-deconz/29390">community</a> or
                         report bugs or request device support at <a href="https://github.com/madmonkey87/HomeyCONZ"
                             style="text-decoration: underline;">github.</a>
                     </p>
@@ -381,6 +383,7 @@
             const sendUsageDataCheckbox = document.getElementById('sendUsageDataCheckbox')
             const autoRepairConnectionCheckbox = document.getElementById('autoRepairConnectionCheckbox')
             const checkDeConzUpdate = document.getElementById('checkDeConzUpdate')
+            const checkDeConzDockerUpdate = document.getElementById('checkDeConzDockerUpdate')
 
             function showError(alert, message) {
                 apiError.style.display = 'grid'
@@ -612,7 +615,6 @@
             })
 
             checkDeConzUpdate.addEventListener('click', (e) => {
-
                 let deConzUpdateNotAvailable = document.getElementById('deConzUpdateNotAvailable')
                 let deConzUpdateAvailable = document.getElementById('deConzUpdateAvailable')
 
@@ -622,13 +624,33 @@
 
                 Homey.api('GET', '/checkDeconzUpdate', {}, function (error, data) {
                     if (data.updateAvailable) {
-                        document.getElementById('deconzUpdateMessage').innerText = 'Update available: ' + data.current + ' ➜ ' + data.next
+                        document.getElementById('deconzUpdateMessage').innerText = 'New release available: ' + data.current + ' ➜ ' + data.next
                         document.getElementById('deConzUpdateLink').href = data.url
                         deConzUpdateAvailable.style.display = 'block'
                     } else {
                         deConzUpdateNotAvailable.style.display = 'block'
                     }
-                    checkDeConzUpdate.style.display = 'none'
+                    checkDeConzUpdate.disabled = false
+                })
+            })
+
+            checkDeConzDockerUpdate.addEventListener('click', (e) => {
+                let deConzUpdateNotAvailable = document.getElementById('deConzUpdateNotAvailable')
+                let deConzUpdateAvailable = document.getElementById('deConzUpdateAvailable')
+
+                checkDeConzDockerUpdate.disabled = true
+                deConzUpdateNotAvailable.style.display = 'none'
+                deConzUpdateAvailable.style.display = 'none'
+
+                Homey.api('GET', '/checkDeconzDockerUpdate', {}, function (error, data) {
+                    if (data.updateAvailable) {
+                        document.getElementById('deconzUpdateMessage').innerText = 'New Docker image available: ' + data.current + ' ➜ ' + data.next
+                        document.getElementById('deConzUpdateLink').href = 'https://hub.docker.com/r/marthoc/deconz/'
+                        deConzUpdateAvailable.style.display = 'block'
+                    } else {
+                        deConzUpdateNotAvailable.style.display = 'block'
+                    }
+                    checkDeConzDockerUpdate.disabled = false
                 })
             })
 
