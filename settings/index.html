@@ -163,6 +163,29 @@
                 </div>
             </div>-->
 
+                        <!--<div class="card glass" style="margin-top: 10px;">
+                <div class="card-body">
+                    <h5 class="card-title">Live Debug</h5>
+                    <p class="card-text">Enable the live debugging action card. Note that this might have significant performance impact...</p>
+
+                    <div class="row col-9">
+                        <div class="col-sm">
+                            <button type="button" class="btn btn-primary" id="copyButton">Check for Updates</button>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info" role="alert">
+                        You have already installed the latest release <img src="images/ok.svg">
+                    </div>
+
+                    <div class="alert alert-success" role="alert">
+                        A new release is available!<br>
+                        <button type="button" class="btn btn-primary">Check Details</button>
+                    </div>
+
+                </div>
+            </div>-->
+
             <div class="card glass" style="margin-top: 10px;">
                 <div class="card-body">
                     <h5 class="card-title">DeCONZ updates</h5>
@@ -171,9 +194,10 @@
                     <div class="row col-9">
                         <div class="col-sm">
                             <div class="btn-group d-flex" role="group" style="margin-bottom: 15px">
-                                <button type="button" class="btn btn-primary" id="checkDeConzUpdate">Check DeConz</button>
-                                <button type="button" class="btn btn-secondary"
-                                    id="checkDeConzDockerUpdate">Check Docker</button>
+                                <button type="button" class="btn btn-primary" id="checkDeConzUpdate">Check
+                                    DeConz</button>
+                                <button type="button" class="btn btn-secondary" id="checkDeConzDockerUpdate">Check
+                                    Docker</button>
                             </div>
                         </div>
                     </div>
@@ -210,7 +234,7 @@
                 </div>
             </div>
 
-            <!--<div class="card glass" style="margin-top: 10px;">
+            <div class="card glass" style="margin-top: 10px;">
                 <div class="card-body">
                     <h5 class="card-title">Polling</h5>
                     <p class="card-text">Most of the events are received in real time from DeConz. To improve your
@@ -223,16 +247,18 @@
                                 <div class="dropdown dropup">
                                     <button class="btn btn-primary dropdown-toggle" type="button" id="pollingDropDown"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                        style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
+                                        style="border-top-right-radius: 0; border-bottom-right-radius: 0;" disabled>
                                         every 15 min
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="pollingDropDown">
-                                        <a class="dropdown-item" href="#">every 5 minutes</a>
-                                        <a class="dropdown-item" href="#">every 15 min (recommended)</a>
-                                        <a class="dropdown-item" href="#">every hour</a>
-                                        <a class="dropdown-item" href="#">every day</a>
+                                        <a class="dropdown-item" href="#" id="pollinIntervall5">every 5 minutes</a>
+                                        <a class="dropdown-item" href="#" id="pollinIntervall15">every 15 min
+                                            (recommended)</a>
+                                        <a class="dropdown-item" href="#" id="pollinIntervall60">every hour</a>
+                                        <a class="dropdown-item" href="#" id="pollinIntervall1440">every day</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">disabled</a>
+                                        <a class="dropdown-item" href="#" id="pollinIntervall-1">disabled (not
+                                            recommended)</a>
                                     </div>
                                 </div>
                                 <button type="button" class="btn btn-secondary" id="pollStateManuallyButton">Poll
@@ -241,7 +267,7 @@
                         </div>
                     </div>
                 </div>
-            </div>-->
+            </div>
 
             <div class="card glass" style="margin-top: 10px; overflow: hidden; height: 800px;">
                 <div class="card-body">
@@ -384,6 +410,8 @@
             const autoRepairConnectionCheckbox = document.getElementById('autoRepairConnectionCheckbox')
             const checkDeConzUpdate = document.getElementById('checkDeConzUpdate')
             const checkDeConzDockerUpdate = document.getElementById('checkDeConzDockerUpdate')
+            const pollStateManuallyButton = document.getElementById('pollStateManuallyButton')
+            const pollingDropDown = document.getElementById('pollingDropDown')
 
             function showError(alert, message) {
                 apiError.style.display = 'grid'
@@ -654,6 +682,26 @@
                 })
             })
 
+            pollStateManuallyButton.addEventListener('click', (e) => {
+                pollStateManuallyButton.disabled = true
+                Homey.api('GET', '/pollManually', {}, function (error, data) {
+                    pollStateManuallyButton.disabled = false
+                })
+            })
+
+            document.getElementById('pollinIntervall-1').addEventListener('click', (e) => { setPollIntervall(-1) })
+            document.getElementById('pollinIntervall5').addEventListener('click', (e) => { setPollIntervall(5) })
+            document.getElementById('pollinIntervall15').addEventListener('click', (e) => { setPollIntervall(15) })
+            document.getElementById('pollinIntervall60').addEventListener('click', (e) => { setPollIntervall(60) })
+            document.getElementById('pollinIntervall1440').addEventListener('click', (e) => { setPollIntervall(1440) })
+
+            function setPollIntervall(intervall) {
+                Homey.set('pollingIntervall', intervall, (err, settings) => {
+                    if (err) return Homey.alert(err)
+                    loadSettings()
+                })
+            }
+
             function saveAll() {
                 Homey.set('host', ip.value, (err, settings) => {
                     if (err) return Homey.alert(err)
@@ -707,6 +755,32 @@
                     if (err) return Homey.alert(err)
 
                     autoRepairConnectionCheckbox.checked = autoRepairConnection !== false
+                })
+
+                Homey.get('pollingIntervall', (err, pollingIntervall) => {
+                    if (err) return Homey.alert(err)
+                    
+                    switch (parseInt(pollingIntervall, 0)) {
+                        case 5:
+                            pollingDropDown.innerText = 'every 5 minutes'
+                            break;
+                        case 15:
+                            pollingDropDown.innerText = 'every 15 minutes'
+                            break;
+                        case 60:
+                            pollingDropDown.innerText = 'every hour'
+                            break;
+                        case 1440:
+                            pollingDropDown.innerText = 'every day'
+                            break;
+                        case -1:
+                            pollingDropDown.innerText = 'disabled'
+                            break;
+                        default:
+                            pollingDropDown.innerText = 'unknown'
+                            break
+                    }
+                    pollingDropDown.disabled = false
                 })
             }
 

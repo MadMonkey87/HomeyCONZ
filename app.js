@@ -59,19 +59,33 @@ class deCONZ extends Homey.App {
 	}
 
 	startIntervalStateUpdate() {
+		if (this.pollIntervall) {
+			clearInterval(this.pollIntervall)
+		}
+		let interval = Homey.ManagerSettings.get('pollingIntervall')
+		if (!interval) {
+			interval = 15
+		}
+
+		if (interval <= 0) {
+			this.log('disable poll interval')
+			return
+		}
+
+		this.log('setting up poll interval in minutes', interval)
+
 		// Update all devices regularly. This might be needed for two cases
 		// - state/config values that do not update very often, such as the battery for certain devices: in that case we would need to wait until something changes s.t we receive
 		//   it trough the websocket update
 		// - some config values are not pushed via websockets such as the sensitivity of certain devices
 		// IMPORTANT: decreasing this might get cpu warnings and lead to a disabled app!
-		setInterval(() => {
-			this.log("Initialize initial states");
+		this.pollIntervall = setInterval(() => {
+			this.log("Polling current states");
 			this.setInitialStates()
-		}, 15 * 60 * 1000)
+		}, interval * 60 * 1000)
 	}
 
 	startSendUsageDataUpdate() {
-
 		setTimeout(() => {
 			this.sendUsageDataFullState()
 		}, 15 * 1000)
@@ -100,6 +114,10 @@ class deCONZ extends Homey.App {
 
 		if (modifiedKey == 'sendUsageData') {
 			this.uploadUsageData('sendUsageData', { sendUsageData: this.sendUsageData })
+		}
+
+		if (modifiedKey == 'pollingIntervall') {
+			this.startIntervalStateUpdate()
 		}
 
 		if (modifiedKey == 'host' || modifiedKey == 'port' || modifiedKey == 'apikey' || modifiedKey == 'wsPort') {
@@ -215,54 +233,62 @@ class deCONZ extends Homey.App {
 			if (!!error) {
 				callback(error, null)
 			} else {
-				let state = JSON.parse(response)
 
-				let anonymizedState = {
-					wsConnected: wsState,
-					usageId: this.usageId,
-					deCONZ: {
-						apiversion: state.config.apiversion,
-						datastoreversion: state.config.datastoreversion,
-						dhcp: state.config.dhcp,
-						fwversion: state.config.fwversion,
-						swversion: state.config.swversion,
-						websocketnotifyall: state.config.websocketnotifyall,
-						name: state.config.name,
-						mac: state.config.mac,
-						zigbeechannel: state.config.zigbeechannel,
-						panid: state.config.panid,
-						devicename: state.config.devicename
-					},
-					groups: [],
-					lights: [],
-					sensors: []
+				try {
+
+
+					let state = JSON.parse(response)
+
+					let anonymizedState = {
+						wsConnected: wsState,
+						usageId: this.usageId,
+						deCONZ: {
+							apiversion: state.config.apiversion,
+							datastoreversion: state.config.datastoreversion,
+							dhcp: state.config.dhcp,
+							fwversion: state.config.fwversion,
+							swversion: state.config.swversion,
+							websocketnotifyall: state.config.websocketnotifyall,
+							name: state.config.name,
+							mac: state.config.mac,
+							zigbeechannel: state.config.zigbeechannel,
+							panid: state.config.panid,
+							devicename: state.config.devicename
+						},
+						groups: [],
+						lights: [],
+						sensors: []
+					}
+
+					Object.entries(state.groups).forEach(entry => {
+						const key = entry[0]
+						const group = entry[1]
+						group.name = undefined
+						group.etag = undefined
+						anonymizedState.groups.push(group)
+					})
+
+					Object.entries(state.lights).forEach(entry => {
+						const key = entry[0]
+						const light = entry[1]
+						light.name = undefined
+						light.etag = undefined
+						anonymizedState.lights.push(light)
+					})
+
+					Object.entries(state.sensors).forEach(entry => {
+						const key = entry[0]
+						const sensor = entry[1]
+						sensor.name = undefined
+						sensor.etag = undefined
+						anonymizedState.sensors.push(sensor)
+					})
+
+					return callback(null, anonymizedState)
+
+				} catch (error) {
+					return callback(error, null)
 				}
-
-				Object.entries(state.groups).forEach(entry => {
-					const key = entry[0]
-					const group = entry[1]
-					group.name = undefined
-					group.etag = undefined
-					anonymizedState.groups.push(group)
-				})
-
-				Object.entries(state.lights).forEach(entry => {
-					const key = entry[0]
-					const light = entry[1]
-					light.name = undefined
-					light.etag = undefined
-					anonymizedState.lights.push(light)
-				})
-
-				Object.entries(state.sensors).forEach(entry => {
-					const key = entry[0]
-					const sensor = entry[1]
-					sensor.name = undefined
-					sensor.etag = undefined
-					anonymizedState.sensors.push(sensor)
-				})
-
-				return callback(null, anonymizedState)
 			}
 		})
 	}
@@ -452,7 +478,7 @@ class deCONZ extends Homey.App {
 
 		this.getLightsList((error, lights) => {
 			if (error) {
-				if(error.code=='EHOSTUNREACH' && this.autoRepairConnection){
+				if (error.code == 'EHOSTUNREACH' && this.autoRepairConnection) {
 					this.attemptAutoRepair()
 				}
 				return this.error('error getting lights', error)
@@ -889,7 +915,7 @@ class deCONZ extends Homey.App {
 		let checkDeconzDockerUpdatesCondition = new Homey.FlowCardCondition('check_deconz_docker_updates');
 		checkDeconzDockerUpdatesCondition
 			.register()
-			.registerRunListener(async (args, state) => {
+			.registerRunListener((args, state) => {
 				this.getDeconzDockerUpdates((error, success) => {
 					return Promise.resolve(!error && success.updateAvailable === true)
 				}

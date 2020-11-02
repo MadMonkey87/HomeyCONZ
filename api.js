@@ -84,5 +84,14 @@ module.exports = [
 				}
 			})
 		}
+	},
+	{
+		method: 'GET',
+		path: '/pollManually',
+		public: false,
+		fn: function (args, callback) {
+			Homey.app.setInitialStates()
+			callback(null, 'success')
+		}
 	}
 ]
