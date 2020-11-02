@@ -1,6 +1,6 @@
 {
   "name": {
-    "en": "Heiman Leakage Sensor"
+    "en": "Heiman/Zipato Leakage Sensor"
   },
   "class": "sensor",
   "capabilities": [
