@@ -85,5 +85,8 @@
   },
   "1.15.0":{
     "en": "Condition card to check for DeConz updates, auto repair connection feature, send usage data if you allow it, setting to adjust or disable the polling, improved color handling for lights, support Jung 4-gang switch"
+  },
+  "1.15.1":{
+    "en": "Generic switch supports up to 8 buttons"
   }
 }
