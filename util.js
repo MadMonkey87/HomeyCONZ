@@ -19,6 +19,13 @@ module.exports.util.round = function (value, exp) {
     return +(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp));
 }
 
+module.exports.util.generateGuid = function generateGuid() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
 // hue = [0,1], sat = [0,1]
 module.exports.util.hsToXy = function (hue, sat) {
   var rgb = HSVtoRGB(hue, sat, 1);

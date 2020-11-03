@@ -12,8 +12,7 @@ class Sensor extends DeconzDevice {
 		this.host = Homey.ManagerSettings.get('host')
 		this.apikey = Homey.ManagerSettings.get('apikey')
 		this.port = Homey.ManagerSettings.get('port')
-		this.id = this.getSetting('id')
-		
+
 		this.registerInApp()
 		
 		// randomize this s.t we're not performing too many requests at once that could cause timeouts
@@ -23,6 +22,7 @@ class Sensor extends DeconzDevice {
 	}
 	
 	registerInApp() {
+		this.id = this.getSetting('id')
 		if (typeof(this.id) === 'object') {
 			this.id.forEach(id => {
 				Homey.app.devices.sensors[id] = this
@@ -98,10 +98,6 @@ class Sensor extends DeconzDevice {
 		})
 	}
 
-	handleRepairRequest(candidateDevice){
-		super.handleRepairRequest(candidateDevice)
-		this.registerInApp()
-	}
 }
 
 module.exports = Sensor

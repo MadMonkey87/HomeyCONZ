@@ -8,6 +8,7 @@ const { util } = require('./util')
 class deCONZ extends Homey.App {
 
 	onInit() {
+
 		// holds all devices that we have, added when a device gets initialized (see Sensor.registerInApp for example).
 		this.devices = {
 			lights: {},
@@ -15,17 +16,33 @@ class deCONZ extends Homey.App {
 			groups: {}
 		}
 
-		this.initializeActions()
 		this.initializeTriggers()
+		this.initializeConditions()
+		this.initializeActions()
+
+		this.usageId = Homey.ManagerSettings.get('usageId')
+		if (!this.usageId) {
+			this.usageId = util.generateGuid()
+			Homey.ManagerSettings.set('usageId', this.usageId)
+		}
 
 		this.host = Homey.ManagerSettings.get('host')
 		this.port = Homey.ManagerSettings.get('port')
 		this.apikey = Homey.ManagerSettings.get('apikey')
 		this.wsPort = Homey.ManagerSettings.get('wsport')
+		this.sendUsageData = Homey.ManagerSettings.get('sendUsageData')
+		if (this.sendUsageData !== false && this.sendUsageData !== true) {
+			this.sendUsageData = true
+		}
+		this.autoRepairConnection = Homey.ManagerSettings.get('autoRepairConnection')
+		if (this.autoRepairConnection !== false && this.autoRepairConnection !== true) {
+			this.autoRepairConnection = true
+		}
 
 		Homey.ManagerSettings.on('set', this.onSettingsChanged.bind(this))
 
 		this.startIntervalStateUpdate()
+		this.startSendUsageDataUpdate()
 
 		if (!this.host || !this.port || !this.apikey || !this.wsPort) {
 			return this.log('Go to the app settings page and fill all the fields')
@@ -42,15 +59,40 @@ class deCONZ extends Homey.App {
 	}
 
 	startIntervalStateUpdate() {
+		if (this.pollIntervall) {
+			clearInterval(this.pollIntervall)
+		}
+		let interval = Homey.ManagerSettings.get('pollingIntervall')
+		if (!interval) {
+			interval = 15
+		}
+
+		if (interval <= 0) {
+			this.log('disable poll interval')
+			return
+		}
+
+		this.log('setting up poll interval in minutes', interval)
+
 		// Update all devices regularly. This might be needed for two cases
 		// - state/config values that do not update very often, such as the battery for certain devices: in that case we would need to wait until something changes s.t we receive
 		//   it trough the websocket update
 		// - some config values are not pushed via websockets such as the sensitivity of certain devices
 		// IMPORTANT: decreasing this might get cpu warnings and lead to a disabled app!
-		setInterval(() => {
-			this.log("Initialize initial states");
+		this.pollIntervall = setInterval(() => {
+			this.log("Polling current states");
 			this.setInitialStates()
-		}, 15 * 60 * 1000)
+		}, interval * 60 * 1000)
+	}
+
+	startSendUsageDataUpdate() {
+		setTimeout(() => {
+			this.sendUsageDataFullState()
+		}, 15 * 1000)
+
+		setInterval(() => {
+			this.sendUsageDataFullState()
+		}, 1000 * 60 * 60 * 24 * 3)
 	}
 
 	onSettingsChanged(modifiedKey) {
@@ -61,8 +103,29 @@ class deCONZ extends Homey.App {
 		this.port = Homey.ManagerSettings.get('port')
 		this.apikey = Homey.ManagerSettings.get('apikey')
 		this.wsPort = Homey.ManagerSettings.get('wsport')
-		if (!!this.host && !!this.port && !!this.apikey && !!this.wsPort) {
-			this.startWebSocketConnection()
+		this.sendUsageData = Homey.ManagerSettings.get('sendUsageData')
+		if (this.sendUsageData !== false && this.sendUsageData !== true) {
+			this.sendUsageData = true
+		}
+		this.autoRepairConnection = Homey.ManagerSettings.get('autoRepairConnection')
+		if (this.autoRepairConnection !== false && this.autoRepairConnection !== true) {
+			this.autoRepairConnection = true
+		}
+
+		if (modifiedKey == 'sendUsageData') {
+			this.uploadUsageData('sendUsageData', { sendUsageData: this.sendUsageData })
+		}
+
+		if (modifiedKey == 'pollingIntervall') {
+			this.startIntervalStateUpdate()
+		}
+
+		if (modifiedKey == 'host' || modifiedKey == 'port' || modifiedKey == 'apikey' || modifiedKey == 'wsPort') {
+			if (!!this.host && !!this.port && !!this.apikey && !!this.wsPort) {
+				this.startWebSocketConnection()
+			}
+		} else {
+			this.log('update ws connection not necessary')
 		}
 	}
 
@@ -92,8 +155,10 @@ class deCONZ extends Homey.App {
 
 	webSocketConnectTo() {
 		this.log('Websocket connect...')
+		this.wsConnected = false
 		this.websocket = new WebSocketClient(`ws://${this.host}:${this.wsPort}`)
 		this.websocket.on('open', () => {
+			this.wsConnected = true
 			this.log('Websocket is up')
 			this.setWSKeepAlive()
 		})
@@ -115,12 +180,16 @@ class deCONZ extends Homey.App {
 			}
 		})
 		this.websocket.on('error', error => {
-			this.error(error)
+			this.error('Websocket error', error)
 		})
 		this.websocket.on('close', (reasonCode, _) => {
+			if (this.wsConnected === true && this.autoRepairConnection === true) {
+				this.attemptAutoRepair()
+			}
 			this.setAllUnavailable()
-			this.error(`Closed, error #${reasonCode}`)
+			this.error(`Closed, error #${reasonCode}, autoRepair ${this.autoRepairConnection}, isFirstFailure ${this.wsConnected === true}`)
 			this.log('Reconnection in 5 seconds...')
+			this.wsConnected = false
 			setTimeout(
 				this.webSocketConnectTo.bind(this),
 				5 * 1000
@@ -164,9 +233,73 @@ class deCONZ extends Homey.App {
 			if (!!error) {
 				callback(error, null)
 			} else {
-				let state = JSON.parse(response)
-				state.wsConnected = wsState
-				return callback(null, state)
+
+				try {
+
+
+					let state = JSON.parse(response)
+
+					let anonymizedState = {
+						wsConnected: wsState,
+						usageId: this.usageId,
+						deCONZ: {
+							apiversion: state.config.apiversion,
+							datastoreversion: state.config.datastoreversion,
+							dhcp: state.config.dhcp,
+							fwversion: state.config.fwversion,
+							swversion: state.config.swversion,
+							websocketnotifyall: state.config.websocketnotifyall,
+							name: state.config.name,
+							mac: state.config.mac,
+							zigbeechannel: state.config.zigbeechannel,
+							panid: state.config.panid,
+							devicename: state.config.devicename
+						},
+						groups: [],
+						lights: [],
+						sensors: []
+					}
+
+					Object.entries(state.groups).forEach(entry => {
+						const key = entry[0]
+						const group = entry[1]
+						group.name = undefined
+						group.etag = undefined
+						anonymizedState.groups.push(group)
+					})
+
+					Object.entries(state.lights).forEach(entry => {
+						const key = entry[0]
+						const light = entry[1]
+						light.name = undefined
+						light.etag = undefined
+						anonymizedState.lights.push(light)
+					})
+
+					Object.entries(state.sensors).forEach(entry => {
+						const key = entry[0]
+						const sensor = entry[1]
+						sensor.name = undefined
+						sensor.etag = undefined
+						anonymizedState.sensors.push(sensor)
+					})
+
+					return callback(null, anonymizedState)
+
+				} catch (error) {
+					this.log(error)
+					return callback(error, null)
+				}
+			}
+		})
+	}
+
+	getConfig(callback) {
+		http.get(`http://${this.host}:${this.port}/api/${this.apikey}/config`, (error, response) => {
+			if (!!error) {
+				callback(error, null)
+			} else {
+				return callback(null, JSON.parse(response))
 			}
 		})
 	}
@@ -180,6 +313,80 @@ class deCONZ extends Homey.App {
 				let state = JSON.parse(response)
 				state.wsConnected = wsState
 				return callback(null, state)
+			}
+		})
+	}
+
+	getDeconzUpdates(callback) {
+		this.getConfig((configError, config) => {
+			if (!!configError) {
+				callback(configError, null)
+			} else {
+				https.get(`https://api.github.com/repos/dresden-elektronik/deconz-rest-plugin/releases/latest`, (releaseError, release) => {
+					if (!!releaseError) {
+						callback(releaseError, null)
+					} else {
+
+						let parsedRelease = JSON.parse(release)
+						let nextRaw = parsedRelease.tag_name.replace("_stable", "").replace("_", ".").replace("_", ".").replace("V", "")
+
+						let nextMajor = parseInt(nextRaw.split('.')[0], 0)
+						let nextMinor = parseInt(nextRaw.split('.')[1], 0)
+						let nextBuild = parseInt(nextRaw.split('.')[2], 0)
+
+						let currentMajor = parseInt(config.swversion.split('.')[0], 0)
+						let currentMinor = parseInt(config.swversion.split('.')[1], 0)
+						let currentBuild = parseInt(config.swversion.split('.')[2], 0)
+
+						let result = {
+							updateAvailable: (currentMajor * 100 + currentMinor * 10 + currentBuild) < (nextMajor * 100 + nextMinor * 10 + nextBuild),
+							current: currentMajor + '.' + currentMinor + '.' + currentBuild,
+							next: nextMajor + '.' + nextMinor + '.' + nextBuild + ' (' + parsedRelease.name + ')',
+							// description: parsedRelease.body,
+							url: parsedRelease.html_url
+						}
+
+						this.log(result)
+
+						callback(null, result)
+					}
+				})
+			}
+		})
+	}
+
+	getDeconzDockerUpdates(callback) {
+		this.getConfig((configError, config) => {
+			if (!!configError) {
+				callback(configError, null)
+			} else {
+				https.get(`https://raw.githubusercontent.com/marthoc/docker-deconz/master/version.json`, (releaseError, release) => {
+					if (!!releaseError) {
+						callback(releaseError, null)
+					} else {
+
+						let parsedRelease = JSON.parse(release)
+						let nextRaw = parsedRelease.version
+
+						let nextMajor = parseInt(nextRaw.split('.')[0], 0)
+						let nextMinor = parseInt(nextRaw.split('.')[1], 0)
+						let nextBuild = parseInt(nextRaw.split('.')[2], 0)
+
+						let currentMajor = parseInt(config.swversion.split('.')[0], 0)
+						let currentMinor = parseInt(config.swversion.split('.')[1], 0)
+						let currentBuild = parseInt(config.swversion.split('.')[2], 0)
+
+						let result = {
+							updateAvailable: (currentMajor * 100 + currentMinor * 10 + currentBuild) < (nextMajor * 100 + nextMinor * 10 + nextBuild),
+							current: currentMajor + '.' + currentMinor + '.' + currentBuild,
+							next: nextMajor + '.' + nextMinor + '.' + nextBuild + ' (' + parsedRelease.channel + ')'
+						}
+
+						this.log(result)
+
+						callback(null, result)
+					}
+				})
 			}
 		})
 	}
@@ -272,7 +479,10 @@ class deCONZ extends Homey.App {
 
 		this.getLightsList((error, lights) => {
 			if (error) {
-				return this.error(error)
+				if (error.code == 'EHOSTUNREACH' && this.autoRepairConnection) {
+					this.attemptAutoRepair()
+				}
+				return this.error('error getting lights', error)
 			}
 			Object.entries(lights).forEach(entry => {
 				const key = entry[0]
@@ -289,7 +499,7 @@ class deCONZ extends Homey.App {
 
 		this.getSensorsList((error, sensors) => {
 			if (error) {
-				return this.error(error)
+				return this.error('error getting sensor', error)
 			}
 			Object.entries(sensors).forEach(entry => {
 				const key = entry[0]
@@ -309,7 +519,7 @@ class deCONZ extends Homey.App {
 
 		this.getGroupsList((error, groups) => {
 			if (error) {
-				return this.error(error)
+				return this.error('error getting groups', error)
 			}
 
 			Object.entries(groups).forEach(entry => {
@@ -359,6 +569,49 @@ class deCONZ extends Homey.App {
 
 		// this.log('state update for', device.getSetting('id'), device.getName()/*, state*/)
 
+		if (state.hasOwnProperty('buttonevent') && !initial) {
+			device.fireEvent(state.buttonevent, state)
+		}
+
+		if (state.hasOwnProperty('buttonevent') && state.hasOwnProperty('gesture')) {
+			device.fireEvent(state.buttonevent, initial, state.gesture, state)
+		}
+
+		if (state.hasOwnProperty('open')) {
+			if (deviceSupports('alarm_contact')) {
+				const invert = device.getSetting('invert_alarm') == null ? false : device.getSetting('invert_alarm')
+				if (invert === true) {
+					device.setCapabilityValue('alarm_contact', !state.open)
+				} else {
+					device.setCapabilityValue('alarm_contact', state.open)
+				}
+			}
+		}
+
+		if (state.hasOwnProperty('presence')) {
+			if (deviceSupports('alarm_motion')) {
+				device.setCapabilityValue('alarm_motion', state.presence)
+			}
+		}
+
+		if (state.hasOwnProperty('vibration')) {
+			if (deviceSupports('vibration_alarm')) {
+				device.setCapabilityValue('vibration_alarm', state.vibration)
+			}
+		}
+
+		if (state.hasOwnProperty('vibrationstrength')) {
+			if (deviceSupports('vibration_strength')) {
+				device.setCapabilityValue('vibration_strength', state.vibrationstrength)
+			}
+		}
+
+		if (state.hasOwnProperty('tiltangle')) {
+			if (deviceSupports('tilt_angle')) {
+				device.setCapabilityValue('tilt_angle', state.tiltangle)
+			}
+		}
+
 		if (state.hasOwnProperty('on')) {
 			if (deviceSupports('onoff')) {
 				device.setCapabilityValue('onoff', state.on)
@@ -383,33 +636,11 @@ class deCONZ extends Homey.App {
 			}
 		}
 
-		if (state.hasOwnProperty('presence')) {
-			if (deviceSupports('alarm_motion')) {
-				device.setCapabilityValue('alarm_motion', state.presence)
-			}
-		}
+
 
 		if (state.hasOwnProperty('bri')) {
 			if (deviceSupports('dim')) {
 				device.setCapabilityValue('dim', state.bri / 255)
-			}
-		}
-
-		if (state.hasOwnProperty('vibration')) {
-			if (deviceSupports('vibration_alarm')) {
-				device.setCapabilityValue('vibration_alarm', state.vibration)
-			}
-		}
-
-		if (state.hasOwnProperty('vibrationstrength')) {
-			if (deviceSupports('vibration_strength')) {
-				device.setCapabilityValue('vibration_strength', state.vibrationstrength)
-			}
-		}
-
-		if (state.hasOwnProperty('tiltangle')) {
-			if (deviceSupports('tilt_angle')) {
-				device.setCapabilityValue('tilt_angle', state.tiltangle)
 			}
 		}
 
@@ -434,25 +665,6 @@ class deCONZ extends Homey.App {
 					device.setCapabilityValue('alarm_water', !state.water)
 				} else {
 					device.setCapabilityValue('alarm_water', state.water)
-				}
-			}
-		}
-
-		if (state.hasOwnProperty('buttonevent') && !initial) {
-			device.fireEvent(state.buttonevent, state)
-		}
-
-		if (state.hasOwnProperty('buttonevent') && state.hasOwnProperty('gesture')) {
-			device.fireEvent(state.buttonevent, initial, state.gesture, state)
-		}
-
-		if (state.hasOwnProperty('open')) {
-			if (deviceSupports('alarm_contact')) {
-				const invert = device.getSetting('invert_alarm') == null ? false : device.getSetting('invert_alarm')
-				if (invert === true) {
-					device.setCapabilityValue('alarm_contact', !state.open)
-				} else {
-					device.setCapabilityValue('alarm_contact', state.open)
 				}
 			}
 		}
@@ -676,24 +888,7 @@ class deCONZ extends Homey.App {
 			.registerRunListener(async (args, state) => {
 				return new Promise((resolve) => {
 					try {
-						this.log('update ip address')
-						this.getDiscoveryData((error, response) => {
-							if (error) {
-								this.log(error)
-								return this.error(error)
-							}
-
-							if (Object.keys(response).length > 0 && response.internalipaddress && this.host !== response.internalipaddress) {
-								this.log('ip address has changed', this.host, response.internalipaddress)
-								Homey.set('host', response.internalipaddress, (err, settings) => {
-									if (err) this.error(err)
-								})
-								this.startWebSocketConnection()
-								this.log('ip address updated successfully')
-							} else {
-								this.log('no deconz changed gateway found')
-							}
-						})
+						this.attemptAutoRepair()
 					} catch (error) {
 						return this.error(error);
 					}
@@ -705,6 +900,95 @@ class deCONZ extends Homey.App {
 	initializeTriggers() {
 		this.deviceReachableTrigger = new Homey.FlowCardTrigger('device_on_reachable').register();
 		this.deviceUnreachableTrigger = new Homey.FlowCardTrigger('device_on_unreachable').register();
+	}
+
+	initializeConditions() {
+		let checkDeconzUpdatesCondition = new Homey.FlowCardCondition('check_deconz_updates');
+		checkDeconzUpdatesCondition
+			.register()
+			.registerRunListener((args, state) => {
+				this.getDeconzUpdates((error, success) => {
+					return Promise.resolve(!error && success.updateAvailable === true)
+				}
+				)
+			});
+
+		let checkDeconzDockerUpdatesCondition = new Homey.FlowCardCondition('check_deconz_docker_updates');
+		checkDeconzDockerUpdatesCondition
+			.register()
+			.registerRunListener((args, state) => {
+				this.getDeconzDockerUpdates((error, success) => {
+					return Promise.resolve(!error && success.updateAvailable === true)
+				}
+				)
+			});
+	}
+
+	sendUsageDataFullState() {
+		if (this.sendUsageData) {
+			this.getFullState((err, result) => {
+				if (err) {
+					this.log('Error while fetching full state', err)
+				} else {
+
+					this.usageDataQueue = []
+
+					result.groups.forEach(e => this.usageDataQueue.push({ type: 'fullstate-group', content: e }))
+					result.lights.forEach(e => this.usageDataQueue.push({ type: 'fullstate-light', content: e }))
+					this.usageDataQueue.push({ type: 'fullstate-deconz', content: result.deCONZ })
+					result.sensors.forEach(e => this.usageDataQueue.push({ type: 'fullstate-sensor', content: e }))
+					this.dequeueUsageData()
+				}
+			})
+		}
+	}
+
+	dequeueUsageData() {
+		if (this.usageDataQueue.length > 0) {
+			let entry = this.usageDataQueue.pop()
+			this.uploadUsageData(entry.type, entry.content)
+			setTimeout(() => {
+				this.dequeueUsageData()
+			}, 1500)
+		}
+	}
+
+	uploadUsageData(type, content) {
+		if (this.sendUsageData) {
+			this.log('upload usage data', type, this.usageId)
+			let payload = { Type: type, Content: content, Identifier: this.usageId }
+			https.post(Homey.env.USAGE_DATA_HOST, 443, Homey.env.USAGE_DATA_PATH, payload, (error, response, statusCode) => {
+				if (error) {
+					this.log('Error while sending usage data', error)
+				} else {
+					this.log('Sent usage data', type, response, statusCode)
+					if (statusCode != 200) {
+						this.log(JSON.stringify(payload))
+					}
+				}
+			})
+		}
+	}
+
+	attemptAutoRepair() {
+		this.log('attempt auto repair...')
+		this.getDiscoveryData((error, response) => {
+			if (error) {
+				this.log(error)
+				return this.error(error)
+			}
+
+			if (Object.keys(response).length > 0 && response.internalipaddress && this.host !== response.internalipaddress) {
+				this.log('ip address has changed', this.host, response.internalipaddress)
+				Homey.ManagerSettings.set('host', response.internalipaddress, (err, settings) => {
+					if (err) this.error(err)
+				})
+				this.startWebSocketConnection()
+				this.log('ip address updated successfully')
+			} else {
+				this.log('no deconz changed gateway found')
+			}
+		})
 	}
 }
 

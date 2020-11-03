@@ -13,9 +13,6 @@ class Light extends DeconzDevice {
 		this.host = Homey.ManagerSettings.get('host')
 		this.apikey = Homey.ManagerSettings.get('apikey')
 		this.port = Homey.ManagerSettings.get('port')
-		this.id = this.getSetting('id')
-		this.address = `/lights/${this.id}/state`
-		this.sensors = this.getSetting('sensors')
 
 		this.isBlinds = this.getClass() === 'windowcoverings'
 
@@ -53,13 +50,17 @@ class Light extends DeconzDevice {
 		callback(null, true)
 	}
 
-	updateSettings(){
+	updateSettings() {
 		this.dimDuration = this.getSetting('dim_duration') || 4
 		this.xycolormode = this.getSetting('colormode') || false
-		this.log('settings updated',this.dimDuration ,this.xycolormode )
+		this.log('settings updated', this.dimDuration, this.xycolormode)
 	}
 
 	registerInApp() {
+		this.id = this.getSetting('id')
+		this.address = `/lights/${this.id}/state`
+		this.sensors = this.getSetting('sensors')
+
 		Homey.app.devices.lights[this.id] = this
 		if (this.sensors) {
 			this.sensors.forEach(id => {
@@ -96,21 +97,87 @@ class Light extends DeconzDevice {
 	registerCTListener() {
 		this.registerCapabilityListener('light_temperature', (value, opts, callback) => {
 			let ct = value * 347 + 153
-			this.setCapabilityValue('light_mode', 'ct')
+			this.setCapabilityValue('light_mode', 'temperature')
 			this.setColorTemperature(ct, callback)
 		})
 	}
 
 	registerColorListener() {
-		// todo: check in detail how this works
-		this.registerCapabilityListener('light_hue', (hue, _, callback) => {
-			this.hue = hue
+
+		// when setting the color from the homey ui it performs this by emitting a hue and a saturation event separatly. Therefore we try to wait for the second event but if it doesn't
+		// come swiftly we take the first one anyways
+
+		// this.timeout = 200
+
+		this.registerCapabilityListener('light_hue', (hue, opts, callback) => {
+			/*if (!this.setColorTimeOut) {
+				this.setColorBuffer = {
+					hue: hue
+				}
+				this.setColorTimeOut = setTimeout(() => {
+					clearTimeout(this.setColorTimeOut)
+					this.setColorBuffer.hue = undefined
+					this.setColor(hue, undefined)
+				}, this.timeout)
+			} else {
+				clearTimeout(this.setColorTimeOut)
+				this.setColor(hue, this.setColorBuffer.sat)
+			}*/
+
+			this.setColor(hue, undefined)
 			callback(null, true)
 		})
-		this.registerCapabilityListener('light_saturation', (saturation, _, callback) => {
-			this.log('sat', saturation)
-			this.setColor(this.hue, saturation, callback)
+
+		this.registerCapabilityListener('light_saturation', (sat, opts, callback) => {
+			/*if (!this.setColorTimeOut) {
+				this.setColorBuffer = {
+					sat: sat
+				}
+				this.setColorTimeOut = setTimeout(() => {
+					clearTimeout(this.setColorTimeOut)
+					this.setColorBuffer.sat = undefined
+					this.setColor(undefined, sat)
+				}, this.timeout)
+			} else {
+				clearTimeout(this.setColorTimeOut)
+				this.setColor(this.setColorBuffer.hue, sat)
+			}*/
+
+			this.setColor(undefined, sat)
+			callback(null, true)
 		})
+	}
+
+	setColor(hue, sat) {
+		if (this.xycolormode === true) {
+			if (hue === undefined) {
+				hue = this.getCapabilityValue('light_hue')
+			}
+			if (sat === undefined) {
+				sat = this.getCapabilityValue('light_saturation')
+			}
+			this.put(this.address, { xy: util.hsToXy(hue, sat), transitiontime: 0 }, (error, success) => { })
+		} else {
+			if (hue !== undefined && sat !== undefined) {
+				this.put(this.address, { hue: Math.round(hue * 65534), sat: Math.round(sat * 255), transitiontime: 0 }, (error, success) => { })
+			} else if (hue !== undefined) {
+				this.put(this.address, { hue: Math.round(hue * 65534), transitiontime: 0 }, (error, success) => { })
+			} else if (sat !== undefined) {
+				this.put(this.address, { sat: Math.round(sat * 255), transitiontime: 0 }, (error, success) => { })
+			}
+		}
+	}
+
+	setPower(value, callback) {
+		this.put(this.address, { on: value }, callback)
+	}
+
+	dim(level, duration, callback) {
+		this.put(this.address, { on: true, bri: level * 255, transitiontime: duration }, callback)
+	}
+
+	setColorTemperature(value, callback) {
+		this.put(this.address, { ct: value }, callback)
 	}
 
 	put(path, data, callback) {
@@ -119,30 +186,7 @@ class Light extends DeconzDevice {
 		})
 	}
 
-	setPower(value, callback) {
-		this.put(this.address, {on: value}, callback)
-	}
-
-	dim(level, duration, callback) {
-		this.put(this.address, { on: true, bri: level * 255, transitiontime: duration }, callback)
-	}
-
-	setColorTemperature(value, callback) {
-		this.put(this.address, {ct: value}, callback)
-	}
-
-	setColor(hue, sat, hue_callback, saturation_callback) {
-		if(!hue || !sat){
-			return
-		}
-		else if (this.xycolormode === true){
-			this.put(this.address, {xy: util.hsToXy(hue, sat),transitiontime: 0}, hue_callback, saturation_callback)
-		} else {
-			this.put(this.address, {hue: hue * 65534, sat: sat * 255, transitiontime: 0}, hue_callback, saturation_callback)
-		}
-	}
-
-	handleRepairRequest(candidateDevice){
+	handleRepairRequest(candidateDevice) {
 		super.handleRepairRequest(candidateDevice)
 		this.id = this.getSetting('id')
 		this.address = `/lights/${this.id}/state`

@@ -1,6 +1,6 @@
 {
   "name": {
-    "en": "<Generic Switch>"
+    "en": "Jung 4-Gang Switch"
   },
   "class": "other",
   "capabilities": [
@@ -8,7 +8,7 @@
   ],
   "energy": {
     "batteries": [
-      "OTHER"
+      "CR2450"
     ]
   },
   "images": {

@@ -1,12 +1,16 @@
 const http = require('http')
 const https = require('https')
-const urlParser = require('url')
 
 module.exports.http = {}
 module.exports.https = {}
 
-module.exports.http.get = function(url, callback) {
-	http.get(url, response => {
+module.exports.http.get = function (url, callback) {
+	let options = {
+		headers: {
+			'User-Agent': 'Homey'
+		}
+	}
+	http.get(url, options, response => {
 		let data = ''
 		response.on('data', chunk => {
 			data += chunk
@@ -19,8 +23,13 @@ module.exports.http.get = function(url, callback) {
 	})
 }
 
-module.exports.https.get = function(url, callback) {
-	https.get(url, response => {
+module.exports.https.get = function (url, callback) {
+	let options = {
+		headers: {
+			'User-Agent': 'Homey'
+		}
+	}
+	https.get(url, options, response => {
 		let data = ''
 		response.on('data', chunk => {
 			data += chunk
@@ -33,7 +42,7 @@ module.exports.https.get = function(url, callback) {
 	})
 }
 
-module.exports.http.post = function(host, port, path, data, callback) {
+module.exports.http.post = function (host, port, path, data, callback) {
 	let dataString = JSON.stringify(data)
 	let options = {
 		host: host,
@@ -42,7 +51,8 @@ module.exports.http.post = function(host, port, path, data, callback) {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
-			'Content-Length': dataString.length
+			'Content-Length': dataString.length,
+			'User-Agent': 'Homey'
 		}
 	}
 	http.request(options, response => {
@@ -58,7 +68,7 @@ module.exports.http.post = function(host, port, path, data, callback) {
 	}).write(dataString)
 }
 
-module.exports.https.post = function(host, port, path, data, callback) {
+module.exports.https.post = function (host, port, path, data, callback) {
 	let dataString = JSON.stringify(data)
 	let options = {
 		host: host,
@@ -67,7 +77,8 @@ module.exports.https.post = function(host, port, path, data, callback) {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
-			'Content-Length': dataString.length
+			'Content-Length': dataString.length,
+			'User-Agent': 'Homey'
 		}
 	}
 	https.request(options, response => {
@@ -83,7 +94,7 @@ module.exports.https.post = function(host, port, path, data, callback) {
 	}).write(dataString)
 }
 
-module.exports.http.put = function(host, port, path, data, callback) {
+module.exports.http.put = function (host, port, path, data, callback) {
 	let dataString = JSON.stringify(data)
 	let options = {
 		host: host,
@@ -92,7 +103,8 @@ module.exports.http.put = function(host, port, path, data, callback) {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
-			'Content-Length': dataString.length
+			'Content-Length': dataString.length,
+			'User-Agent': 'Homey'
 		}
 	}
 	http.request(options, response => {
@@ -108,7 +120,7 @@ module.exports.http.put = function(host, port, path, data, callback) {
 	}).write(dataString)
 }
 
-module.exports.https.put = function(host, port, path, data, callback) {
+module.exports.https.put = function (host, port, path, data, callback) {
 	let dataString = JSON.stringify(data)
 	let options = {
 		host: host,
@@ -117,7 +129,8 @@ module.exports.https.put = function(host, port, path, data, callback) {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
-			'Content-Length': dataString.length
+			'Content-Length': dataString.length,
+			'User-Agent': 'Homey'
 		}
 	}
 	https.request(options, response => {
