@@ -81,9 +81,9 @@
     "en": "New repair mode that is better integrated into the homey environment, fancy UI"
   },
   "1.14.2":{
-    "en": "Updated/removed packages, improved repair mode, fixed a but that could cause app crashes when using certain power-plugs"
+    "en": "Updated/removed packages, improved repair mode, fixed a bug that could cause app crashes when using certain power-plugs"
   },
   "1.15.0":{
-    "en": "Condition card to check for DeConz updates, send usage data if you allow it"
+    "en": "Condition card to check for DeConz updates, auto repair connection feature, send usage data if you allow it, setting to adjust or disable the polling, improved color handling for lights, support Jung 4-gang switch"
   }
 }

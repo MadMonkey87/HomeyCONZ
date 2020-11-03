@@ -287,6 +287,7 @@ class deCONZ extends Homey.App {
 					return callback(null, anonymizedState)
 
 				} catch (error) {
+					this.log(error)
 					return callback(error, null)
 				}
 			}
