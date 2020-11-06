@@ -3,13 +3,13 @@
 const Light = require('../Light')
 const { FlowCardTriggerDevice } = require('homey')
 
-class SonoffBasic extends Light {
-
+class SonoffS31LiteZb extends Light {
+	
 	onInit() {
 		super.onInit()
 
 		this.setTriggers()
-
+		
 		this.log(this.getName(), 'has been initiated')
 	}
 
@@ -23,7 +23,7 @@ class SonoffBasic extends Light {
 		}
 		super.setCapabilityValue(name, value)
 	}
-
+	
 }
 
-module.exports = SonoffBasic
+module.exports = SonoffS31LiteZb
