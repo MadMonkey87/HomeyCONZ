@@ -395,10 +395,10 @@ class deCONZ extends Homey.App {
 		http.get(`http://phoscon.de/discover`, (error, response) => {
 			if (error) {
 				callback(error, null)
-			} else if (response.startsWith('{')) {
+			} else if (response.startsWith('[')) {
 				callback(null, JSON.parse(response)[0])
 			} else {
-				this.sendUsageData('invalid-discovery', response)
+				Homey.app.sendUsageData('invalid-discovery', response)
 				callback('invalid response', null)
 			}
 		})
