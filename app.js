@@ -393,7 +393,14 @@ class deCONZ extends Homey.App {
 
 	getDiscoveryData(callback) {
 		http.get(`http://phoscon.de/discover`, (error, response) => {
-			callback(error, !!error ? null : JSON.parse(response)[0])
+			if (error) {
+				callback(error, null)
+			} else if (response.startsWith('[')) {
+				callback(null, JSON.parse(response)[0])
+			} else {
+				Homey.app.sendUsageData('invalid-discovery', response)
+				callback('invalid response', null)
+			}
 		})
 	}
 
@@ -977,8 +984,7 @@ class deCONZ extends Homey.App {
 				this.log(error)
 				return this.error(error)
 			}
-
-			if (Object.keys(response).length > 0 && response.internalipaddress && this.host !== response.internalipaddress) {
+			else if (response != undefined && response != null && Object.keys(response).length > 0 && response.internalipaddress && this.host !== response.internalipaddress) {
 				this.log('ip address has changed', this.host, response.internalipaddress)
 				Homey.ManagerSettings.set('host', response.internalipaddress, (err, settings) => {
 					if (err) this.error(err)
