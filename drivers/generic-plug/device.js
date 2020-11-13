@@ -1,7 +1,8 @@
 'use strict'
 
 const Light = require('../Light')
-const { FlowCardTriggerDevice, Homey } = require('homey')
+const FlowCardTriggerDevice = require('homey')
+const Homey = require('homey')
 
 class GenericPlug extends Light {
 
@@ -25,8 +26,8 @@ class GenericPlug extends Light {
 	}
 
 	fireEvent(event, state) {
-		this.log('generic-plug-unhandled-fire-event', event, state, Homey.ManagerSettings.get('manufacturername'))
-		Homey.app.uploadUsageData('generic-plug-unhandled-fire-event', { event: event, state: state, manufacturer: Homey.ManagerSettings.get('manufacturername') })
+		this.log('generic-plug-unhandled-fire-event', event, state, this.getSetting('modelid'), this.getSetting('manufacturername'))
+		Homey.app.uploadUsageData('generic-plug-unhandled-fire-event', { event: event, state: state, modelid: this.getSetting('modelid'), manufacturername: this.getSetting('manufacturername') })
 	}
 
 }

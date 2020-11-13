@@ -10,7 +10,7 @@ class CubeDriver extends Driver {
 	}
 	
 	onPairListDevices(data, callback) {
-		this.getSensorsByCondition(device => device.modelid === 'lumi.sensor_cube.aqgl01', callback)
+		this.getSensorsByCondition(device => device.modelid === 'lumi.sensor_cube.aqgl01' || 'lumi.sensor_cube', callback)
 	}
 	
 }
