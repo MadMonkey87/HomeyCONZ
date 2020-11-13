@@ -88,5 +88,8 @@
   },
   "1.15.1":{
     "en": "Generic switch supports up to 8 buttons"
+  },
+  "1.16.0":{
+    "en": "Support for new Sonoff devices, supports newer revisions for a bunch of devices"
   }
 }
