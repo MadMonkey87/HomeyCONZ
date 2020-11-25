@@ -91,5 +91,11 @@
   },
   "1.16.0":{
     "en": "Support for new Sonoff devices, supports newer revisions for a bunch of devices"
+  },
+  "1.16.1":{
+    "en": "Small fix"
+  },
+  "1.16.2":{
+    "en": "Support newer Sonoff models"
   }
 }
