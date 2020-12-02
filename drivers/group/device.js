@@ -18,7 +18,7 @@ class Group extends Light {
 		let capabilities = this.getCapabilities()
 
 		if (capabilities.includes('onoff')) {
-			this.registerOnoffListener()
+			this.registerOnOffListener()
 		}
 
 		if (capabilities.includes('dim')) {

@@ -625,6 +625,13 @@ class deCONZ extends Homey.App {
 			}
 		}
 
+		// siren
+		if (state.hasOwnProperty('alert')) {
+			if (deviceSupports('onoff')) {
+				device.setCapabilityValue('onoff', state.alert !=='none')
+			}
+		}
+
 		if (state.hasOwnProperty('any_on')) {
 			if (deviceSupports('onoff')) {
 				device.setCapabilityValue('onoff', state.any_on)

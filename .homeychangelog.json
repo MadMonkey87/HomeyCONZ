@@ -97,5 +97,8 @@
   },
   "1.16.2":{
     "en": "Support newer Sonoff models"
+  },
+  "1.17.0":{
+    "en": "Generic support for sirens"
   }
 }

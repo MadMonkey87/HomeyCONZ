@@ -21,7 +21,7 @@ class Light extends DeconzDevice {
 		let capabilities = this.getCapabilities()
 
 		if (capabilities.includes('onoff')) {
-			this.registerOnoffListener()
+			this.registerOnOffListener()
 		}
 
 		if (capabilities.includes('dim')) {
@@ -78,7 +78,7 @@ class Light extends DeconzDevice {
 		})
 	}
 
-	registerOnoffListener() {
+	registerOnOffListener() {
 		this.registerCapabilityListener('onoff', (value, opts, callback) => {
 			let power = this.isBlinds ? !value : value
 			this.setPower(power, callback)

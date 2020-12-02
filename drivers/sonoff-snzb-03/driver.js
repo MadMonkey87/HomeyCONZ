@@ -11,7 +11,7 @@ class SonoffSnzb03Driver extends Driver {
 
 	onPairListDevices(_, callback) {
 		this.getSensorsByCondition(device => {
-			return device.modelid === 'ms01' || device.modelid === 'MS01' || device.modelid === 'MSO1'
+			return device.modelid === 'ms01' || device.modelid === 'MS01' || device.modelid === 'MSO1' || (device.type === 'ZHAPresence' && device.manufacturername === 'eWeLink')
 		}, callback)
 	}
 
