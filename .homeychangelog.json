@@ -100,5 +100,8 @@
   },
   "1.17.0":{
     "en": "Generic support for sirens"
+  },
+  "1.17.1":{
+    "en": "Support newer heiman sensors"
   }
 }
