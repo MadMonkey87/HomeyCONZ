@@ -103,5 +103,8 @@
   },
   "1.17.1":{
     "en": "Support newer heiman sensors"
+  },
+  "1.17.2":{
+    "en": "Fix that some devices power state was shown incorrectly"
   }
 }

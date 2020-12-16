@@ -92,6 +92,10 @@ class DeconzDevice extends Homey.Device {
 	fireEvent(event, state) {
 		Homey.app.uploadUsageData('unhandled-fireEvent', { driver: this.getDriver().getManifest().name.en, state: state, event: event, modelId: this.getSetting('modelid'), manufacturername: this.getSetting('manufacturername') })
 	}
+
+	// some devices missuse the alert, i.e Sirens use this as on/off indicator
+	handleAlertState(state){
+	}
 }
 
 module.exports = DeconzDevice

@@ -17,6 +17,10 @@ class GenericSiren extends Light {
 			this.put(this.address, { alert: value ? 'select':'none' }, callback)
 		})
 	}
+
+	handleAlertState(state){
+		this.setCapabilityValue('onoff', state.alert !=='none')
+	}
 }
 
 module.exports = GenericSiren

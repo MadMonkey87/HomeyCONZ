@@ -628,7 +628,7 @@ class deCONZ extends Homey.App {
 		// siren
 		if (state.hasOwnProperty('alert')) {
 			if (deviceSupports('onoff')) {
-				device.setCapabilityValue('onoff', state.alert !=='none')
+				device.handleAlertState(state)
 			}
 		}
 
@@ -649,8 +649,6 @@ class deCONZ extends Homey.App {
 				device.setCapabilityValue('measure_luminance', state.lux)
 			}
 		}
-
-
 
 		if (state.hasOwnProperty('bri')) {
 			if (deviceSupports('dim')) {
