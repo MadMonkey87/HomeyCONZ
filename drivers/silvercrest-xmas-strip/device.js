@@ -3,6 +3,7 @@
 const Light = require('../Light')
 const Homey = require('homey')
 const { http } = require('../../nbhttp')
+const { util } = require('../../util')
 
 class SilvercrestXmasStrip extends Light {
 
@@ -15,6 +16,7 @@ class SilvercrestXmasStrip extends Light {
 	}
 
 	setLightState(state, callback) {
+		this.log('send xmas effect', state)
 		http.put(Homey.app.host, Homey.app.port, `/api/${Homey.app.apikey}/lights/${this.id}/state`, state, (error, response) => {
 			callback(error, !!error ? null : JSON.parse(response))
 		})
@@ -22,11 +24,13 @@ class SilvercrestXmasStrip extends Light {
 
 	initializeActions() {
 
-		/*let flashShortAction = new Homey.FlowCardAction('flash_short');
-		flashShortAction
+		let applyEffectAction = new Homey.FlowCardAction('apply_effect');
+		applyEffectAction
 			.register()
 			.registerRunListener(async (args, state) => {
-				const lightState = { alert: 'select' };
+				this.log(args.effect_color_1, args.effect_color_2, args.effect_color_3, args.effect_color_4, args.effect_color_5, args.effect_color_6)
+				const effectColors = [util.hexToRgb(args.effect_color_1), util.hexToRgb(args.effect_color_2), util.hexToRgb(args.effect_color_3), util.hexToRgb(args.effect_color_4), util.hexToRgb(args.effect_color_5), util.hexToRgb(args.effect_color_6)];
+				const lightState = { effect: args.effect, effectSpeed: args.effect_speed, effectColors: effectColors };
 				return new Promise((resolve) => {
 					this.setLightState(lightState, (error, result) => {
 						if (error) {
@@ -36,51 +40,6 @@ class SilvercrestXmasStrip extends Light {
 					})
 				});
 			});
-
-		let flashLongAction = new Homey.FlowCardAction('flash_long');
-		flashLongAction
-			.register()
-			.registerRunListener(async (args, state) => {
-				const lightState = { alert: 'lselect' };
-				return new Promise((resolve) => {
-					this.setLightState(lightState, (error, result) => {
-						if (error) {
-							return this.error(error);
-						}
-						resolve(true);
-					})
-				});
-			});
-
-		let setRelativeBrightnessAction = new Homey.FlowCardAction('relative_brightness');
-		setRelativeBrightnessAction
-			.register()
-			.registerRunListener(async (args, state) => {
-				const lightState = { bri_inc: args.relative_brightness * 254 };
-				return new Promise((resolve) => {
-					this.setLightState(lightState, (error, result) => {
-						if (error) {
-							return this.error(error);
-						}
-						resolve(true);
-					})
-				});
-			});
-
-		let setRelativeColorTemperatureAction = new Homey.FlowCardAction('relative_ct');
-		setRelativeColorTemperatureAction
-			.register()
-			.registerRunListener(async (args, state) => {
-				const lightState = { ct_inc: args.relative_ct * 254 };
-				return new Promise((resolve) => {
-					this.setLightState(lightState, (error, result) => {
-						if (error) {
-							return this.error(error);
-						}
-						resolve(true);
-					})
-				});
-			});*/
 	}
 }
 

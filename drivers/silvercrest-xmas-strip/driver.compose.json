@@ -29,13 +29,13 @@
   ],
   "settings": [
     {
-      "$extends":  "light-settings"
+      "$extends": "light-settings"
     },
     {
-      "$extends":  "ignore-reachable"
+      "$extends": "ignore-reachable"
     },
     {
-      "$extends":  "info"
+      "$extends": "info"
     }
   ]
 }

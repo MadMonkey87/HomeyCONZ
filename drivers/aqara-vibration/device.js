@@ -44,13 +44,10 @@ class AqaraVibration extends Sensor {
 	setCapabilityValue(name, value) {
 		super.setCapabilityValue(name, value)
 		if (name == 'tilt_angle') {
-			// относительный угол
 			let relative_angle = value - this.getCapabilityValue('tilt_angle')
 			this.setCapabilityValue('relative_tilt_angle', relative_angle)
-			// таймер отключения тревоги наклона
 			this.timeout = setTimeout(() => {
 				this.setCapabilityValue('tilt_alarm', false)
-				// this.motionToggleTrigger.trigger(this)
 				this.timeout = null
 			}, this.getSetting('no_tilt_timeout') * 1000)
 			this.setCapabilityValue('tilt_alarm', true)

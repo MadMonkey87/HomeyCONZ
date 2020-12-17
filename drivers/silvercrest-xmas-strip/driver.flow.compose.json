@@ -1,0 +1,153 @@
+{
+  "actions": [
+    {
+      "id": "apply_effect",
+      "title": {
+        "en": "Apply Effect"
+      },
+      "args": [
+        {
+          "type": "dropdown",
+          "name": "effect",
+          "values": [
+            {
+              "id": "none",
+              "title": {
+                "en": "None"
+              }
+            },
+            {
+              "id": "steady",
+              "title": {
+                "en": "Steady"
+              }
+            },
+            {
+              "id": "snow",
+              "title": {
+                "en": "Snow"
+              }
+            },
+            {
+              "id": "rainbow",
+              "title": {
+                "en": "Rainbow"
+              }
+            },
+            {
+              "id": "snake",
+              "title": {
+                "en": "Snake"
+              }
+            },
+            {
+              "id": "twinkle",
+              "title": {
+                "en": "Twinkle"
+              }
+            },
+            {
+              "id": "fireworks",
+              "title": {
+                "en": "Fireworks"
+              }
+            },
+            {
+              "id": "flag",
+              "title": {
+                "en": "Flag"
+              }
+            },
+            {
+              "id": "waves",
+              "title": {
+                "en": "Waves"
+              }
+            },
+            {
+              "id": "updown",
+              "title": {
+                "en": "Updown"
+              }
+            },
+            {
+              "id": "vintage",
+              "title": {
+                "en": "Vintage"
+              }
+            },
+            {
+              "id": "fading",
+              "title": {
+                "en": "Fading"
+              }
+            },
+            {
+              "id": "collide",
+              "title": {
+                "en": "Collide"
+              }
+            },
+            {
+              "id": "strobe",
+              "title": {
+                "en": "Strobe"
+              }
+            },
+            {
+              "id": "sparkles",
+              "title": {
+                "en": "Sparkles"
+              }
+            },
+            {
+              "id": "carnival",
+              "title": {
+                "en": "Carnival"
+              }
+            },
+            {
+              "id": "glow",
+              "title": {
+                "en": "Glow"
+              }
+            }
+          ]
+        },
+        {
+          "type": "range",
+          "name": "effect_speed",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "label": "%",
+          "labelMultiplier": 1,
+          "labelDecimals": 0
+        },
+        {
+          "type": "color",
+          "name": "effect_color_1"
+        },
+        {
+          "type": "color",
+          "name": "effect_color_2"
+        },
+        {
+          "type": "color",
+          "name": "effect_color_3"
+        },
+        {
+          "type": "color",
+          "name": "effect_color_4"
+        },        {
+          "type": "color",
+          "name": "effect_color_5"
+        },
+        {
+          "type": "color",
+          "name": "effect_color_6"
+        }
+      ]
+    }
+  ]
+}
