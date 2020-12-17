@@ -106,5 +106,8 @@
   },
   "1.17.2":{
     "en": "Fix that some devices power state was shown incorrectly"
+  },
+  "1.18.0":{
+    "en": "Experimental support for Lidl/Silvercrest christmas strip"
   }
 }

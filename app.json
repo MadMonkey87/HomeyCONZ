@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "de.dresden-elektronik.deconz",
-  "version": "1.17.2",
+  "version": "1.18.0",
   "compatibility": ">=4.0.0",
   "brandColor": "#55626b",
   "sdk": 2,
@@ -9319,6 +9319,156 @@
         }
       ],
       "id": "mijia-temphum"
+    },
+    {
+      "name": {
+        "en": "Lidl/Silvercrest Xmas ledstrip"
+      },
+      "class": "light",
+      "capabilities": [],
+      "images": {
+        "large": "/drivers/silvercrest-xmas-strip/assets/images/large.png",
+        "small": "/drivers/silvercrest-xmas-strip/assets/images/small.png"
+      },
+      "icon": "/drivers/silvercrest-xmas-strip/assets/icon.svg",
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
+      "settings": [
+        {
+          "id": "lightControl",
+          "type": "group",
+          "label": {
+            "en": "Control"
+          },
+          "children": [
+            {
+              "id": "dim_duration",
+              "type": "number",
+              "label": {
+                "en": "Transition time"
+              },
+              "min": 0,
+              "value": 4,
+              "hint": {
+                "en": "Transition time between brightnesses in 100ms steps (ex: a value of 4 means 400ms, a value of 10 would be 1 second)."
+              }
+            },
+            {
+              "id": "colormode",
+              "type": "checkbox",
+              "label": {
+                "en": "xy colormode"
+              },
+              "value": false,
+              "hint": {
+                "en": "There are two different options available to control the color of a light. By default hs (hue amd saturation) is used. Using this setting you can use xy (CIELAB) instead. Only use this if you know what you're doing!"
+              }
+            }
+          ]
+        },
+        {
+          "id": "deconz",
+          "type": "group",
+          "label": {
+            "en": "deCONZ"
+          },
+          "children": [
+            {
+              "id": "ignore-reachable",
+              "type": "checkbox",
+              "label": {
+                "en": "Ignore if unreachable"
+              },
+              "value": false,
+              "hint": {
+                "en": "In Zigbee networks there are no active connections and thus deCONZ does not know if this device is still there as long as it does not communicate. Therefore a device gets marked as unreachable if it does not report for a longer period of time. This is perfectly fine for most devices as they report their status periodically, but if this devices doesn't do this, you can prevent that it get's reported as unavailable using this setting."
+              }
+            }
+          ]
+        },
+        {
+          "id": "info",
+          "type": "group",
+          "label": {
+            "en": "Info"
+          },
+          "children": [
+            {
+              "id": "modelid",
+              "type": "label",
+              "label": {
+                "en": "Model"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "manufacturername",
+              "type": "label",
+              "label": {
+                "en": "Manufacturer"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "swversion",
+              "type": "label",
+              "label": {
+                "en": "Firmware"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "ids",
+              "type": "label",
+              "label": {
+                "en": "Api Id's"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "mac",
+              "type": "label",
+              "label": {
+                "en": "MAC"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "lastseen",
+              "type": "label",
+              "label": {
+                "en": "Last Seen"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "lastUpdated",
+              "type": "label",
+              "label": {
+                "en": "Last Updated"
+              },
+              "value": "Unknown"
+            }
+          ]
+        }
+      ],
+      "id": "silvercrest-xmas-strip"
     },
     {
       "name": {

@@ -44,18 +44,20 @@ class Driver extends Homey.Driver {
 			let onoff = ['onoff']
 			let dim = ['onoff', 'dim']
 			let ct = ['onoff', 'dim', 'light_temperature']
-			let color = ['onoff', 'dim', 'light_temperature', 'light_mode', 'light_saturation', 'light_hue']
+			let extendedColor = ['onoff', 'dim', 'light_temperature', 'light_mode', 'light_saturation', 'light_hue']
+			let dimmableColor = ['onoff', 'dim', 'light_mode', 'light_saturation', 'light_hue']
 
 			let matchTable = {
 				'On/Off light': onoff,
 				'Dimmable light': dim,
 				'Color temperature light': ct,
-				'Extended color light': color,
-				'Color light': color,
+				'Extended color light': extendedColor,
+				'Color light': extendedColor,
 				'Smart plug': onoff,
 				'On/Off plug-in unit': onoff,
 				'Window covering device': dim,
-				'Range extender': none
+				'Range extender': none,
+				'Color dimmable light': dimmableColor
 			}
 
 			this.getSensorsList((error, sensors) => {
