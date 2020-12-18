@@ -9,6 +9,9 @@
         {
           "type": "dropdown",
           "name": "effect",
+          "placeholder": {
+            "en": "Effect"
+          },
           "values": [
             {
               "id": "none",
@@ -117,6 +120,9 @@
         {
           "type": "range",
           "name": "effect_speed",
+          "placeholder": {
+            "en": "Effect Speed (supported by some effects only)"
+          },
           "min": 0,
           "max": 100,
           "step": 1,
@@ -126,25 +132,44 @@
         },
         {
           "type": "color",
+          "placeholder": {
+            "en": "Effect Color 1 (supported by some effects only)"
+          },
           "name": "effect_color_1"
         },
         {
           "type": "color",
-          "name": "effect_color_2"
+          "name": "effect_color_2",
+          "placeholder": {
+            "en": "Effect Color 2 (supported by some effects only)"
+          }
         },
         {
           "type": "color",
+          "placeholder": {
+            "en": "Effect Color 3 (supported by some effects only)"
+          },
           "name": "effect_color_3"
         },
         {
           "type": "color",
+          "placeholder": {
+            "en": "Effect Color 4 (supported by some effects only)"
+          },
           "name": "effect_color_4"
-        },        {
+        },
+        {
           "type": "color",
+          "placeholder": {
+            "en": "Effect Color 5 (supported by some effects only)"
+          },
           "name": "effect_color_5"
         },
         {
           "type": "color",
+          "placeholder": {
+            "en": "Effect Color 6 (supported by some effects only)"
+          },
           "name": "effect_color_6"
         }
       ]

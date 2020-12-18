@@ -328,7 +328,7 @@ class deCONZ extends Homey.App {
 					} else {
 
 						let parsedRelease = JSON.parse(release)
-						let nextRaw = parsedRelease.tag_name.replace("_stable", "").replace("_", ".").replace("_", ".").replace("V", "")
+						let nextRaw = parsedRelease.tag_name.replace("_stable", "").replace("_", ".").replace("_", ".").replace("V", "").replace("v", "")
 
 						let nextMajor = parseInt(nextRaw.split('.')[0], 0)
 						let nextMinor = parseInt(nextRaw.split('.')[1], 0)

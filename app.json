@@ -3339,6 +3339,9 @@
           {
             "type": "dropdown",
             "name": "effect",
+            "placeholder": {
+              "en": "Effect"
+            },
             "values": [
               {
                 "id": "none",
@@ -3447,6 +3450,9 @@
           {
             "type": "range",
             "name": "effect_speed",
+            "placeholder": {
+              "en": "Effect Speed (supported by some effects only)"
+            },
             "min": 0,
             "max": 100,
             "step": 1,
@@ -3456,26 +3462,44 @@
           },
           {
             "type": "color",
+            "placeholder": {
+              "en": "Effect Color 1 (supported by some effects only)"
+            },
             "name": "effect_color_1"
           },
           {
             "type": "color",
-            "name": "effect_color_2"
+            "name": "effect_color_2",
+            "placeholder": {
+              "en": "Effect Color 2 (supported by some effects only)"
+            }
           },
           {
             "type": "color",
+            "placeholder": {
+              "en": "Effect Color 3 (supported by some effects only)"
+            },
             "name": "effect_color_3"
           },
           {
             "type": "color",
+            "placeholder": {
+              "en": "Effect Color 4 (supported by some effects only)"
+            },
             "name": "effect_color_4"
           },
           {
             "type": "color",
+            "placeholder": {
+              "en": "Effect Color 5 (supported by some effects only)"
+            },
             "name": "effect_color_5"
           },
           {
             "type": "color",
+            "placeholder": {
+              "en": "Effect Color 6 (supported by some effects only)"
+            },
             "name": "effect_color_6"
           }
         ]
@@ -12301,135 +12325,6 @@
       "max": 6,
       "uiComponent": "sensor",
       "uiQuickAction": false
-    },
-    "silvercrest_xmas_effect": {
-      "type": "enum",
-      "title": {
-        "en": "Effect"
-      },
-      "getable": true,
-      "setable": false,
-      "icon": "/drivers/silvercrest-xmas-strip/assets/effects.svg",
-      "values": [
-        {
-          "id": "none",
-          "title": {
-            "en": "None"
-          }
-        },
-        {
-          "id": "steady",
-          "title": {
-            "en": "Steady"
-          }
-        },
-        {
-          "id": "snow",
-          "title": {
-            "en": "Snow"
-          }
-        },
-        {
-          "id": "rainbow",
-          "title": {
-            "en": "Rainbow"
-          }
-        },
-        {
-          "id": "snake",
-          "title": {
-            "en": "Snake"
-          }
-        },
-        {
-          "id": "twinkle",
-          "title": {
-            "en": "Twinkle"
-          }
-        },
-        {
-          "id": "fireworks",
-          "title": {
-            "en": "Fireworks"
-          }
-        },
-        {
-          "id": "flag",
-          "title": {
-            "en": "Flag"
-          }
-        },
-        {
-          "id": "waves",
-          "title": {
-            "en": "Waves"
-          }
-        },
-        {
-          "id": "updown",
-          "title": {
-            "en": "Updown"
-          }
-        },
-        {
-          "id": "vintage",
-          "title": {
-            "en": "Vintage"
-          }
-        },
-        {
-          "id": "fading",
-          "title": {
-            "en": "Fading"
-          }
-        },
-        {
-          "id": "collide",
-          "title": {
-            "en": "Collide"
-          }
-        },
-        {
-          "id": "strobe",
-          "title": {
-            "en": "Strobe"
-          }
-        },
-        {
-          "id": "sparkles",
-          "title": {
-            "en": "Sparkles"
-          }
-        },
-        {
-          "id": "carnival",
-          "title": {
-            "en": "Carnival"
-          }
-        },
-        {
-          "id": "glow",
-          "title": {
-            "en": "Glow"
-          }
-        }
-      ]
-    },
-    "silvercrest_xmas_effect_speed": {
-      "type": "number",
-      "title": {
-        "en": "Effect speed"
-      },
-      "uiComponent": "slider",
-      "icon": "/drivers/silvercrest-xmas-strip/assets/speedometer.svg",
-      "getable": true,
-      "setable": true,
-      "units": {
-        "en": "%"
-      },
-      "min": 0,
-      "max": 100,
-      "step": 1
     },
     "tilt_alarm": {
       "type": "boolean",
