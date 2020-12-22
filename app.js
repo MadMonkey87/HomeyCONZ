@@ -49,6 +49,15 @@ class deCONZ extends Homey.App {
 		}
 
 		this.startWebSocketConnection()
+
+		this.log('Listing local files...');
+		fs.readdir(util.appDataFolder, (err, fileNames) => {
+			if (fileNames) {
+				fileNames.forEach(fileName => {
+					this.log(fileName + '(' + util.getFileSizeInBytes(certificateFolder + fileName) + ' bytes)')
+				})
+			}
+		})
 	}
 
 	startWebSocketConnection() {
@@ -284,11 +293,11 @@ class deCONZ extends Homey.App {
 						anonymizedState.sensors.push(sensor)
 					})
 
-					return callback(null, anonymizedState)
+					callback(null, anonymizedState)
 
 				} catch (error) {
 					this.log(error)
-					return callback(error, null)
+					callback(error, null)
 				}
 			}
 		})
@@ -299,20 +308,40 @@ class deCONZ extends Homey.App {
 			if (!!error) {
 				callback(error, null)
 			} else {
-				return callback(null, JSON.parse(response))
+				callback(null, JSON.parse(response))
+			}
+		})
+	}
+
+	createBackup(callback) {
+		http.post(Homey.app.host, Homey.app.port, `/api/${Homey.app.apikey}/config/export`, state, (error, response) => {
+			if (!!error) {
+				callback(error, null)
+			} else {
+				downloadBackup(callback)
+			}
+		})
+	}
+
+	downloadBackup(callback) {
+		http.downloadToFile(`http://${this.host}/deCONZ.tar.gz`, util.appDataFolder + 'deCONZ.tar.gz', (error, success) => {
+			if (!!error) {
+				callback(error, null)
+			} else {
+				callback(null, success)
 			}
 		})
 	}
 
 	test(host, port, apikey, callback) {
 		const wsState = this.websocket && this.websocket.readyState === 1
-		http.get(`http://${host}:${port}/api/${apikey}`, (error, response) => {
+		http.get(`http://${host}:${port}/config/${apikey}`, (error, response) => {
 			if (!!error) {
 				callback(error, null)
 			} else {
 				let state = JSON.parse(response)
 				state.wsConnected = wsState
-				return callback(null, state)
+				callback(null, state)
 			}
 		})
 	}
@@ -460,16 +489,16 @@ class deCONZ extends Homey.App {
 			} else {
 
 				Homey.ManagerSettings.set('host', host, (err, settings) => {
-					if (err) return callback(err, null)
+					if (err) callback(err, null)
 				})
 				Homey.ManagerSettings.set('port', port, (err, settings) => {
-					if (err) return callback(err, null)
+					if (err) callback(err, null)
 				})
 				Homey.ManagerSettings.set('wsport', JSON.parse(result).websocketport, (err, settings) => {
-					if (err) return callback(err, null)
+					if (err) callback(err, null)
 				})
 				Homey.ManagerSettings.set('apikey', apikey, (err, settings) => {
-					if (err) return callback(err, null)
+					if (err) callback(err, null)
 				})
 
 				this.log('[SETTINGS-API] successfully persisted config')
@@ -888,8 +917,10 @@ class deCONZ extends Homey.App {
 					try {
 						this.log('update all devices manually')
 						this.setInitialStates()
+						resolve(true)
 					} catch (error) {
-						return this.error(error);
+						this.log('error while updating all devices', error)
+						resolve(false)
 					}
 				});
 			});
@@ -900,9 +931,32 @@ class deCONZ extends Homey.App {
 			.registerRunListener(async (args, state) => {
 				return new Promise((resolve) => {
 					try {
-						this.attemptAutoRepair()
+						this.attemptAutoRepair();
+						resolve(true)
 					} catch (error) {
-						return this.error(error);
+						this.log('error while performing auto repair', error)
+						resolve(false)
+					}
+				});
+			});
+
+		let createBackupAction = new Homey.FlowCardAction('create_backup');
+		createBackupAction
+			.register()
+			.registerRunListener(async (args, state) => {
+				return new Promise((resolve) => {
+					try {
+						this.createBackup((error, success) => {
+							if (error) {
+								resolve(false)
+							} else {
+								resolve(true)
+							}
+						})
+
+					} catch (error) {
+						this.log('error while creating backup', error)
+						resolve(false)
 					}
 				});
 			});
