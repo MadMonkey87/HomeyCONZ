@@ -1,26 +1,26 @@
 module.exports.util = {}
 
 module.exports.util.round = function (value, exp) {
-    if (typeof exp === 'undefined' || +exp === 0)
-      return Math.round(value);
-  
-    value = +value;
-    exp = +exp;
-  
-    if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0))
-      return NaN;
-  
-    // Shift
-    value = value.toString().split('e');
-    value = Math.round(+(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp)));
-  
-    // Shift back
-    value = value.toString().split('e');
-    return +(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp));
+  if (typeof exp === 'undefined' || +exp === 0)
+    return Math.round(value);
+
+  value = +value;
+  exp = +exp;
+
+  if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0))
+    return NaN;
+
+  // Shift
+  value = value.toString().split('e');
+  value = Math.round(+(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp)));
+
+  // Shift back
+  value = value.toString().split('e');
+  return +(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp));
 }
 
 module.exports.util.generateGuid = function generateGuid() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
     var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
     return v.toString(16);
   });
@@ -40,7 +40,7 @@ function rgbToXy(r, g, b) {
 }
 
 function rgbToXy2(rgb) {
-  var viv = rgb.map(x=>x > .04045 ? Math.pow((x + .055) / 1.055, 2.4) : x / 12.92);
+  var viv = rgb.map(x => x > .04045 ? Math.pow((x + .055) / 1.055, 2.4) : x / 12.92);
   let red = viv[0]
     , green = viv[1]
     , blue = viv[2]
@@ -56,35 +56,35 @@ function HSVtoRGB(h, s, v) {
   q = v * (1 - (f = 6 * h - (i = Math.floor(6 * h))) * s),
   t = v * (1 - (1 - f) * s),
   i % 6) {
-  case 0:
+    case 0:
       r = v,
-      g = t,
-      b = p;
+        g = t,
+        b = p;
       break;
-  case 1:
+    case 1:
       r = q,
-      g = v,
-      b = p;
+        g = v,
+        b = p;
       break;
-  case 2:
+    case 2:
       r = p,
-      g = v,
-      b = t;
+        g = v,
+        b = t;
       break;
-  case 3:
+    case 3:
       r = p,
-      g = q,
-      b = v;
+        g = q,
+        b = v;
       break;
-  case 4:
+    case 4:
       r = t,
-      g = p,
-      b = v;
+        g = p,
+        b = v;
       break;
-  case 5:
+    case 5:
       r = v,
-      g = p,
-      b = q
+        g = p,
+        b = q
   }
   return [r, g, b]
 }
@@ -95,21 +95,21 @@ function hueToHex(hue) {
     , t1 = 255
     , t3 = h % 60 * 255 / 60;
   360 == h && (h = 0),
-  h < 60 ? (rgb.r = t1,
-  rgb.b = 0,
-  rgb.g = 0 + t3) : h < 120 ? (rgb.g = t1,
-  rgb.b = 0,
-  rgb.r = t1 - t3) : h < 180 ? (rgb.g = t1,
-  rgb.r = 0,
-  rgb.b = 0 + t3) : h < 240 ? (rgb.b = t1,
-  rgb.r = 0,
-  rgb.g = t1 - t3) : h < 300 ? (rgb.b = t1,
-  rgb.g = 0,
-  rgb.r = 0 + t3) : h < 360 ? (rgb.r = t1,
-  rgb.g = 0,
-  rgb.b = t1 - t3) : (rgb.r = 0,
-  rgb.g = 0,
-  rgb.b = 0);
+    h < 60 ? (rgb.r = t1,
+      rgb.b = 0,
+      rgb.g = 0 + t3) : h < 120 ? (rgb.g = t1,
+        rgb.b = 0,
+        rgb.r = t1 - t3) : h < 180 ? (rgb.g = t1,
+          rgb.r = 0,
+          rgb.b = 0 + t3) : h < 240 ? (rgb.b = t1,
+            rgb.r = 0,
+            rgb.g = t1 - t3) : h < 300 ? (rgb.b = t1,
+              rgb.g = 0,
+              rgb.r = 0 + t3) : h < 360 ? (rgb.r = t1,
+                rgb.g = 0,
+                rgb.b = t1 - t3) : (rgb.r = 0,
+                  rgb.g = 0,
+                  rgb.b = 0);
   var r = parseInt(rgb.r).toString(16)
     , rr = 2 == r.length ? r : "0" + r
     , g = parseInt(rgb.g).toString(16)
@@ -126,41 +126,55 @@ function mapHueFrom360(hue) {
   return Math.floor(hue / 360 * 65535)
 }
 
-module.exports.util.xyToHs = function(x, y, bri) {
-      var z = 1 - x - y
-        , X = (bri,
+module.exports.util.xyToHs = function (x, y, bri) {
+  var z = 1 - x - y
+    , X = (bri,
       0 === y ? 0 : 1 / y * x)
-        , Z = 0 === y ? 0 : 1 / y * z
-        , r = 3.2406 * X - 1.5372 - .4986 * Z
-        , g = .9689 * -X + 1.8758 + .0415 * Z
-        , b = .0557 * X - .204 + 1.057 * Z;
-      r > b && r > g && r > 1 ? (g /= r,
-      b /= r,
-      r = 1) : g > b && g > r && g > 1 ? (r /= g,
+    , Z = 0 === y ? 0 : 1 / y * z
+    , r = 3.2406 * X - 1.5372 - .4986 * Z
+    , g = .9689 * -X + 1.8758 + .0415 * Z
+    , b = .0557 * X - .204 + 1.057 * Z;
+  r > b && r > g && r > 1 ? (g /= r,
+    b /= r,
+    r = 1) : g > b && g > r && g > 1 ? (r /= g,
       b /= g,
       g = 1) : b > r && b > g && b > 1 && (r /= b,
-      g /= b,
-      b = 1),
-      r = r <= .0031308 ? 12.92 * r : 1.055 * Math.pow(r, 1 / 2.4) - .055,
-      g = g <= .0031308 ? 12.92 * g : 1.055 * Math.pow(g, 1 / 2.4) - .055,
-      b = b <= .0031308 ? 12.92 * b : 1.055 * Math.pow(b, 1 / 2.4) - .055,
-      r < 0 && (r = 0),
-      g < 0 && (g = 0),
-      b < 0 && (b = 0);
-      var hsv = rgb2hsv(String(255 * r), String(255 * g), String(255 * b));
-      return { hue: hsv[0] / 360/* * 65535*/, sat:/*255 * */hsv[1]}
+        g /= b,
+        b = 1),
+    r = r <= .0031308 ? 12.92 * r : 1.055 * Math.pow(r, 1 / 2.4) - .055,
+    g = g <= .0031308 ? 12.92 * g : 1.055 * Math.pow(g, 1 / 2.4) - .055,
+    b = b <= .0031308 ? 12.92 * b : 1.055 * Math.pow(b, 1 / 2.4) - .055,
+    r < 0 && (r = 0),
+    g < 0 && (g = 0),
+    b < 0 && (b = 0);
+  var hsv = rgb2hsv(String(255 * r), String(255 * g), String(255 * b));
+  return { hue: hsv[0] / 360/* * 65535*/, sat:/*255 * */hsv[1] }
 }
 
 function rgb2hsv(r, g, b) {
   r = parseInt(("" + r).replace(/\s/g, ""), 10),
-  g = parseInt(("" + g).replace(/\s/g, ""), 10),
-  b = parseInt(("" + b).replace(/\s/g, ""), 10);
+    g = parseInt(("" + g).replace(/\s/g, ""), 10),
+    b = parseInt(("" + b).replace(/\s/g, ""), 10);
   if (!(null == r || null == g || null == b || isNaN(r) || isNaN(g) || isNaN(b) || r < 0 || g < 0 || b < 0 || r > 255 || g > 255 || b > 255)) {
-      r /= 255,
+    r /= 255,
       g /= 255,
       b /= 255;
-      var minRGB = Math.min(r, Math.min(g, b))
-        , maxRGB = Math.max(r, Math.max(g, b));
-      return minRGB == maxRGB ? [0, 0, minRGB] : [60 * ((r == minRGB ? 3 : b == minRGB ? 1 : 5) - (r == minRGB ? g - b : b == minRGB ? r - g : b - r) / (maxRGB - minRGB)), (maxRGB - minRGB) / maxRGB, maxRGB]
+    var minRGB = Math.min(r, Math.min(g, b))
+      , maxRGB = Math.max(r, Math.max(g, b));
+    return minRGB == maxRGB ? [0, 0, minRGB] : [60 * ((r == minRGB ? 3 : b == minRGB ? 1 : 5) - (r == minRGB ? g - b : b == minRGB ? r - g : b - r) / (maxRGB - minRGB)), (maxRGB - minRGB) / maxRGB, maxRGB]
   }
+}
+
+module.exports.util.hexToRgb = function hexToRgb(hex) {
+  var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+  hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+    return r + r + g + g + b + b;
+  });
+
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? [
+    parseInt(result[1], 16),
+    parseInt(result[2], 16),
+    parseInt(result[3], 16)
+   ] : null;
 }

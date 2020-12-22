@@ -1,0 +1,41 @@
+{
+  "name": {
+    "en": "Lidl/Silvercrest Xmas ledstrip"
+  },
+  "class": "light",
+  "capabilities": [],
+  "images": {
+    "large": "{{driverAssetsPath}}/images/large.png",
+    "small": "{{driverAssetsPath}}/images/small.png"
+  },
+  "icon": "{{driverAssetsPath}}/icon.svg",
+  "pair": [
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+        "next": "add_devices"
+      }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ],
+  "repair": [
+    {
+      "id": "repair"
+    }
+  ],
+  "settings": [
+    {
+      "$extends": "light-settings"
+    },
+    {
+      "$extends": "ignore-reachable"
+    },
+    {
+      "$extends": "info"
+    }
+  ]
+}
