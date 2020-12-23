@@ -163,7 +163,7 @@
                 </div>
             </div>-->
 
-                        <!--<div class="card glass" style="margin-top: 10px;">
+            <!--<div class="card glass" style="margin-top: 10px;">
                 <div class="card-body">
                     <h5 class="card-title">Live Debug</h5>
                     <p class="card-text">Enable the live debugging action card. Note that this might have significant performance impact...</p>
@@ -211,6 +211,32 @@
                         <a class="btn btn-primary" id="deConzUpdateLink">Check Details</a>
                     </div>
 
+                </div>
+            </div>
+
+            <div class="card glass" style="margin-top: 10px;">
+                <div class="card-body">
+                    <h5 class="card-title">Backup</h5>
+                    <p class="card-text">Automatically create DeConz backups and store them on your homey. Please use
+                        the 'Crate DeConz Backup' action card to schedule backups.</p>
+                    <div class="row col-9" style="display: none;" id="backupAvailable">
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <small class="form-text text-muted">size</small>
+                                <label style="font-weight: bold; font-size: 18px;" id="backupSize"></label>
+                            </div>
+                            <div class="form-group">
+                                <small class="form-text text-muted">timestamp</small>
+                                <label style="font-weight: bold; font-size: 18px;" id="backupTimestamp"></label>
+                            </div>
+                            <button type="button" class="btn btn-primary" id="downloadBackup">Download</button>
+                        </div>
+                    </div>
+                    <div class="row col-9" style="display: none;" id="noBackupAvailable">
+                        <div class="col-sm">
+                            <p style="font-weight: bold;">no backup has been created yet!</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -315,7 +341,8 @@
                         report bugs or request device support at <a href="https://github.com/madmonkey87/HomeyCONZ"
                             style="text-decoration: underline;">github.</a>
                     </p>
-                    <div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+                    <div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a>
+                        from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
                 </div>
             </div>
             </br>
@@ -703,6 +730,21 @@
                 })
             }
 
+            function updateBackup() {
+                document.getElementById('backupAvailable').style.display = 'none'
+                document.getElementById('noBackupAvailable').style.display = 'none'
+
+                Homey.api('GET', '/backups', {}, function (error, data) {
+                    if (data.length > 0) {
+                        document.getElementById('backupSize').innerText = data[0].size + ' bytes'
+                        document.getElementById('backupTimestamp').innerText = data[0].name
+                        document.getElementById('backupAvailable').style.display = 'grid'
+                    } else {
+                        document.getElementById('noBackupAvailable').style.display = 'grid'
+                    }
+                })
+            }
+
             function saveAll() {
                 Homey.set('host', ip.value, (err, settings) => {
                     if (err) return Homey.alert(err)
@@ -760,7 +802,7 @@
 
                 Homey.get('pollingIntervall', (err, pollingIntervall) => {
                     if (err) return Homey.alert(err)
-                    
+
                     switch (parseInt(pollingIntervall, 0)) {
                         case 5:
                             pollingDropDown.innerText = 'every 5 minutes'
@@ -786,6 +828,8 @@
             }
 
             loadSettings()
+
+            updateBackup()
 
             setTimeout(function () { updateDetails() }, 1000);
 

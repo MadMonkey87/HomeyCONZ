@@ -3188,6 +3188,15 @@
     ],
     "actions": [
       {
+        "id": "create_backup",
+        "title": {
+          "en": "Create DeConz Backup"
+        },
+        "hint": {
+          "en": "The backup gets stored on your Homey. Please visit the app config -> advanced to get more details or download the stored backup file."
+        }
+      },
+      {
         "id": "update_all_devices",
         "title": {
           "en": "Update all devices manually"

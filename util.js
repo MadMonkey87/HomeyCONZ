@@ -189,7 +189,7 @@ module.exports.util.getFileSizeInBytes = function (filename) {
 }
 
 module.exports.util.convertBase64ToFile = function (base64EncodedContent) {
-  const type = base64EncodedContent.split(',')[0].split(';')[0].split(':')[1]; console.log(type);
+  const type = base64EncodedContent.split(',')[0].split(';')[0].split(':')[1];
   const byteString = atob(base64EncodedContent.split(',')[1]);
 
   const ab = new ArrayBuffer(byteString.length);

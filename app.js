@@ -1,9 +1,10 @@
 'use strict'
 
-const Homey = require('homey')
-const { http, https } = require('./nbhttp')
-const WebSocketClient = require('ws')
-const { util } = require('./util')
+const Homey = require('homey');
+const { http, https } = require('./nbhttp');
+const WebSocketClient = require('ws');
+const { util } = require('./util');
+const fs = require('fs');
 
 class deCONZ extends Homey.App {
 
@@ -314,11 +315,13 @@ class deCONZ extends Homey.App {
 	}
 
 	createBackup(callback) {
-		http.post(Homey.app.host, Homey.app.port, `/api/${Homey.app.apikey}/config/export`, state, (error, response) => {
+		http.post(Homey.app.host, Homey.app.port, `/api/${Homey.app.apikey}/config/export`, {}, (error, response) => {
 			if (!!error) {
 				callback(error, null)
 			} else {
-				downloadBackup(callback)
+				setTimeout(() => {
+					downloadBackup(callback)
+				}, 3000)
 			}
 		})
 	}
@@ -331,6 +334,20 @@ class deCONZ extends Homey.App {
 				callback(null, success)
 			}
 		})
+	}
+
+	getBackups(callback) {
+		fs.readdir(util.appDataFolder, (error, files) => {
+			if (error) {
+				callback(error, null);
+			}
+			else {
+				callback(null, files.map(file => new {
+					name: file,
+					size: util.getFileSizeInBytes()
+				}));
+			}
+		});
 	}
 
 	test(host, port, apikey, callback) {
