@@ -55,7 +55,7 @@ class deCONZ extends Homey.App {
 		fs.readdir(util.appDataFolder, (err, fileNames) => {
 			if (fileNames) {
 				fileNames.forEach(fileName => {
-					this.log(fileName + '(' + util.getFileSizeInBytes(certificateFolder + fileName) + ' bytes)')
+					this.log(fileName + '(' + util.getFileSizeInBytes(util.appDataFolder + fileName) + ' bytes)')
 				})
 			}
 		})
@@ -337,17 +337,26 @@ class deCONZ extends Homey.App {
 	}
 
 	getBackups(callback) {
-		fs.readdir(util.appDataFolder, (error, files) => {
-			if (error) {
-				callback(error, null);
-			}
-			else {
-				callback(null, files.map(file => new {
-					name: file,
-					size: util.getFileSizeInBytes()
-				}));
-			}
-		});
+		try {
+			fs.readdir(util.appDataFolder, (error, fileNames) => {
+				if (error || fileNames == undefined) {
+					callback(error, null)
+				}
+				else {
+					let backups = [];
+					fileNames.forEach(fileName => {
+						backups.push({
+							name: fs.statSync(util.appDataFolder + fileName).ctime,
+							size: util.getFileSizeInBytes(util.appDataFolder + fileName)
+						})
+					})
+					callback(null, backups)
+				}
+			});
+		} catch (e) {
+			this.log('error while getting backups', e)
+			callback(e, null)
+		}
 	}
 
 	test(host, port, apikey, callback) {
