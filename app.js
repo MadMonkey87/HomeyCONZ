@@ -320,7 +320,7 @@ class deCONZ extends Homey.App {
 				callback(error, null)
 			} else {
 				setTimeout(() => {
-					downloadBackup(callback)
+					this.downloadBackup(callback)
 				}, 3000)
 			}
 		})
