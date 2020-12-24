@@ -735,7 +735,7 @@
                     if (error) {
                         Homey.alert('error while downloading: ' + error)
                     } else {
-                        this.download(data.content.data, data.name, data.type)
+                        download(data.content.data, data.name, data.type)
                     }
                 })
             })
