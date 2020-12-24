@@ -108,4 +108,18 @@ module.exports = [
 			})
 		}
 	},
+	{
+		method: 'GET',
+		path: '/backup',
+		public: false,
+		fn: function (args, callback) {
+			Homey.app.getBackup((err, result) => {
+				if (err) {
+					callback(err, null)
+				} else {
+					callback(null, result)
+				}
+			})
+		}
+	},
 ]

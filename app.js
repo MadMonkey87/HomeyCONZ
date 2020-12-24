@@ -359,6 +359,29 @@ class deCONZ extends Homey.App {
 		}
 	}
 
+	getBackup(callback) {
+		try {
+			fs.readdir(util.appDataFolder, (error, fileNames) => {
+				if (error || fileNames == undefined || fileNames.length == 0) {
+					callback(error, null)
+				}
+				else {
+					fs.readFile(util.appDataFolder + fileNames[0], function (e, data) {
+						if (e) {
+							callback(e, null)
+						}
+						else {
+							callback(null, { name: 'deCONZ.tar.gz', type: 'application/octet-stream', content: data })
+						}
+					})
+				}
+			});
+		} catch (e) {
+			this.log('error while getting backup', e)
+			callback(e, null)
+		}
+	}
+
 	test(host, port, apikey, callback) {
 		const wsState = this.websocket && this.websocket.readyState === 1
 		http.get(`http://${host}:${port}/config/${apikey}`, (error, response) => {
