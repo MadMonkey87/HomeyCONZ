@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "de.dresden-elektronik.deconz",
-  "version": "1.18.0",
+  "version": "1.19.0",
   "compatibility": ">=4.0.0",
   "brandColor": "#55626b",
   "sdk": 2,
@@ -5942,7 +5942,7 @@
     },
     {
       "name": {
-        "en": "Develco Motion Sensor"
+        "en": "Develco/Frient Motion Sensor"
       },
       "class": "sensor",
       "capabilities": [
@@ -6124,7 +6124,134 @@
     },
     {
       "name": {
-        "en": "Develco Leakage Sensor"
+        "en": "Develco/Frient Smoke Sensor"
+      },
+      "class": "sensor",
+      "capabilities": [
+        "alarm_smoke",
+        "measure_battery",
+        "measure_temperature"
+      ],
+      "energy": {
+        "batteries": [
+          "CR123A"
+        ]
+      },
+      "images": {
+        "large": "/drivers/develco-smoke-detector/assets/images/large.png",
+        "small": "/drivers/develco-smoke-detector/assets/images/small.png"
+      },
+      "icon": "/drivers/develco-smoke-detector/assets/icon.svg",
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
+      "settings": [
+        {
+          "id": "deconz",
+          "type": "group",
+          "label": {
+            "en": "deCONZ"
+          },
+          "children": [
+            {
+              "id": "ignore-reachable",
+              "type": "checkbox",
+              "label": {
+                "en": "Ignore if unreachable"
+              },
+              "value": false,
+              "hint": {
+                "en": "In Zigbee networks there are no active connections and thus deCONZ does not know if this device is still there as long as it does not communicate. Therefore a device gets marked as unreachable if it does not report for a longer period of time. This is perfectly fine for most devices as they report their status periodically, but if this devices doesn't do this, you can prevent that it get's reported as unavailable using this setting."
+              }
+            }
+          ]
+        },
+        {
+          "id": "info",
+          "type": "group",
+          "label": {
+            "en": "Info"
+          },
+          "children": [
+            {
+              "id": "modelid",
+              "type": "label",
+              "label": {
+                "en": "Model"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "manufacturername",
+              "type": "label",
+              "label": {
+                "en": "Manufacturer"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "swversion",
+              "type": "label",
+              "label": {
+                "en": "Firmware"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "ids",
+              "type": "label",
+              "label": {
+                "en": "Api Id's"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "mac",
+              "type": "label",
+              "label": {
+                "en": "MAC"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "lastseen",
+              "type": "label",
+              "label": {
+                "en": "Last Seen"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "lastUpdated",
+              "type": "label",
+              "label": {
+                "en": "Last Updated"
+              },
+              "value": "Unknown"
+            }
+          ]
+        }
+      ],
+      "id": "develco-smoke-detector"
+    },
+    {
+      "name": {
+        "en": "Develco/Frient Leakage Sensor"
       },
       "class": "sensor",
       "capabilities": [
