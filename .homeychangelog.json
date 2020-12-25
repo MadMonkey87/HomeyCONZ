@@ -109,5 +109,8 @@
   },
   "1.18.0":{
     "en": "Experimental support for Lidl/Silvercrest christmas strip"
+  },
+  "1.19.0":{
+    "en": "Support for Develco/Frient smoke sensor"
   }
 }

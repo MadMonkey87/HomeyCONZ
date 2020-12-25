@@ -1,6 +1,6 @@
 {
   "name": {
-    "en": "Develco Motion Sensor"
+    "en": "Develco/Frient Motion Sensor"
   },
   "class": "sensor",
   "capabilities": [
