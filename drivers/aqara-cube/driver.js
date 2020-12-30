@@ -3,16 +3,16 @@
 const Driver = require('../Driver')
 
 class CubeDriver extends Driver {
-	
+
 	onInit() {
 		super.onInit()
 		this.log('CubeDriver has been initiated')
 	}
-	
+
 	onPairListDevices(data, callback) {
-		this.getSensorsByCondition(device => device.modelid === 'lumi.sensor_cube.aqgl01' || 'lumi.sensor_cube', callback)
+		this.getSensorsByCondition(device => device.modelid === 'lumi.sensor_cube.aqgl01' || device.modelid === 'lumi.sensor_cube', callback)
 	}
-	
+
 }
 
 module.exports = CubeDriver
