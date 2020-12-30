@@ -19,14 +19,14 @@ Almost there. Now you can install app using `athom app install` command being in
 - [x] Blinds
 - [x] Plugs
 - [x] deCONZ groups
-- [x] Motion sensors: Philips, Xiaomi, Aqara, TRÅDFRI, Trust, Develco
+- [x] Motion sensors: Philips, Xiaomi, Aqara, TRÅDFRI, Trust, Develco, Frient
 - [x] Temperature/Humidity sensors: Xiaomi, Aqara
 - [x] Buttons: Mi, Aqara, Aqara gyro, TRÅDFRI, 
 - [x] Switches: Aqara, TRÅDFRI, Philips, Trust, Feller
 - [x] Contact sensors: Xiaomi, Aqara, Trust
 - [x] Remotes: TRÅDFRI, Tint
-- [x] Leakage sensor: Aqara, Develco, Zipato
-- [x] Smoke sensor: Honeywell, Trust, Heimann
+- [x] Leakage sensor: Aqara, Develco, Zipato, Frient
+- [x] Smoke sensor: Honeywell, Trust, Heimann, Develco, Frient
 - [x] CO sensor: Heimann
 
 - [x] Aqara Cube

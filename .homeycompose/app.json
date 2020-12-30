@@ -40,6 +40,13 @@
       }
     ]
   },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "madmonkey87"
+      }
+    }
+  },
   "bugs": {
     "url": "https://github.com/madmonkey87/HomeyCONZ/issues/new?assignees=&labels=bug&template=bug_report.md&title=Bug"
   },

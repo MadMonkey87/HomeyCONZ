@@ -111,6 +111,9 @@
     "en": "Experimental support for Lidl/Silvercrest christmas strip"
   },
   "1.19.0":{
+    "en": "Support for Develco/Frient smoke sensor"
+  },
+  "1.20.0":{
     "en": "Create DeConz backups and store them on your homey"
   }
 }
