@@ -111,7 +111,7 @@ module.exports = [
 	{
 		method: 'GET',
 		path: '/backup',
-		public: false,
+		public: true,
 		fn: function (args, callback) {
 			Homey.app.getBackup((err, result) => {
 				if (err) {

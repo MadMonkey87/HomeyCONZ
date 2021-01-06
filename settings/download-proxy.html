@@ -1,0 +1,54 @@
+<html>
+
+<head>
+</head>
+
+<body>
+    <script type="text/javascript">
+        (function () {
+
+            function download(data, filename, type) {
+                var file = new Blob([data], { type: type });
+                if (window.navigator.msSaveOrOpenBlob) // IE10+
+                    window.navigator.msSaveOrOpenBlob(file, filename);
+                else { // Others
+                    var a = document.createElement("a"),
+                        url = URL.createObjectURL(file);
+                    a.href = url;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    setTimeout(function () {
+                        document.body.removeChild(a);
+                        window.URL.revokeObjectURL(url);
+                    }, 0);
+                }
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const src = urlParams.get('src');
+            if (!src) {
+                alert('no source provided');
+                return;
+            }
+            const srcUrl = decodeURI(src);
+
+            const xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4) {
+                    if (this.status == 200) {
+                        const data = JSON.parse(this.responseText);
+                        download(data.content.data, data.name, data.type);
+                    } else {
+                        alert('something went wrong, please ensure that your are in the same network as your homey is!')
+                    }
+                }
+            };
+            xmlhttp.open("GET", srcUrl, true);
+            xmlhttp.send();
+
+        })();
+    </script>
+</body>
+
+</html>

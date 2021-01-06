@@ -731,7 +731,7 @@
             }
 
             document.getElementById('downloadBackup').addEventListener('click', (e) => {
-                Homey.openURL('https://www.philippewechsler.ch/homey/proxy?src=' + window.location.hostname + '/api/app/de.dresden-elektronik.deconz/backup');
+                Homey.openURL('https://' + window.location.hostname + '/app/de.dresden-elektronik.deconz/settings/download-proxy.html?src=' + encodeURIComponent('https://' + window.location.hostname + '/api/app/de.dresden-elektronik.deconz/backup'));
             })
 
             function updateBackup() {
