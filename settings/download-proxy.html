@@ -1,11 +1,63 @@
 <html>
 
 <head>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/app/de.dresden-elektronik.deconz/settings/css/bootstrap.css">
 </head>
 
-<body>
+<body style="font-size: 30px !important;">
+    <div class="card glass"></div>
+    <div class="card-body">
+        <div class="alert alert-danger" role="alert" style="display: none" id="messageBox">
+            <div id="messageBoxText"></div>
+        </div>
+        <div class="alert alert-info" role="alert" id="infoBox">
+            <div id="infoBoxText">initializing, please wait...</div>
+        </div>
+    </div>
+    </div>
     <script type="text/javascript">
         (function () {
+
+            const messageBox = document.getElementById('messageBox');
+            const messageBoxText = document.getElementById('messageBoxText');
+            const infoBox = document.getElementById('infoBox');
+            const infoBoxText = document.getElementById('infoBoxText');
+
+            function showError(message) {
+                infoBox.style.display = 'none';
+                messageBox.style.display = 'grid';
+                messageBox.classList.remove('alert-success');
+                messageBox.classList.add('alert-danger');
+                messageBoxText.innerHTML = message;
+            }
+
+            function showSuccess(message) {
+                infoBox.style.display = 'none';
+                messageBox.style.display = 'grid';
+                messageBox.classList.remove('alert-danger');
+                messageBox.classList.add('alert-success');
+                messageBoxText.innerHTML = message;
+            }
+
+            function showInfo(message) {
+                messageBox.style.display = 'none';
+                infoBoxText.style.display = 'grid';
+                infoBoxText.innerHTML = message;
+            }
+
+            function clearMessages() {
+                messageBox.style.display = 'none';
+                infoBox.style.display = 'none';
+            }
 
             function download(data, filename, type) {
                 var file = new Blob([data], { type: type });
@@ -23,12 +75,27 @@
                         window.URL.revokeObjectURL(url);
                     }, 0);
                 }
+
+                showSuccess('Downloaded successfully!\n');
+
             }
+
+            function base64ToArrayBuffer(base64) {
+                var binary_string = window.atob(base64);
+                var len = binary_string.length;
+                var bytes = new Uint8Array(len);
+                for (var i = 0; i < len; i++) {
+                    bytes[i] = binary_string.charCodeAt(i);
+                }
+                return bytes.buffer;
+            }
+
+            showInfo('preparing download...');
 
             const urlParams = new URLSearchParams(window.location.search);
             const src = urlParams.get('src');
             if (!src) {
-                alert('no source provided');
+                showError('no source has been provided');
                 return;
             }
             const srcUrl = decodeURI(src);
@@ -38,12 +105,14 @@
                 if (this.readyState == 4) {
                     if (this.status == 200) {
                         const data = JSON.parse(this.responseText);
-                        download(data.content.data, data.name, data.type);
+                        const buffer = base64ToArrayBuffer(data.content);
+                        download(buffer, data.name, data.type);
                     } else {
-                        alert('something went wrong, please ensure that your are in the same network as your homey is!')
+                        showError('something went wrong, please ensure that your are in the same network as your homey is!')
                     }
                 }
             };
+            showInfo('starting download...');
             xmlhttp.open("GET", srcUrl, true);
             xmlhttp.send();
 

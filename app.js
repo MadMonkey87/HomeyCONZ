@@ -366,7 +366,7 @@ class deCONZ extends Homey.App {
 					callback(error, null)
 				}
 				else {
-					fs.readFile(util.appDataFolder + fileNames[0], function (e, data) {
+					fs.readFile(util.appDataFolder + fileNames[0], { encoding: 'base64' }, function (e, data) {
 						if (e) {
 							callback(e, null)
 						}
