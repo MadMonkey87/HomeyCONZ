@@ -1,5 +1,6 @@
-const http = require('http')
-const https = require('https')
+const http = require('http');
+const https = require('https');
+const fs = require('fs');
 
 module.exports.http = {}
 module.exports.https = {}
@@ -23,6 +24,19 @@ module.exports.http.get = function (url, callback) {
 	})
 }
 
+module.exports.http.downloadToFile = function (url, filename, callback) {
+	let file = fs.createWriteStream(filename);
+	http.get(url, function (response) {
+		response.pipe(file)
+		file.on('finish', function () {
+			file.close(callback)
+		});
+	}).on('error', function (err) {
+		fs.unlink(filename)
+		callback(err)
+	})
+}
+
 module.exports.https.get = function (url, callback) {
 	let options = {
 		headers: {
@@ -38,6 +52,19 @@ module.exports.https.get = function (url, callback) {
 			callback(null, data, response.statusCode)
 		})
 	}).on('error', err => {
+		callback(err)
+	})
+}
+
+module.exports.https.downloadToFile = function (url, filename, callback) {
+	let file = fs.createWriteStream(filename);
+	https.get(url, function (response) {
+		response.pipe(file)
+		file.on('finish', function () {
+			file.close(callback)
+		});
+	}).on('error', function (err) {
+		fs.unlink(filename)
 		callback(err)
 	})
 }

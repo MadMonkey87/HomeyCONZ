@@ -93,5 +93,33 @@ module.exports = [
 			Homey.app.setInitialStates()
 			callback(null, 'success')
 		}
-	}
+	},
+	{
+		method: 'GET',
+		path: '/backups',
+		public: false,
+		fn: function (args, callback) {
+			Homey.app.getBackups((err, result) => {
+				if (err) {
+					callback(err, null)
+				} else {
+					callback(null, result)
+				}
+			})
+		}
+	},
+	{
+		method: 'GET',
+		path: '/backup',
+		public: true,
+		fn: function (args, callback) {
+			Homey.app.getBackup((err, result) => {
+				if (err) {
+					callback(err, null)
+				} else {
+					callback(null, result)
+				}
+			})
+		}
+	},
 ]

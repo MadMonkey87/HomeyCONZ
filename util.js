@@ -1,3 +1,6 @@
+const fs = require('fs');
+const crypto = require('crypto');
+
 module.exports.util = {}
 
 module.exports.util.round = function (value, exp) {
@@ -167,7 +170,7 @@ function rgb2hsv(r, g, b) {
 
 module.exports.util.hexToRgb = function hexToRgb(hex) {
   var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-  hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+  hex = hex.replace(shorthandRegex, function (m, r, g, b) {
     return r + r + g + g + b + b;
   });
 
@@ -176,5 +179,39 @@ module.exports.util.hexToRgb = function hexToRgb(hex) {
     parseInt(result[1], 16),
     parseInt(result[2], 16),
     parseInt(result[3], 16)
-   ] : null;
+  ] : null;
 }
+
+module.exports.util.getFileSizeInBytes = function (filename) {
+  var stats = fs.statSync(filename);
+  var fileSizeInBytes = stats.size;
+  return fileSizeInBytes;
+}
+
+module.exports.util.convertBase64ToFile = function (base64EncodedContent) {
+  const type = base64EncodedContent.split(',')[0].split(';')[0].split(':')[1];
+  const byteString = atob(base64EncodedContent.split(',')[1]);
+
+  const ab = new ArrayBuffer(byteString.length);
+  const ia = new Uint8Array(ab);
+  for (let i = 0; i < byteString.length; i += 1) {
+    ia[i] = byteString.charCodeAt(i);
+  }
+  const newBlob = new Blob([ab], {
+    type: type,
+  });
+  return newBlob;
+}
+
+module.exports.util.saveFile = function (filename, base64EncodedContent, callback) {
+  // const type = base64EncodedContent.split(',')[0].split(';')[0].split(':')[1]; 
+  const buffer = Buffer.from(base64EncodedContent.split(',')[1], 'base64');
+  const sha256 = crypto.createHash("sha256").update(buffer).digest("hex");
+  if (fs.existsSync(filename)) {
+    callback('the file exists already', null);
+  } else {
+    fs.writeFile(filename, buffer, () => callback(null, sha256));
+  }
+}
+
+module.exports.util.appDataFolder = '/userdata/';
