@@ -17,12 +17,10 @@
     content: "";
     width: 250vw;
     height: 250vw;
-    z-index: 0;
     background: url(../images/homey.svg) no-repeat 50%;
     background-size: contain;
     -webkit-animation: rotate 20s linear infinite;
     animation: rotate 20s linear infinite;
-    /*background-attachment: fixed;*/
 }
 
 .homeyAnimation {
@@ -30,8 +28,8 @@
     position: absolute;
     left: -55vw;
     top: -40vw;
-    /*bottom: 0;*/
 	right: 0;
+	z-index: -1000;
 }
 
 .rotate {

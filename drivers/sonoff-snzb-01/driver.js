@@ -10,7 +10,7 @@ class SonoffSnzb01Driver extends Driver {
 	}
 
 	onPairListDevices(data, callback) {
-		this.getSensorsByCondition(device => device.modelid === 'WB01', callback)
+		this.getSensorsByCondition(device => device.modelid === 'WB01' || device.modelid === 'WB-01', callback)
 	}
 
 }
