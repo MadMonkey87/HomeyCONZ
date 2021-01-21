@@ -9081,3 +9081,18 @@ input[type="checkbox"]:not(.hy-nostyle), .hy-input-checkbox{
 label{
   padding-top: 3px !important;
 }
+
+.slider-handle{
+  background-color: rgb(47, 62, 73);
+}
+
+
+.slider-handle {
+  background-color: rgb(47, 62, 73) !important;
+  background-image: none !important;
+}
+
+.slider-selection {
+  background-color: rgb(106, 115, 122) !important;
+  background-image: none !important;
+}

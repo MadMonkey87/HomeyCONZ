@@ -114,6 +114,9 @@
     "en": "Support for Develco/Frient smoke sensor"
   },
   "1.20.0":{
-    "en": " - Create DeConz backups and store them on your homey\n - Reduced app size"
+    "en": "Create DeConz backups and store them on your homey, reduced app size"
+  },
+  "1.20.5":{
+    "en": "Improved iOS compatibility, support some newer device models"
   }
 }
