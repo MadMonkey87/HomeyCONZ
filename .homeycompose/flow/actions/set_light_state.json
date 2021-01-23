@@ -1,7 +1,7 @@
 {
   "id": "set_light_state",
   "title": {
-    "en": "Set state"
+    "en": "Set state (Advanced)"
   },
   "hint": {
     "en": "Apply one or more light commands that all will be applied natively which will get you a smoother expirience than doing so with separate commands."

@@ -28,6 +28,36 @@ class GenericLampDriver extends Driver {
 
 	initializeActions() {
 
+		let flashLightShortAction = new Homey.FlowCardAction('flash_short');
+		flashLightShortAction
+			.register()
+			.registerRunListener(async (args, state) => {
+				const lightState = { alert: 'select' };
+				return new Promise((resolve) => {
+					this.setLightState(args.device.id, lightState, (error) => {
+						if (error) {
+							return this.error(error);
+						}
+						resolve(true);
+					})
+				});
+			});
+
+		let flashLightLongAction = new Homey.FlowCardAction('flash_long');
+		flashLightLongAction
+			.register()
+			.registerRunListener(async (args, state) => {
+				const lightState = { alert: 'lselect' };
+				return new Promise((resolve) => {
+					this.setLightState(args.device.id, lightState, (error) => {
+						if (error) {
+							return this.error(error);
+						}
+						resolve(true);
+					})
+				});
+			});
+
 		let setLightState = new Homey.FlowCardAction('set_light_state');
 		setLightState
 			.register()
@@ -78,7 +108,7 @@ class GenericLampDriver extends Driver {
 				return new Promise((resolve) => {
 					this.setLightState(args.device.id, lightState, (error, result) => {
 						if (error) {
-							this.log(error)
+							this.log(error);
 							resolve(false);
 						}
 						resolve(true);
