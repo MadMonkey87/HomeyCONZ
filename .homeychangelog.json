@@ -20,103 +20,106 @@
   "1.4.0": {
     "en": "sensitivity and led indication settings for hue (outdoor) motion sensors, secondary no motion trigger for all motion sensors, deprecated redundant trigger cards for mi/aqaara motion sensors, show details for all devices"
   },
-  "1.5.0":{
+  "1.5.0": {
     "en": "New action card to update all devices manually, calibration for temperature, humidity and pressure, fixed a critical bug"
   },
-  "1.6.1":{
+  "1.6.1": {
     "en": "New action card to check for a changed ip address, support for hue tap switch, support for trust smoke sensor ZSDR-850, cleaned up some old code for the ikea symfonisk & tradfri dimmer switch"
   },
-  "1.6.2":{
+  "1.6.2": {
     "en": "Support quadrupple presses for the Aqara button, fixed a bug that caused groups to remain unavailable when the connection was interrupted"
   },
-  "1.6.3":{
+  "1.6.3": {
     "en": "Improved support for the Trust ZYCZ-202 switch"
   },
-  "1.7.0":{
+  "1.7.0": {
     "en": "Support for Tradfri, Aqara and Mi Smart plugs/sockets, improved the generic smart plug driver with support for current, consumption and voltage"
   },
-  "1.7.1":{
+  "1.7.1": {
     "en": "Support tripple press for Symfonisk controller, fixed a bug that caused secondary no motion triggers to be fired too often"
   },
-  "1.8.0":{
+  "1.8.0": {
     "en": "Door/window and water leakage sensors support an invert setting, tampered capability for devices supporting it, improved startup behavior, support heiman fire, smoke and co sensor, improved motion sensor handling, support develco motion & water leakage sensor, scene recall, support for sonoff basic"
   },
-  "1.8.1":{
+  "1.8.1": {
     "en": "Support new Tradfri square dimmer model"
   },
-  "1.9.0":{
+  "1.9.0": {
     "en": "Support Tint rgbw remote, support Aqara relay, flash groups, set relative brightness/color temperature"
   },
-  "1.10.0":{
+  "1.10.0": {
     "en": "Support Zipato water leakage sensor, support Aqara wall switches, revert Tradfri Square dimmer changes"
   },
-  "1.11.0":{
+  "1.11.0": {
     "en": "Improved connection setup, ability to test the connection, display gateway details, support page, setting ignore when a device becomes unreachable, show more device details"
   },
-  "1.11.2":{
+  "1.11.2": {
     "en": "Improved settings page, all setup connections are now performed by homey directly, improved motion sensor behavior"
   },
-  "1.11.3":{
+  "1.11.3": {
     "en": "xy colormode for lights and groups"
   },
-  "1.12.0":{
+  "1.12.0": {
     "en": "Support for Aqare Opple switches, support Aqara D1 Wireless Remote Switch (single & double rocker), support for new Aqara water leakage sensor, app configuration has a dedicated button to request an api key"
   },
-  "1.12.1":{
+  "1.12.1": {
     "en": "Flow card that notifies when a device becomes reachable/unreachable, show last updated/seen date in the device infos"
   },
-  "1.12.2":{
+  "1.12.2": {
     "en": "Fix for the 'recal a scene' flow card"
   },
-  "1.13.0":{
+  "1.13.0": {
     "en": "Maintenance actions to update or repair a device"
   },
-  "1.13.1":{
+  "1.13.1": {
     "en": "Small fixes and optimizations"
   },
-  "1.13.2":{
+  "1.13.2": {
     "en": "Small fixes and optimizations"
   },
-  "1.14.1":{
+  "1.14.1": {
     "en": "New repair mode that is better integrated into the homey environment, fancy UI"
   },
-  "1.14.2":{
+  "1.14.2": {
     "en": "Updated/removed packages, improved repair mode, fixed a bug that could cause app crashes when using certain power-plugs"
   },
-  "1.15.0":{
+  "1.15.0": {
     "en": "Condition card to check for DeConz updates, auto repair connection feature, send usage data if you allow it, setting to adjust or disable the polling, improved color handling for lights, support Jung 4-gang switch"
   },
-  "1.15.1":{
+  "1.15.1": {
     "en": "Generic switch supports up to 8 buttons"
   },
-  "1.16.0":{
+  "1.16.0": {
     "en": "Support for new Sonoff devices, supports newer revisions for a bunch of devices"
   },
-  "1.16.1":{
+  "1.16.1": {
     "en": "Small fix"
   },
-  "1.16.2":{
+  "1.16.2": {
     "en": "Support newer Sonoff models"
   },
-  "1.17.0":{
+  "1.17.0": {
     "en": "Generic support for sirens"
   },
-  "1.17.1":{
+  "1.17.1": {
     "en": "Support newer heiman sensors"
   },
-  "1.17.2":{
+  "1.17.2": {
     "en": "Fix that some devices power state was shown incorrectly"
   },
-  "1.18.0":{
+  "1.18.0": {
     "en": "Experimental support for Lidl/Silvercrest christmas strip"
   },
-  "1.19.0":{
+  "1.19.0": {
     "en": "Support for Develco/Frient smoke sensor"
   },
-  "1.20.0":{
+  "1.20.0": {
     "en": "Create DeConz backups and store them on your homey, reduced app size"
   },
-  "1.20.5":{
+  "1.20.5": {
     "en": "Improved iOS compatibility, support some newer device models"
+  },
+  "1.21.0": {
+    "en": "Lights & groups now have a flow card to set multiple commands at once"
   }
 }

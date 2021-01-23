@@ -10,13 +10,13 @@ class GroupDriver extends Driver {
 		super.onInit()
 
 		this.initializeActions()
-	
+
 		this.log('GroupDriver has been initiated')
 	}
 
 	onPairListDevices(_, callback) {
 		let capabilitiesArray = [
-			['onoff'], 
+			['onoff'],
 			['onoff', 'dim'],
 			['onoff', 'dim', 'light_temperature'],
 			['onoff', 'dim', 'light_temperature', 'light_mode', 'light_saturation', 'light_hue']
@@ -28,7 +28,7 @@ class GroupDriver extends Driver {
 			'Color temperature light': 2,
 			'Extended color light': 3,
 			'Color light': 3,
-			'Smart plug': 0, 
+			'Smart plug': 0,
 			'On/Off plug-in unit': 0,
 			'Window covering device': 1
 		}
@@ -184,35 +184,65 @@ class GroupDriver extends Driver {
 				});
 			});
 
-		/*let setRelativeHueAction = new Homey.FlowCardAction('relative_hue');
-		setRelativeHueAction
+		let setLightState = new Homey.FlowCardAction('set_light_state');
+		setLightState
 			.register()
 			.registerRunListener(async (args, state) => {
-				const groupState = { hue_inc: Math.round(args.relative_hue * 65534), transitiontime: args.transitiontime };
+				this.log(args)
+
+				const lightState = { transitiontime: args.transitiontime };
+
+				if (args.power === 'on') {
+					lightState.on = true;
+				} else if (args.power === 'off') {
+					lightState.on = false;
+				}
+
+				if (args.brightness_mode === 'absolute') {
+					lightState.bri = Math.round(args.brightness * 254)
+				} else if (args.brightness_mode === 'relative') {
+					lightState.bri_inc = Math.round(args.relative_increasement_brightness * 254)
+				}
+
+				if (args.saturation_mode === 'absolute') {
+					lightState.sat = Math.round(args.saturation * 254)
+				} else if (args.brightness_mode === 'relative') {
+					lightState.sat_inc = Math.round(args.relative_increasement_saturation * 254)
+				}
+
+				if (args.hue_mode === 'absolute') {
+					lightState.hue = Math.round(args.hue * 65534)
+				} else if (args.brightness_mode === 'relative') {
+					lightState.hue_inc = Math.round(args.relative_increasement_hue * 65534)
+				}
+
+				if (args.hue_mode === 'absolute') {
+					lightState.hue = Math.round(args.hue * 65534)
+				} else if (args.brightness_mode === 'relative') {
+					lightState.hue_inc = Math.round(args.relative_increasement_hue * 65534)
+				}
+
+				if (args.ct_mode === 'absolute') {
+					lightState.ct = Math.round(args.ct * 347 + 153)
+				} else if (args.ct_mode === 'relative') {
+					lightState.ct_inc = Math.round(args.relative_increasement_ct * 347)
+				}
+
+				if (args.colormode !== 'none') {
+					lightState.colormode = args.colormode
+				}
+
 				return new Promise((resolve) => {
-					this.setGroupState(groupState, (error) => {
+					this.setGroupState(args.device.id, lightState, (error, result) => {
 						if (error) {
-							return this.error(error);
+							this.log(error)
+							resolve(false);
 						}
 						resolve(true);
 					})
 				});
 			});
 
-		let setRelativeSaturationAction = new Homey.FlowCardAction('relative_saturation');
-		setRelativeSaturationAction
-			.register()
-			.registerRunListener(async (args, state) => {
-				const groupState = { sat_inc: Math.round(args.relative_saturation * 65534), transitiontime: args.transitiontime };
-				return new Promise((resolve) => {
-					this.setGroupState(groupState, (error) => {
-						if (error) {
-							return this.error(error);
-						}
-						resolve(true);
-					})
-				});
-			});*/
 	}
 }
 

@@ -2,18 +2,18 @@
   "actions": [
     {
       "id": "recall_scene",
-      "title":{
-          "en": "recall a scene"
+      "title": {
+        "en": "Recall a scene"
       },
       "args": [
-          {
-              "type": "autocomplete",
-              "name": "scene",
-              "placeholder": {
-                  "en": "Search for scenes..."
-              }
+        {
+          "type": "autocomplete",
+          "name": "scene",
+          "placeholder": {
+            "en": "Search for scenes..."
           }
-        ]
+        }
+      ]
     },
     {
       "id": "flash_long",
@@ -29,6 +29,7 @@
     },
     {
       "id": "relative_brightness",
+      "deprecated": true,
       "title": {
         "en": "set relative brightness (advanced)"
       },
@@ -64,6 +65,7 @@
     },
     {
       "id": "relative_ct",
+      "deprecated": true,
       "title": {
         "en": "set relative color temperature (advanced)"
       },
