@@ -100,7 +100,8 @@ class GroupDriver extends Driver {
 				return new Promise((resolve) => {
 					this.recallScene(args.device.id, args.scene.id, (error, result) => {
 						if (error) {
-							return this.error(error);
+							this.log(error)
+							resolve(false);
 						}
 						resolve(true);
 					})
@@ -132,7 +133,8 @@ class GroupDriver extends Driver {
 				return new Promise((resolve) => {
 					this.setGroupState(args.device.id, groupState, (error) => {
 						if (error) {
-							return this.error(error);
+							this.log(error)
+							resolve(false);
 						}
 						resolve(true);
 					})
@@ -147,7 +149,8 @@ class GroupDriver extends Driver {
 				return new Promise((resolve) => {
 					this.setGroupState(args.device.id, groupState, (error) => {
 						if (error) {
-							return this.error(error);
+							this.log(error)
+							resolve(false);
 						}
 						resolve(true);
 					})
@@ -162,7 +165,8 @@ class GroupDriver extends Driver {
 				return new Promise((resolve) => {
 					this.setGroupState(args.device.id, groupState, (error) => {
 						if (error) {
-							return this.error(error);
+							this.log(error)
+							resolve(false);
 						}
 						resolve(true);
 					})
@@ -177,18 +181,18 @@ class GroupDriver extends Driver {
 				return new Promise((resolve) => {
 					this.setGroupState(args.device.id, groupState, (error) => {
 						if (error) {
-							return this.error(error);
+							this.log(error)
+							resolve(false);
 						}
 						resolve(true);
 					})
 				});
 			});
 
-		let setLightState = new Homey.FlowCardAction('set_light_state');
+		let setLightState = new Homey.FlowCardAction('set_group_state');
 		setLightState
 			.register()
 			.registerRunListener(async (args, state) => {
-				this.log(args)
 
 				const lightState = { transitiontime: args.transitiontime };
 
@@ -206,19 +210,19 @@ class GroupDriver extends Driver {
 
 				if (args.saturation_mode === 'absolute') {
 					lightState.sat = Math.round(args.saturation * 254)
-				} else if (args.brightness_mode === 'relative') {
+				} else if (args.saturation_mode === 'relative') {
 					lightState.sat_inc = Math.round(args.relative_increasement_saturation * 254)
 				}
 
 				if (args.hue_mode === 'absolute') {
 					lightState.hue = Math.round(args.hue * 65534)
-				} else if (args.brightness_mode === 'relative') {
+				} else if (args.hue_mode === 'relative') {
 					lightState.hue_inc = Math.round(args.relative_increasement_hue * 65534)
 				}
 
 				if (args.hue_mode === 'absolute') {
 					lightState.hue = Math.round(args.hue * 65534)
-				} else if (args.brightness_mode === 'relative') {
+				} else if (args.hue_mode === 'relative') {
 					lightState.hue_inc = Math.round(args.relative_increasement_hue * 65534)
 				}
 

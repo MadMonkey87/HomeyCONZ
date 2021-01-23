@@ -21,14 +21,14 @@ class GenericLampDriver extends Driver {
 	}
 
 	setLightState(lightId, state, callback) {
-		http.put(Homey.app.host, Homey.app.port, `/api/${Homey.app.apikey}/lights/${lightId}/action`, state, (error, response) => {
+		http.put(Homey.app.host, Homey.app.port, `/api/${Homey.app.apikey}/lights/${lightId}/state`, state, (error, response) => {
 			callback(error)
 		})
 	}
 
 	initializeActions() {
 
-		let flashLightShortAction = new Homey.FlowCardAction('flash_short');
+		let flashLightShortAction = new Homey.FlowCardAction('light_flash_short');
 		flashLightShortAction
 			.register()
 			.registerRunListener(async (args, state) => {
@@ -36,14 +36,15 @@ class GenericLampDriver extends Driver {
 				return new Promise((resolve) => {
 					this.setLightState(args.device.id, lightState, (error) => {
 						if (error) {
-							return this.error(error);
+							this.log(error)
+							resolve(false);
 						}
 						resolve(true);
 					})
 				});
 			});
 
-		let flashLightLongAction = new Homey.FlowCardAction('flash_long');
+		let flashLightLongAction = new Homey.FlowCardAction('light_flash_long');
 		flashLightLongAction
 			.register()
 			.registerRunListener(async (args, state) => {
@@ -51,7 +52,8 @@ class GenericLampDriver extends Driver {
 				return new Promise((resolve) => {
 					this.setLightState(args.device.id, lightState, (error) => {
 						if (error) {
-							return this.error(error);
+							this.log(error)
+							resolve(false);
 						}
 						resolve(true);
 					})
@@ -79,19 +81,19 @@ class GenericLampDriver extends Driver {
 
 				if (args.saturation_mode === 'absolute') {
 					lightState.sat = Math.round(args.saturation * 254)
-				} else if (args.brightness_mode === 'relative') {
+				} else if (args.saturation_mode === 'relative') {
 					lightState.sat_inc = Math.round(args.relative_increasement_saturation * 254)
 				}
 
 				if (args.hue_mode === 'absolute') {
 					lightState.hue = Math.round(args.hue * 65534)
-				} else if (args.brightness_mode === 'relative') {
+				} else if (args.hue_mode === 'relative') {
 					lightState.hue_inc = Math.round(args.relative_increasement_hue * 65534)
 				}
 
 				if (args.hue_mode === 'absolute') {
 					lightState.hue = Math.round(args.hue * 65534)
-				} else if (args.brightness_mode === 'relative') {
+				} else if (args.hue_mode === 'relative') {
 					lightState.hue_inc = Math.round(args.relative_increasement_hue * 65534)
 				}
 
@@ -108,7 +110,7 @@ class GenericLampDriver extends Driver {
 				return new Promise((resolve) => {
 					this.setLightState(args.device.id, lightState, (error, result) => {
 						if (error) {
-							this.log(error);
+							this.log(error)
 							resolve(false);
 						}
 						resolve(true);

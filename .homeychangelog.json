@@ -120,6 +120,6 @@
     "en": "Improved iOS compatibility, support some newer device models"
   },
   "1.21.0": {
-    "en": "Lights & groups now have a flow card to set multiple commands at once"
+    "en": "Lights & groups now have a flow card to set multiple commands at once, lights now have flash action cards too"
   }
 }
