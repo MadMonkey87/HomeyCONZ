@@ -221,19 +221,31 @@ class deCONZ extends Homey.App {
 
 	getLightsList(callback) {
 		http.get(`http://${this.host}:${this.port}/api/${this.apikey}/lights`, (error, response) => {
-			callback(error, !!error ? null : JSON.parse(response))
+			try {
+				callback(error, !!error ? null : JSON.parse(response))
+			} catch (e) {
+				callback('invalid response', null)
+			}
 		})
 	}
 
 	getSensorsList(callback) {
 		http.get(`http://${this.host}:${this.port}/api/${this.apikey}/sensors`, (error, response) => {
-			callback(error, !!error ? null : JSON.parse(response))
+			try {
+				callback(error, !!error ? null : JSON.parse(response))
+			} catch (e) {
+				callback('invalid response', null)
+			}
 		})
 	}
 
 	getGroupsList(callback) {
 		http.get(`http://${Homey.app.host}:${Homey.app.port}/api/${Homey.app.apikey}/groups`, (error, response) => {
-			callback(error, !!error ? null : JSON.parse(response))
+			try {
+				callback(error, !!error ? null : JSON.parse(response))
+			} catch (e) {
+				callback('invalid response', null)
+			}
 		})
 	}
 
@@ -388,9 +400,13 @@ class deCONZ extends Homey.App {
 			if (!!error) {
 				callback(error, null)
 			} else {
-				let state = JSON.parse(response)
-				state.wsConnected = wsState
-				callback(null, state)
+				try {
+					let state = JSON.parse(response)
+					state.wsConnected = wsState
+					callback(null, state)
+				} catch (e) {
+					callback('invalid response', null)
+				}
 			}
 		})
 	}
