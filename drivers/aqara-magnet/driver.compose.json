@@ -1,6 +1,6 @@
 {
   "name": {
-    "en": "Aqara Magnet"
+    "en": "Aqara Window/Door Sensor"
   },
   "class": "sensor",
   "capabilities": [

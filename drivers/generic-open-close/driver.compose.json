@@ -1,7 +1,7 @@
 {
   "id": "generic-open-close",
   "name": {
-    "en": "<Generic Open-Close>"
+    "en": "<Generic Open-Close Sensor>"
   },
   "class": "sensor",
   "capabilities": [
