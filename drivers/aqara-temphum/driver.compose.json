@@ -1,6 +1,6 @@
 {
   "name": {
-    "en": "Aqara Temp/Hum"
+    "en": "Aqara Weather Sensor"
   },
   "class": "sensor",
   "capabilities": [

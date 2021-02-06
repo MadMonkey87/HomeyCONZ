@@ -2,7 +2,7 @@
 
 This app for [Athom Homey](https://homey.app/en-us/) adds support for [deCONZ](https://www.dresden-elektronik.de/funk/software/deconz.html)'s [[RaspBee](https://www.phoscon.de/en/raspbee)/[ConBee](https://www.phoscon.de/en/conbee)] child devices.
 
-[![current version](https://img.shields.io/badge/version-1.20.5-<COLOR>.svg)](https://shields.io/)
+[![current version](https://img.shields.io/badge/version-1.21.0-<COLOR>.svg)](https://shields.io/)
 
 # Installation information
 
@@ -19,7 +19,7 @@ Almost there. Now you can install app using `athom app install` command being in
 - [x] Blinds
 - [x] Plugs
 - [x] deCONZ groups
-- [x] Motion sensors: Philips, Xiaomi, Aqara, TRÅDFRI, Trust, Develco, Frient
+- [x] Motion sensors: Philips, Xiaomi, Aqara, TRÅDFRI, Trust, Develco, Frient, Heiman, Silvercrest
 - [x] Temperature/Humidity sensors: Xiaomi, Aqara
 - [x] Buttons: Mi, Aqara, Aqara gyro, TRÅDFRI, 
 - [x] Switches: Aqara, TRÅDFRI, Philips, Trust, Feller

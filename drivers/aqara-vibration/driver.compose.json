@@ -1,6 +1,6 @@
 {
   "name": {
-    "en": "Aqara Vibration"
+    "en": "Aqara Vibration Sensor"
   },
   "class": "sensor",
   "capabilities": [

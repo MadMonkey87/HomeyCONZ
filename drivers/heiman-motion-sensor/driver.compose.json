@@ -1,11 +1,10 @@
 {
   "name": {
-    "en": "Aqara Motion Sensor"
+    "en": "Heiman/Lidl/Silvercrest Motion Sensor"
   },
   "class": "sensor",
   "capabilities": [
     "alarm_motion",
-    "measure_luminance",
     "measure_battery"
   ],
   "energy": {

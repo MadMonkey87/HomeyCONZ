@@ -1,0 +1,16 @@
+{
+  "actions": [
+    {
+      "id": "light_flash_long",
+      "title": {
+        "en": "Flash (Long)"
+      }
+    },
+    {
+      "id": "light_flash_short",
+      "title": {
+        "en": "Flash (Short)"
+      }
+    }
+  ]
+}
