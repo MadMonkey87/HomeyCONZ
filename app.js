@@ -163,6 +163,24 @@ class deCONZ extends Homey.App {
 		}, 60 * 1000)
 	}
 
+	handleMessage(message) {
+		let data = JSON.parse(message)
+		let device = this.getDevice(data.r, data.id)
+
+		if (device) {
+			if (data.state) {
+				this.updateState(device, data.state)
+			} else if (data.action) {
+				// applies to groups only
+				this.updateState(device, data.action)
+			} else if (data.config) {
+				this.updateConfig(device, data.config)
+			}
+		} else if (data.attr && data.attr.modelid !== 'ConBee') {
+			this.log('Update for unregistered device', data)
+		}
+	}
+
 	webSocketConnectTo() {
 		this.log('Websocket connect...')
 		this.wsConnected = false
@@ -173,21 +191,7 @@ class deCONZ extends Homey.App {
 			this.setWSKeepAlive()
 		})
 		this.websocket.on('message', message => {
-			let data = JSON.parse(message)
-			let device = this.getDevice(data.r, data.id)
-
-			if (device) {
-				if (data.state) {
-					this.updateState(device, data.state)
-				} else if (data.action) {
-					// applies to groups only
-					this.updateState(device, data.action)
-				} else if (data.config) {
-					this.updateConfig(device, data.config)
-				}
-			} else if (data.attr && data.attr.modelid !== 'ConBee') {
-				this.log('Update for unregistered device', data)
-			}
+			this.handleMessage(message)
 		})
 		this.websocket.on('error', error => {
 			this.error('Websocket error', error)
@@ -973,6 +977,22 @@ class deCONZ extends Homey.App {
 	}
 
 	initializeActions() {
+
+		let simulateMessageAction = new Homey.FlowCardAction('debug_send_message');
+		simulateMessageAction
+			.register()
+			.registerRunListener(async (args, state) => {
+				return new Promise((resolve) => {
+					try {
+						this.log('simulate incoming message', message)
+						handleMessage(args.message)
+						resolve(true)
+					} catch (error) {
+						this.log('error while simulating a message', error)
+						resolve(false)
+					}
+				});
+			});
 
 		let updateAllDevicesManuallyAction = new Homey.FlowCardAction('update_all_devices');
 		updateAllDevicesManuallyAction
