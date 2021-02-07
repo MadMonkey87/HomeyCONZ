@@ -1,26 +1,34 @@
 'use strict'
 
-const Light = require('../Light')
-const Homey = require('homey')
-const { http } = require('../../nbhttp')
+const Sensor = require('../Sensor')
 
-class GenericThermostat extends Light {
+class GenericThermostat extends Sensor {
 
 	onInit() {
 		super.onInit()
 
+		this.registerTargetTemperatureListener()
+		this.registerOnOffListener()
+
 		this.log(this.getName(), 'has been initiated')
+	}
+
+	registerTargetTemperatureListener() {
+		this.registerCapabilityListener('target_temperature', (value, opts, callback) => {
+			this.putSensorConfig({ config: { heatsetpoint: value * 100 } }, (err, result) => {
+				callback(err, result)
+			})
+		})
 	}
 
 	registerOnOffListener() {
 		this.registerCapabilityListener('onoff', (value, opts, callback) => {
-			this.put(this.address, { alert: value ? 'select':'none' }, callback)
+			this.putSensorConfig({ config: { on: value } }, (err, result) => {
+				callback(err, result)
+			})
 		})
 	}
 
-	handleAlertState(state){
-		this.setCapabilityValue('onoff', state.alert !=='none')
-	}
 }
 
 module.exports = GenericThermostat
