@@ -984,7 +984,7 @@ class deCONZ extends Homey.App {
 			.registerRunListener(async (args, state) => {
 				return new Promise((resolve) => {
 					try {
-						this.log('simulate incoming message', message)
+						this.log('simulate incoming message', args.message)
 						handleMessage(args.message)
 						resolve(true)
 					} catch (error) {
