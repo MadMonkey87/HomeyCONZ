@@ -1,8 +1,10 @@
 'use strict'
 
 const Light = require('../Light')
+const Homey = require('homey')
+const { http } = require('../../nbhttp')
 
-class GenericSiren extends Light {
+class GenericThermostat extends Light {
 
 	onInit() {
 		super.onInit()
@@ -21,4 +23,4 @@ class GenericSiren extends Light {
 	}
 }
 
-module.exports = GenericSiren
+module.exports = GenericThermostat
