@@ -3,7 +3,11 @@
     "en": "<Generic Thermostat>"
   },
   "class": "thermostat",
-  "capabilities": [],
+  "capabilities": [
+    "measure_temperature", 
+    "target_temperature",
+    "thermostat_mode"
+  ],
   "images": {
     "large": "{{driverAssetsPath}}/images/large.png",
     "small": "{{driverAssetsPath}}/images/small.png"
