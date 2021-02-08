@@ -29,13 +29,13 @@ class SymfoniskRemote extends Sensor {
 
 		if (tokens.buttonIndex === 2) {
 			this.clockwiseCount++;
-			util.debounce(() => {
+			util.throttle(() => {
 				this.triggerRaw.trigger(this, tokens, state);
 				this.clockwiseCount = 0;
 			}, 1000)
 		} else if (tokens.buttonIndex === 3) {
 			this.counterClockwiseCount++;
-			util.debounce(() => {
+			util.throttle(() => {
 				this.triggerRaw.trigger(this, tokens, state);
 				this.counterClockwiseCount = 0;
 			}, 1000)
