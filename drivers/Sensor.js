@@ -1,7 +1,7 @@
 'use strict'
 
 const Homey = require('homey')
-const { http, https } = require('./../nbhttp')
+const { http } = require('./../nbhttp')
 const DeconzDevice = require('../drivers/DeconzDevice')
 
 class Sensor extends DeconzDevice {

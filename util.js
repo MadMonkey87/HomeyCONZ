@@ -214,4 +214,19 @@ module.exports.util.saveFile = function (filename, base64EncodedContent, callbac
   }
 }
 
+module.exports.util.debounce = function (func, wait) {
+  let timeout;
+  return function () {
+    let context = this;
+    let args = arguments;
+    let later = function () {
+      timeout = null;
+      func.apply(context, args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
+
 module.exports.util.appDataFolder = '/userdata/';
