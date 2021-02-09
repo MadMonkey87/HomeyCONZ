@@ -1,6 +1,44 @@
 {
   "triggers": [
     {
+      "id": "rotate_clockwise",
+      "title": {
+        "en": "Rotated Clockwise"
+      },
+      "hint": {
+        "en": "This device sends a lot of events which is not very performant if you need to react on everyone of them. Instead throttling is used which only triggers this card once every second but then provides and 'event count' that tell you how many emits were omitted. You can use this to derive how much or how fast the rotation was. Note that you can adapt this behaviour in the device settings."
+      },
+      "tokens": [
+        {
+          "name": "count",
+          "type": "number",
+          "title": {
+            "en": "event count"
+          },
+          "example": 35
+        }
+      ]
+    },
+    {
+      "id": "rotate_counter_clockwise",
+      "title": {
+        "en": "Rotated Counterclockwise"
+      },
+      "hint": {
+        "en": "This device sends a lot of events which is not very performant if you need to react on everyone of them. Instead throttling is used which only triggers this card once every second but then provides and 'event count' that tell you how many emits were omitted. You can use this to derive how much or how fast the rotation was. Note that you can adapt this behaviour in the device settings."
+      },
+      "tokens": [
+        {
+          "name": "count",
+          "type": "number",
+          "title": {
+            "en": "event count"
+          },
+          "example": 35
+        }
+      ]
+    },
+    {
       "id": "raw_switch_event",
       "title": {
         "en": "Event"
@@ -42,36 +80,6 @@
       "args": [
         {
           "type": "dropdown",
-          "name": "button",
-          "values": [
-            {
-              "id": "-1",
-              "label": {
-                "en": "Any Action"
-              }
-            },
-            {
-              "id": "1",
-              "label": {
-                "en": "Button"
-              }
-            },
-            {
-              "id": "2",
-              "label": {
-                "en": "Turn Clockwise"
-              }
-            },
-            {
-              "id": "3",
-              "label": {
-                "en": "Turn Counter Clockwise"
-              }
-            }
-          ]
-        },
-        {
-          "type": "dropdown",
           "name": "action",
           "values": [
             {
@@ -96,18 +104,6 @@
               "id": "5",
               "label": {
                 "en": "Tripple Press"
-              }
-            },
-            {
-              "id": "1",
-              "label": {
-                "en": "Start Rotation"
-              }
-            },
-            {
-              "id": "3",
-              "label": {
-                "en": "End Rotation"
               }
             }
           ]

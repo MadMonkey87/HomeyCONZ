@@ -2530,6 +2530,58 @@
         ]
       },
       {
+        "id": "rotate_clockwise",
+        "title": {
+          "en": "Rotated Clockwise"
+        },
+        "hint": {
+          "en": "This device sends a lot of events which is not very performant if you need to react on everyone of them. Instead throttling is used which only triggers this card once every second but then provides and 'event count' that tell you how many emits were omitted. You can use this to derive how much or how fast the rotation was. Note that you can adapt this behaviour in the device settings."
+        },
+        "tokens": [
+          {
+            "name": "count",
+            "type": "number",
+            "title": {
+              "en": "event count"
+            },
+            "example": 35
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=symfonisk-remote"
+          }
+        ]
+      },
+      {
+        "id": "rotate_counter_clockwise",
+        "title": {
+          "en": "Rotated Counterclockwise"
+        },
+        "hint": {
+          "en": "This device sends a lot of events which is not very performant if you need to react on everyone of them. Instead throttling is used which only triggers this card once every second but then provides and 'event count' that tell you how many emits were omitted. You can use this to derive how much or how fast the rotation was. Note that you can adapt this behaviour in the device settings."
+        },
+        "tokens": [
+          {
+            "name": "count",
+            "type": "number",
+            "title": {
+              "en": "event count"
+            },
+            "example": 35
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=symfonisk-remote"
+          }
+        ]
+      },
+      {
         "id": "raw_switch_event",
         "title": {
           "en": "Event"
@@ -2576,36 +2628,6 @@
           },
           {
             "type": "dropdown",
-            "name": "button",
-            "values": [
-              {
-                "id": "-1",
-                "label": {
-                  "en": "Any Action"
-                }
-              },
-              {
-                "id": "1",
-                "label": {
-                  "en": "Button"
-                }
-              },
-              {
-                "id": "2",
-                "label": {
-                  "en": "Turn Clockwise"
-                }
-              },
-              {
-                "id": "3",
-                "label": {
-                  "en": "Turn Counter Clockwise"
-                }
-              }
-            ]
-          },
-          {
-            "type": "dropdown",
             "name": "action",
             "values": [
               {
@@ -2630,18 +2652,6 @@
                 "id": "5",
                 "label": {
                   "en": "Tripple Press"
-                }
-              },
-              {
-                "id": "1",
-                "label": {
-                  "en": "Start Rotation"
-                }
-              },
-              {
-                "id": "3",
-                "label": {
-                  "en": "End Rotation"
                 }
               }
             ]
@@ -11633,6 +11643,22 @@
         }
       ],
       "settings": [
+        {
+          "id": "throttling",
+          "type": "number",
+          "label": {
+            "en": "Throttling"
+          },
+          "hint": {
+            "en": "This device sends a lot of rotation events which is not reasonable to be used in flows. Instead, this setting defines the interval in which rotation events are emitted."
+          },
+          "units": {
+            "en": "Milliseconds"
+          },
+          "value": 500,
+          "min": 1,
+          "max": 2500
+        },
         {
           "id": "deconz",
           "type": "group",

@@ -34,12 +34,28 @@
       "id": "repair"
     }
   ],
-  "settings":[
+  "settings": [
     {
-      "$extends":  "ignore-reachable"
+      "id": "throttling",
+      "type": "number",
+      "label": {
+        "en": "Throttling"
+      },
+      "hint": {
+        "en": "This device sends a lot of rotation events which is not reasonable to be used in flows. Instead, this setting defines the interval in which rotation events are emitted."
+      },
+      "units": {
+        "en": "Milliseconds"
+      },
+      "value": 500,
+      "min": 1,
+      "max": 2500
     },
     {
-      "$extends":  "info"
+      "$extends": "ignore-reachable"
+    },
+    {
+      "$extends": "info"
     }
   ]
 }

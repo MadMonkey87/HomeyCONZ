@@ -233,7 +233,7 @@ module.exports.util.debounce = function (func, wait) {
 // as much as it can, without ever going more than once per `wait` duration;
 // but if you'd like to disable the execution on the leading edge, pass
 // `{leading: false}`. To disable execution on the trailing edge, ditto.
-module.exports.util.throttle = function (func, wait, options) {
+/*module.exports.util.throttle = function (func, wait, options) {
   var context, args, result;
   var timeout = null;
   var previous = 0;
@@ -263,7 +263,7 @@ module.exports.util.throttle = function (func, wait, options) {
     }
     return result;
   };
-};
+};*/
 
 module.exports.util.throttle = function (callback, limit) {
   var waiting = false;                      // Initially, we're not waiting
