@@ -1,9 +1,44 @@
 {
   "triggers": [
     {
-      "id": "rotate_clockwise",
+      "id": "rotation_start",
       "title": {
-        "en": "Rotated Clockwise"
+        "en": "Start Rotating"
+      },
+      "args": [
+        {
+          "type": "dropdown",
+          "name": "direction",
+          "title": {
+            "en": "Direction"
+          },
+          "values": [
+            {
+              "id": "-1",
+              "label": {
+                "en": "Any"
+              }
+            },
+            {
+              "id": "clockwise",
+              "label": {
+                "en": "Clockwise"
+              }
+            },
+            {
+              "id": "counterClockwise",
+              "label": {
+                "en": "Counter Clockwise"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rotating",
+      "title": {
+        "en": "Rotating"
       },
       "hint": {
         "en": "This device sends a lot of events which is not very performant if you need to react on everyone of them. Instead throttling is used which only triggers this card once every second but then provides and 'event count' that tell you how many emits were omitted. You can use this to derive how much or how fast the rotation was. Note that you can adapt this behaviour in the device settings."
@@ -17,31 +52,76 @@
           },
           "example": 35
         }
+      ],
+      "args": [
+        {
+          "type": "dropdown",
+          "name": "direction",
+          "title": {
+            "en": "Direction"
+          },
+          "values": [
+            {
+              "id": "-1",
+              "label": {
+                "en": "Any"
+              }
+            },
+            {
+              "id": "clockwise",
+              "label": {
+                "en": "Clockwise"
+              }
+            },
+            {
+              "id": "counterClockwise",
+              "label": {
+                "en": "Counter Clockwise"
+              }
+            }
+          ]
+        }
       ]
     },
     {
-      "id": "rotate_counter_clockwise",
+      "id": "rotating_end",
       "title": {
-        "en": "Rotated Counterclockwise"
+        "en": "End Rotating"
       },
-      "hint": {
-        "en": "This device sends a lot of events which is not very performant if you need to react on everyone of them. Instead throttling is used which only triggers this card once every second but then provides and 'event count' that tell you how many emits were omitted. You can use this to derive how much or how fast the rotation was. Note that you can adapt this behaviour in the device settings."
-      },
-      "tokens": [
+      "args": [
         {
-          "name": "count",
-          "type": "number",
+          "type": "dropdown",
+          "name": "direction",
           "title": {
-            "en": "event count"
+            "en": "Direction"
           },
-          "example": 35
+          "values": [
+            {
+              "id": "-1",
+              "label": {
+                "en": "Any"
+              }
+            },
+            {
+              "id": "clockwise",
+              "label": {
+                "en": "Clockwise"
+              }
+            },
+            {
+              "id": "counterClockwise",
+              "label": {
+                "en": "Counter Clockwise"
+              }
+            }
+          ]
         }
       ]
     },
     {
       "id": "raw_switch_event",
       "title": {
-        "en": "Event"
+        "en": "Button Event"
       },
       "tokens": [
         {
