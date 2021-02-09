@@ -1057,21 +1057,25 @@ class deCONZ extends Homey.App {
 		let checkDeconzUpdatesCondition = new Homey.FlowCardCondition('check_deconz_updates');
 		checkDeconzUpdatesCondition
 			.register()
-			.registerRunListener((args, state) => {
-				this.getDeconzUpdates((error, success) => {
-					return Promise.resolve(!error && success.updateAvailable === true)
-				}
-				)
+			.registerRunListener(async (args, state) => {
+				return new Promise((resolve, reject) => {
+					this.getDeconzDockerUpdates((error, success) => {
+						this.log('check for deconz updates', !error && success.updateAvailable === true);
+						resolve(!error && success.updateAvailable === true)
+					})
+				});
 			});
 
 		let checkDeconzDockerUpdatesCondition = new Homey.FlowCardCondition('check_deconz_docker_updates');
 		checkDeconzDockerUpdatesCondition
 			.register()
-			.registerRunListener((args, state) => {
-				this.getDeconzDockerUpdates((error, success) => {
-					return Promise.resolve(!error && success.updateAvailable === true)
-				}
-				)
+			.registerRunListener(async (args, state) => {
+				return new Promise((resolve, reject) => {
+					this.getDeconzDockerUpdates((error, success) => {
+						this.log('check for docker updates', !error && success.updateAvailable === true);
+						resolve(!error && success.updateAvailable === true)
+					})
+				});
 			});
 	}
 
