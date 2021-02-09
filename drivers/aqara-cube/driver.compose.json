@@ -2,7 +2,7 @@
   "name": {
     "en": "Aqara Cube"
   },
-  "class": "sensor",
+  "class": "remote",
   "capabilities": [
     "side_up",
     "cube_measure_rotation",

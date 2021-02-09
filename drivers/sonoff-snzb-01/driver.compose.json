@@ -2,7 +2,7 @@
   "name": {
     "en": "Sonoff snzb-01"
   },
-  "class": "other",
+  "class": "remote",
   "capabilities": [
     "measure_battery"
   ],

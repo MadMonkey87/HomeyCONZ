@@ -2,7 +2,7 @@
   "name": {
     "en": "Mi Magnet"
   },
-  "class": "sensor",
+  "class": "homealarm",
   "capabilities": [
     "alarm_contact",
     "measure_battery"

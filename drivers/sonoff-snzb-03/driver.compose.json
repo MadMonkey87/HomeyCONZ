@@ -2,7 +2,7 @@
   "name": {
     "en": "Sonoff snzb-03"
   },
-  "class": "sensor",
+  "class": "homealarm",
   "capabilities": [
     "alarm_motion",
     "measure_battery"

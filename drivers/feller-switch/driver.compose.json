@@ -2,7 +2,7 @@
   "name": {
     "en": "Feller Edizio Due"
   },
-  "class": "other",
+  "class": "remote",
   "capabilities": [],
   "images": {
     "large": "{{driverAssetsPath}}/images/large.png",

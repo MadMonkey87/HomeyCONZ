@@ -3,7 +3,7 @@
   "name": {
     "en": "Trust ZPIR 8000"
   },
-  "class": "sensor",
+  "class": "homealarm",
   "capabilities": [
     "alarm_motion",
     "measure_battery"

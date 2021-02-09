@@ -2,7 +2,7 @@
   "name": {
     "en": "Philips Hue Dimmer Switch"
   },
-  "class": "other",
+  "class": "remote",
   "capabilities": [
     "measure_battery"
   ],

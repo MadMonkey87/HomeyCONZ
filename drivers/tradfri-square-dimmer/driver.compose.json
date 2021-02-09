@@ -2,7 +2,7 @@
   "name": {
     "en": "Tradfri Square Dimmer"
   },
-  "class": "other",
+  "class": "remote",
   "capabilities": [
     "measure_battery"
   ],

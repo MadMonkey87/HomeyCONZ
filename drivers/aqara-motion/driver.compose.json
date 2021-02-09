@@ -2,7 +2,7 @@
   "name": {
     "en": "Aqara Motion Sensor"
   },
-  "class": "sensor",
+  "class": "homealarm",
   "capabilities": [
     "alarm_motion",
     "measure_luminance",

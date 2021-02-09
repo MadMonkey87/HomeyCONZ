@@ -4835,7 +4835,7 @@
       "name": {
         "en": "Aqara Motion Sensor"
       },
-      "class": "sensor",
+      "class": "homealarm",
       "capabilities": [
         "alarm_motion",
         "measure_luminance",
@@ -11832,7 +11832,7 @@
       "name": {
         "en": "Tint rgb remote"
       },
-      "class": "other",
+      "class": "remote",
       "capabilities": [
         "hue_angle"
       ],

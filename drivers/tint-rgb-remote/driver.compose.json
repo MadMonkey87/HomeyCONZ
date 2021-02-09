@@ -2,7 +2,7 @@
   "name": {
     "en": "Tint rgb remote"
   },
-  "class": "other",
+  "class": "remote",
   "capabilities": [
     "hue_angle"
   ],

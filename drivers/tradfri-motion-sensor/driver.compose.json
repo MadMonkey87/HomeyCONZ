@@ -2,7 +2,7 @@
   "name": {
     "en": "Tradfri Motion Sensor"
   },
-  "class": "sensor",
+  "class": "homealarm",
   "capabilities": [
     "alarm_motion",
     "dark",

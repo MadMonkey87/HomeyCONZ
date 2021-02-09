@@ -2,7 +2,7 @@
   "name": {
     "en": "<Generic Switch>"
   },
-  "class": "other",
+  "class": "remote",
   "capabilities": [
     "measure_battery"
   ],

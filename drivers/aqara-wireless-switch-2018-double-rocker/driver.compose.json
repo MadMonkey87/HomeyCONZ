@@ -3,7 +3,7 @@
   "name": {
     "en": "Aqara Wireless Switch 2018 Double Rocker"
   },
-  "class": "other",
+  "class": "remote",
   "capabilities": [
     "measure_battery"
   ],

@@ -2,7 +2,7 @@
   "name": {
     "en": "Aqara Wall Switch Double Rocker"
   },
-  "class": "other",
+  "class": "remote",
   "capabilities": [],
   "images": {
     "large": "{{driverAssetsPath}}/images/large.png",

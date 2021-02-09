@@ -2,7 +2,7 @@
   "name": {
     "en": "<Generic Siren>"
   },
-  "class": "other",
+  "class": "homealarm",
   "capabilities": [],
   "images": {
     "large": "{{driverAssetsPath}}/images/large.png",

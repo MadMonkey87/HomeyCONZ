@@ -3,7 +3,7 @@
   "name": {
     "en": "Trust ZYCT-202"
   },
-  "class": "other",
+  "class": "remote",
   "capabilities": [
     "measure_battery"
   ],

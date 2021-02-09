@@ -123,6 +123,6 @@
     "en": "Lights & groups now have a flow card to set multiple commands at once, lights now have flash action cards too, support heiman/silvercrest motion sensor"
   },
   "1.22.0":{
-    "en": "Generic support for thermostats, support new action card to simulate incoming messages, throttling for symfonisk rotation events"
+    "en": "Generic support for thermostats, support new action card to simulate incoming messages, throttling for symfonisk rotation events, fixed a bug that would not correctly check for deConz updates, support new hue dimmer switch model"
   }
 }
