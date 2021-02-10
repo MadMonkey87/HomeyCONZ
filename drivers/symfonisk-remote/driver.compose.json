@@ -47,9 +47,20 @@
       "units": {
         "en": "Milliseconds"
       },
-      "value": 500,
+      "value": 1000,
       "min": 1,
       "max": 2500
+    },
+    {
+      "id": "scale",
+      "type": "number",
+      "label": {
+        "en": "Scale"
+      },
+      "hint": {
+        "en": "[TODO]"
+      },
+      "value": 0.5
     },
     {
       "$extends": "ignore-reachable"

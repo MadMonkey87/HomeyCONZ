@@ -13,15 +13,28 @@ class SymfoniskRemote extends Sensor {
 		this.counterClockwiseCount = 0;
 		this.mode = 'none';
 
-		this.throttle = this.getSetting('throttling');
+		if (!this.getSetting('throttling')) {
+			device.setSettings({ 'throttling': 1000 });
+			this.throttle = 1000;
+		} else {
+			this.throttle = this.getSetting('throttling');
+		}
+
+		if (!this.getSetting('scale')) {
+			device.setSettings({ 'scale': 0.75 });
+			this.scale = 0.75;
+		} else {
+			this.scale = this.getSetting('scale');
+		}
+
 		this.triggerClockwiseThrottled = util.throttle(() => {
 			this.log('rotatingClockwise', this.clockwiseCount)
-			this.triggerRotating.trigger(this, { number: this.clockwiseCount }, { direction: 'clockwise' });
+			this.triggerRotating.trigger(this, { amount: this.clockwiseCount * this.scale }, { direction: 'clockwise' });
 			this.clockwiseCount = 0;
 		}, this.throttle);
 		this.triggerCounterClockwiseThrottled = util.throttle(() => {
 			this.log('rotatingCounterClockwise', this.counterClockwiseCount)
-			this.triggerRotating.trigger(this, { number: this.counterClockwiseCount }, { direction: 'counterClockwise' });
+			this.triggerRotating.trigger(this, { amount: this.counterClockwiseCount * this.scale }, { direction: 'counterClockwise' });
 			this.counterClockwiseCount = 0;
 		}, this.throttle);
 
@@ -45,8 +58,7 @@ class SymfoniskRemote extends Sensor {
 				} else if (number == 2003) {
 					this.mode = 'none';
 					this.triggerClockwiseThrottled();
-					this.triggerEndRotating.trigger(this, {}, { direction: 'clockwise' });
-					this.log('stop rotating clockwise')
+					this.triggerEndRotating.trigger(this, null, { direction: 'clockwise' });
 					return;
 				} else if (number == 3001) {
 					// ignore: the device always sents both events, relevant is only the one of the current direction indicated by the first event
@@ -55,14 +67,13 @@ class SymfoniskRemote extends Sensor {
 				break;
 			case 'rotatingCounterClockwise':
 				if (number == 3001) {
-					this.counterClockwiseCount++;
+					this.counterClockwiseCount--;
 					this.triggerCounterClockwiseThrottled();
 					return;
 				} else if (number == 3003) {
 					this.mode = 'none';
 					this.triggerCounterClockwiseThrottled();
-					this.triggerEndRotating.trigger(this, {}, { direction: 'counterClockwise' });
-					this.log('stop rotating counter clockwise')
+					this.triggerEndRotating.trigger(this, null, { direction: 'counterClockwise' });
 					return;
 				} else if (number == 2001) {
 					// ignore: the device always sents both events, relevant is only the one of the current direction indicated by the first event
@@ -72,13 +83,11 @@ class SymfoniskRemote extends Sensor {
 			case 'none':
 				if (number == 2001) {
 					this.mode = 'rotatingClockwise';
-					this.log('start rotating clockwise')
-					this.triggerStartRotating.trigger(this, {}, { direction: 'clockwise' });
+					this.triggerStartRotating.trigger(this, null, { direction: 'clockwise' });
 					return;
 				} else if (number == 3001) {
 					this.mode = 'rotatingCounterClockwise';
-					this.log('start rotating counter clockwise')
-					this.triggerStartRotating.trigger(this, {}, { direction: 'counterClockwise' });
+					this.triggerStartRotating.trigger(this, null, { direction: 'counterClockwise' });
 					return;
 				}
 				break;
@@ -94,33 +103,31 @@ class SymfoniskRemote extends Sensor {
 	}
 
 	setTriggers() {
+
 		this.triggerRaw = new Homey.FlowCardTriggerDevice('raw_switch_event')
 			.register()
 			.registerRunListener((args, state) => {
-				return Promise.resolve(
-					(args.action === '-1' || args.action === state.actionIndex));
+				return Promise.resolve(args.action === '-1' || args.action === state.actionIndex);
 			});
 
 		this.triggerRotating = new Homey.FlowCardTriggerDevice('rotating')
 			.register()
 			.registerRunListener((args, state) => {
-				return Promise.resolve(
-					(args.direction === '-1' || args.direction === state.direction));
+				return Promise.resolve(args.direction === '-1' || args.direction === state.direction);
 			});
 
 		this.triggerStartRotating = new Homey.FlowCardTriggerDevice('rotation_start')
 			.register()
 			.registerRunListener((args, state) => {
-				return Promise.resolve(
-					(args.direction === '-1' || args.direction === state.direction));
+				return Promise.resolve(args.direction === '-1' || args.direction === state.direction);
 			});
 
 		this.triggerEndRotating = new Homey.FlowCardTriggerDevice('rotating_end')
 			.register()
 			.registerRunListener((args, state) => {
-				return Promise.resolve(
-					(args.direction === '-1' || args.direction === state.direction));
+				return Promise.resolve(args.direction === '-1' || args.direction === state.direction);
 			});
+
 	}
 
 }
