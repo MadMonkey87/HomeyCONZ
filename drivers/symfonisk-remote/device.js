@@ -30,6 +30,7 @@ class SymfoniskRemote extends Sensor {
 			this.triggerRotating.trigger(this, { count: this.clockwiseCount, amount: this.clockwiseCount * this.scale }, { direction: 'clockwise' });
 			this.clockwiseCount = 0;
 		}, this.throttle);
+
 		this.triggerCounterClockwiseThrottled = util.throttle(() => {
 			this.log('rotatingCounterClockwise', this.counterClockwiseCount, this.counterClockwiseCount * -this.scale);
 			this.triggerRotating.trigger(this, { count: this.counterClockwiseCount, amount: this.counterClockwiseCount * -this.scale }, { direction: 'counterClockwise' });
@@ -52,13 +53,16 @@ class SymfoniskRemote extends Sensor {
 				if (number == 2001) {
 					this.clockwiseCount++;
 					this.triggerClockwiseThrottled();
+					this.resetMode();
 					return;
 				} else if (number == 2003) {
+					this.clearModeReset();
 					this.mode = 'none';
 					this.triggerClockwiseThrottled();
 					this.triggerEndRotating.trigger(this, null, { direction: 'clockwise' });
 					return;
 				} else if (number == 3001) {
+					this.resetMode();
 					// ignore: the device always sents both events, relevant is only the one of the current direction indicated by the first event
 					return;
 				}
@@ -69,11 +73,13 @@ class SymfoniskRemote extends Sensor {
 					this.triggerCounterClockwiseThrottled();
 					return;
 				} else if (number == 3003) {
+					this.clearModeReset();
 					this.mode = 'none';
 					this.triggerCounterClockwiseThrottled();
 					this.triggerEndRotating.trigger(this, null, { direction: 'counterClockwise' });
 					return;
 				} else if (number == 2001) {
+					this.resetMode();
 					// ignore: the device always sents both events, relevant is only the one of the current direction indicated by the first event
 					return;
 				}
@@ -82,10 +88,12 @@ class SymfoniskRemote extends Sensor {
 				if (number == 2001) {
 					this.mode = 'rotatingClockwise';
 					this.triggerStartRotating.trigger(this, null, { direction: 'clockwise' });
+					this.resetMode();
 					return;
 				} else if (number == 3001) {
 					this.mode = 'rotatingCounterClockwise';
 					this.triggerStartRotating.trigger(this, null, { direction: 'counterClockwise' });
+					this.resetMode();
 					return;
 				}
 				break;
@@ -97,6 +105,25 @@ class SymfoniskRemote extends Sensor {
 		if (state.buttonIndex == 1) {
 			this.log('symphonisk switch event (' + number + ') button: ' + tokens.buttonIndex + ', action: ' + tokens.action);
 			this.triggerRaw.trigger(this, tokens, state);
+		}
+	}
+
+	// the device does not always send the "rotationStopped" event and thus we try to emulate it
+	resetMode() {
+		if (this.resetModeTimer) {
+			clearTimeout(this.resetModeTimer);
+		}
+		this.resetModeTimer = setTimeout(() => {
+			this.mode = 'none';
+			this.resetModeTimer = null;
+			// todo: direction
+			this.triggerEndRotating.trigger(this, null, { direction: 'counterClockwise' });
+		 }, this.throttle);
+	}
+
+	clearModeReset() {
+		if (this.resetModeTimer) {
+			clearTimeout(this.resetModeTimer);
 		}
 	}
 
