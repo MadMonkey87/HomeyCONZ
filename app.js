@@ -903,6 +903,10 @@ class deCONZ extends Homey.App {
 			device.setSettings({ pending: JSON.stringify(config.pending) });
 		}
 
+		if (config.hasOwnProperty('heatsetpoint') && deviceСapabilities.includes('target_temperature')) {
+			device.setCapabilityValue('target_temperature', config.heatsetpoint / 100)
+		}
+
 		if (config.hasOwnProperty('reachable')) {
 			(config.reachable || device.getSetting('ignore-reachable') === true) ? device.setAvailable() : device.setUnavailable('Unreachable')
 		}
