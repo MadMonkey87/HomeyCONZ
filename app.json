@@ -2662,12 +2662,20 @@
         },
         "tokens": [
           {
+            "name": "amount",
+            "type": "number",
+            "title": {
+              "en": "relative rotation"
+            },
+            "example": 0.5
+          },
+          {
             "name": "count",
             "type": "number",
             "title": {
               "en": "event count"
             },
-            "example": 35
+            "example": 0.5
           }
         ],
         "args": [
@@ -5976,7 +5984,7 @@
               "max": 21,
               "value": 0,
               "hint": {
-                "en": "Note that the sensitivity gets applied the next time the sensor performs a handshake with the conbee. This might take up to some time!"
+                "en": "Note that the sensitivity gets applied the next time the sensor performs a handshake with the conbee. This might take up to some time! Hint: 0 = most sensitive and 21 = least sensitive!"
               }
             },
             {
@@ -11939,7 +11947,7 @@
             "en": "Throttling"
           },
           "hint": {
-            "en": "This device sends a lot of rotation events which is not reasonable to be used in flows. Instead, this setting defines the interval in which rotation events are emitted."
+            "en": "This device sends a lot of rotation events which is not reasonable to be used in flows. Instead, this setting defines the interval in which rotation events are emitted. The amount of events that have been skipped is noted as the 'event count' token"
           },
           "units": {
             "en": "Milliseconds"
@@ -11955,7 +11963,7 @@
             "en": "Scale"
           },
           "hint": {
-            "en": "[TODO]"
+            "en": "The amount of emited rotation events can be used as indicator for the relative rotation. Use this scale parameter to get an appropriate 'relative rotation' for you use case. Example: Let's assume a normal rotation of 90° takes one second and emits 4 events and you wan't this to be the equivalent of 0.5 for dimming a light to 50% so you would set the scaling to 0.128."
           },
           "value": 0.5
         },

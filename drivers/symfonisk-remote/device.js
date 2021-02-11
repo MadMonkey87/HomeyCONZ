@@ -13,32 +13,30 @@ class SymfoniskRemote extends Sensor {
 		this.counterClockwiseCount = 0;
 		this.mode = 'none';
 
-		if (!this.getSetting('throttling')) {
+		this.throttle = this.getSetting('throttling');
+		if (!this.throttle) {
 			device.setSettings({ 'throttling': 1000 });
 			this.throttle = 1000;
-		} else {
-			this.throttle = this.getSetting('throttling');
 		}
 
-		if (!this.getSetting('scale')) {
-			device.setSettings({ 'scale': 0.75 });
-			this.scale = 0.75;
-		} else {
-			this.scale = this.getSetting('scale');
+		this.scale = this.getSetting('scale');
+		if (!this.scale) {
+			device.setSettings({ 'scale': 0.5 });
+			this.scale = 0.5;
 		}
 
 		this.triggerClockwiseThrottled = util.throttle(() => {
-			this.log('rotatingClockwise', this.clockwiseCount)
-			this.triggerRotating.trigger(this, { amount: this.clockwiseCount * this.scale }, { direction: 'clockwise' });
+			this.log('rotatingClockwise', this.clockwiseCount, this.clockwiseCount * this.scale)
+			this.triggerRotating.trigger(this, { count: this.clockwiseCount, amount: this.clockwiseCount * this.scale }, { direction: 'clockwise' });
 			this.clockwiseCount = 0;
 		}, this.throttle);
 		this.triggerCounterClockwiseThrottled = util.throttle(() => {
-			this.log('rotatingCounterClockwise', this.counterClockwiseCount)
-			this.triggerRotating.trigger(this, { amount: this.counterClockwiseCount * this.scale }, { direction: 'counterClockwise' });
+			this.log('rotatingCounterClockwise', this.counterClockwiseCount, this.counterClockwiseCount * -this.scale);
+			this.triggerRotating.trigger(this, { count: this.counterClockwiseCount, amount: this.counterClockwiseCount * -this.scale }, { direction: 'counterClockwise' });
 			this.counterClockwiseCount = 0;
 		}, this.throttle);
 
-		this.setTriggers()
+		this.setTriggers();
 
 		this.log(this.getName(), 'has been initiated')
 	}
@@ -67,7 +65,7 @@ class SymfoniskRemote extends Sensor {
 				break;
 			case 'rotatingCounterClockwise':
 				if (number == 3001) {
-					this.counterClockwiseCount--;
+					this.counterClockwiseCount++;
 					this.triggerCounterClockwiseThrottled();
 					return;
 				} else if (number == 3003) {

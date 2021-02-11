@@ -45,12 +45,20 @@
       },
       "tokens": [
         {
+          "name": "amount",
+          "type": "number",
+          "title": {
+            "en": "relative rotation"
+          },
+          "example": 0.5
+        },
+        {
           "name": "count",
           "type": "number",
           "title": {
             "en": "event count"
           },
-          "example": 35
+          "example": 0.5
         }
       ],
       "args": [
