@@ -872,6 +872,12 @@ class deCONZ extends Homey.App {
 			}
 		}
 
+		if (state.hasOwnProperty('airqualityppb')) {
+			if (deviceSupports('measure_voc')) {
+				device.setCapabilityValue('measure_voc')
+			}
+		}
+
 		if (state.hasOwnProperty('lastupdated') && device.getSetting('lastUpdated') != null) {
 			device.setSettings({ lastUpdated: state.lastupdated });
 		}
