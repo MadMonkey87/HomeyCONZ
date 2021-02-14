@@ -4,6 +4,8 @@
   },
   "class": "sensor",
   "capabilities": [
+    "measure_temperature",
+    "measure_humidity",
     "measure_battery"
   ],
   "energy": {
