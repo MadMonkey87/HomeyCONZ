@@ -2,7 +2,7 @@
   "name": {
     "en": "Aqara Window/Door Sensor"
   },
-  "class": "sensor",
+  "class": "homealarm",
   "capabilities": [
     "alarm_contact",
     "measure_battery"

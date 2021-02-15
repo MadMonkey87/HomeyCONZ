@@ -2,7 +2,7 @@
   "name": {
     "en": "Sonoff snzb-04"
   },
-  "class": "sensor",
+  "class": "homealarm",
   "capabilities": [
     "alarm_contact",
     "measure_battery"

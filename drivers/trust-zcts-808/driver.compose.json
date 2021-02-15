@@ -3,7 +3,7 @@
   "name": {
     "en": "Trust ZCTS-808"
   },
-  "class": "sensor",
+  "class": "homealarm",
   "capabilities": [
     "alarm_contact",
     "measure_battery"

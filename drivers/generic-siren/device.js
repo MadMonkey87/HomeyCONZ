@@ -1,8 +1,6 @@
 'use strict'
 
 const Light = require('../Light')
-const Homey = require('homey')
-const { http } = require('../../nbhttp')
 
 class GenericSiren extends Light {
 

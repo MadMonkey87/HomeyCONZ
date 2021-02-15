@@ -2,7 +2,7 @@
   "name": {
     "en": "Aqara Opple 2-Gang Switch"
   },
-  "class": "other",
+  "class": "remote",
   "capabilities": [
     "measure_battery"
   ],

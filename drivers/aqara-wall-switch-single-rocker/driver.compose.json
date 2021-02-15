@@ -2,7 +2,7 @@
   "name": {
     "en": "Aqara Wall Switch Single Rocker"
   },
-  "class": "other",
+  "class": "remote",
   "capabilities": [
   ],
   "images": {

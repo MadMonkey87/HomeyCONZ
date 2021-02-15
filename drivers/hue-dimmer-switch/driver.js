@@ -10,7 +10,7 @@ class HueDimmerSwitchDriver extends Driver {
 	}
 	
 	onPairListDevices(data, callback) {
-		this.getSensorsByCondition(device => device.modelid === 'RWL021' || device.modelid === 'RWL020', callback)
+		this.getSensorsByCondition(device => device.modelid === 'RWL021' || device.modelid === 'RWL020' || device.modelid === 'RWL022', callback)
 	}
 	
 }

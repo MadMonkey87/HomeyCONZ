@@ -1,0 +1,18 @@
+{
+    "id": "debug_send_message",
+    "title": {
+        "en": "DEBUG emulate incoming message"
+    },
+    "hint": {
+        "en": "Simulates an incoming websocket message. This can be useful for a few tests. Only use this if you know what you're doing."
+    },
+    "args": [
+        {
+            "type": "text",
+            "name": "message",
+            "title": {
+                "en": "Message"
+            }
+        }
+    ]
+}

@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "de.dresden-elektronik.deconz",
-  "version": "1.21.0",
+  "version": "1.22.1",
   "compatibility": ">=4.0.0",
   "brandColor": "#55626b",
   "sdk": 2,
@@ -2227,6 +2227,89 @@
           {
             "type": "device",
             "name": "device",
+            "filter": "driver_id=hue-smart-button"
+          },
+          {
+            "type": "dropdown",
+            "name": "action",
+            "values": [
+              {
+                "id": "-1",
+                "label": {
+                  "en": "Any Action"
+                }
+              },
+              {
+                "id": "0",
+                "label": {
+                  "en": "Initial Press"
+                }
+              },
+              {
+                "id": "1",
+                "label": {
+                  "en": "Hold"
+                }
+              },
+              {
+                "id": "2",
+                "label": {
+                  "en": "Release (Single Press)"
+                }
+              },
+              {
+                "id": "3",
+                "label": {
+                  "en": "Release (After Hold)"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "raw_switch_event",
+        "title": {
+          "en": "Event"
+        },
+        "tokens": [
+          {
+            "name": "rawEvent",
+            "type": "number",
+            "title": {
+              "en": "event"
+            },
+            "example": 1001
+          },
+          {
+            "name": "buttonIndex",
+            "type": "number",
+            "title": {
+              "en": "button index"
+            },
+            "example": 1
+          },
+          {
+            "name": "actionIndex",
+            "type": "number",
+            "title": {
+              "en": "action index"
+            },
+            "example": 1
+          },
+          {
+            "name": "action",
+            "type": "string",
+            "title": {
+              "en": "action"
+            },
+            "example": "initial_press"
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
             "filter": "driver_id=hue-tap"
           },
           {
@@ -2530,9 +2613,150 @@
         ]
       },
       {
+        "id": "rotation_start",
+        "title": {
+          "en": "Start Rotating"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=symfonisk-remote"
+          },
+          {
+            "type": "dropdown",
+            "name": "direction",
+            "title": {
+              "en": "Direction"
+            },
+            "values": [
+              {
+                "id": "-1",
+                "label": {
+                  "en": "Any"
+                }
+              },
+              {
+                "id": "clockwise",
+                "label": {
+                  "en": "Clockwise"
+                }
+              },
+              {
+                "id": "counterClockwise",
+                "label": {
+                  "en": "Counter Clockwise"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "rotating",
+        "title": {
+          "en": "Rotating"
+        },
+        "hint": {
+          "en": "This device sends a lot of events which is not very performant if you need to react on everyone of them. Instead throttling is used which only triggers this card once every second but then provides and 'event count' that tell you how many emits were omitted. You can use this to derive how much or how fast the rotation was. Note that you can adapt this behaviour in the device settings."
+        },
+        "tokens": [
+          {
+            "name": "amount",
+            "type": "number",
+            "title": {
+              "en": "relative rotation"
+            },
+            "example": 0.5
+          },
+          {
+            "name": "count",
+            "type": "number",
+            "title": {
+              "en": "event count"
+            },
+            "example": 0.5
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=symfonisk-remote"
+          },
+          {
+            "type": "dropdown",
+            "name": "direction",
+            "title": {
+              "en": "Direction"
+            },
+            "values": [
+              {
+                "id": "-1",
+                "label": {
+                  "en": "Any"
+                }
+              },
+              {
+                "id": "clockwise",
+                "label": {
+                  "en": "Clockwise"
+                }
+              },
+              {
+                "id": "counterClockwise",
+                "label": {
+                  "en": "Counter Clockwise"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "rotating_end",
+        "title": {
+          "en": "End Rotating"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=symfonisk-remote"
+          },
+          {
+            "type": "dropdown",
+            "name": "direction",
+            "title": {
+              "en": "Direction"
+            },
+            "values": [
+              {
+                "id": "-1",
+                "label": {
+                  "en": "Any"
+                }
+              },
+              {
+                "id": "clockwise",
+                "label": {
+                  "en": "Clockwise"
+                }
+              },
+              {
+                "id": "counterClockwise",
+                "label": {
+                  "en": "Counter Clockwise"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
         "id": "raw_switch_event",
         "title": {
-          "en": "Event"
+          "en": "Button Event"
         },
         "tokens": [
           {
@@ -2576,36 +2800,6 @@
           },
           {
             "type": "dropdown",
-            "name": "button",
-            "values": [
-              {
-                "id": "-1",
-                "label": {
-                  "en": "Any Action"
-                }
-              },
-              {
-                "id": "1",
-                "label": {
-                  "en": "Button"
-                }
-              },
-              {
-                "id": "2",
-                "label": {
-                  "en": "Turn Clockwise"
-                }
-              },
-              {
-                "id": "3",
-                "label": {
-                  "en": "Turn Counter Clockwise"
-                }
-              }
-            ]
-          },
-          {
-            "type": "dropdown",
             "name": "action",
             "values": [
               {
@@ -2630,18 +2824,6 @@
                 "id": "5",
                 "label": {
                   "en": "Tripple Press"
-                }
-              },
-              {
-                "id": "1",
-                "label": {
-                  "en": "Start Rotation"
-                }
-              },
-              {
-                "id": "3",
-                "label": {
-                  "en": "End Rotation"
                 }
               }
             ]
@@ -3202,6 +3384,24 @@
         "hint": {
           "en": "The backup gets stored on your Homey. Please visit the app config -> advanced to get more details or download the stored backup file."
         }
+      },
+      {
+        "id": "debug_send_message",
+        "title": {
+          "en": "DEBUG emulate incoming message"
+        },
+        "hint": {
+          "en": "Simulates an incoming websocket message. This can be useful for a few tests. Only use this if you know what you're doing."
+        },
+        "args": [
+          {
+            "type": "text",
+            "name": "message",
+            "title": {
+              "en": "Message"
+            }
+          }
+        ]
       },
       {
         "id": "set_group_state",
@@ -4195,7 +4395,7 @@
       "name": {
         "en": "Aqara Button"
       },
-      "class": "other",
+      "class": "remote",
       "capabilities": [
         "measure_battery"
       ],
@@ -4320,7 +4520,7 @@
       "name": {
         "en": "Aqara Gyro Button"
       },
-      "class": "other",
+      "class": "remote",
       "capabilities": [
         "measure_battery"
       ],
@@ -4445,7 +4645,7 @@
       "name": {
         "en": "Aqara Cube"
       },
-      "class": "sensor",
+      "class": "remote",
       "capabilities": [
         "side_up",
         "cube_measure_rotation",
@@ -4587,9 +4787,9 @@
     },
     {
       "name": {
-        "en": "Aqara Magnet"
+        "en": "Aqara Window/Door Sensor"
       },
-      "class": "sensor",
+      "class": "homealarm",
       "capabilities": [
         "alarm_contact",
         "measure_battery"
@@ -4724,9 +4924,9 @@
     },
     {
       "name": {
-        "en": "Aqara Motion"
+        "en": "Aqara Motion Sensor"
       },
-      "class": "sensor",
+      "class": "homealarm",
       "capabilities": [
         "alarm_motion",
         "measure_luminance",
@@ -4879,7 +5079,7 @@
       "name": {
         "en": "Aqara Opple 1-Gang Switch"
       },
-      "class": "other",
+      "class": "remote",
       "capabilities": [
         "measure_battery"
       ],
@@ -5005,7 +5205,7 @@
       "name": {
         "en": "Aqara Opple 2-Gang Switch"
       },
-      "class": "other",
+      "class": "remote",
       "capabilities": [
         "measure_battery"
       ],
@@ -5131,7 +5331,7 @@
       "name": {
         "en": "Aqara Opple 3-Gang Switch"
       },
-      "class": "other",
+      "class": "remote",
       "capabilities": [
         "measure_battery"
       ],
@@ -5536,7 +5736,7 @@
     },
     {
       "name": {
-        "en": "Aqara Temp/Hum"
+        "en": "Aqara Weather Sensor"
       },
       "class": "sensor",
       "capabilities": [
@@ -5705,7 +5905,7 @@
     },
     {
       "name": {
-        "en": "Aqara Vibration"
+        "en": "Aqara Vibration Sensor"
       },
       "class": "sensor",
       "capabilities": [
@@ -5784,7 +5984,7 @@
               "max": 21,
               "value": 0,
               "hint": {
-                "en": "Note that the sensitivity gets applied the next time the sensor performs a handshake with the conbee. This might take up to some time!"
+                "en": "Note that the sensitivity gets applied the next time the sensor performs a handshake with the conbee. This might take up to some time! Hint: 0 = most sensitive and 21 = least sensitive!"
               }
             },
             {
@@ -5892,7 +6092,7 @@
       "name": {
         "en": "Aqara Wall Switch Double Rocker"
       },
-      "class": "other",
+      "class": "remote",
       "capabilities": [],
       "images": {
         "large": "/drivers/aqara-wall-switch-double-rocker/assets/images/large.png",
@@ -6010,7 +6210,7 @@
       "name": {
         "en": "Aqara Wall Switch Single Rocker"
       },
-      "class": "other",
+      "class": "remote",
       "capabilities": [],
       "images": {
         "large": "/drivers/aqara-wall-switch-single-rocker/assets/images/large.png",
@@ -6129,7 +6329,7 @@
       "name": {
         "en": "Aqara Wireless Switch 2016 Double Rocker"
       },
-      "class": "other",
+      "class": "remote",
       "capabilities": [
         "measure_battery"
       ],
@@ -6254,7 +6454,7 @@
       "name": {
         "en": "Aqara Wireless Switch 2016 Single Rocker"
       },
-      "class": "other",
+      "class": "remote",
       "capabilities": [
         "measure_battery"
       ],
@@ -6379,7 +6579,7 @@
       "name": {
         "en": "Aqara Wireless Switch 2018 Double Rocker"
       },
-      "class": "other",
+      "class": "remote",
       "capabilities": [
         "measure_battery"
       ],
@@ -6504,7 +6704,7 @@
       "name": {
         "en": "Aqara Wireless Switch 2018 Single Rocker"
       },
-      "class": "other",
+      "class": "remote",
       "capabilities": [
         "measure_battery"
       ],
@@ -6628,7 +6828,7 @@
       "name": {
         "en": "Develco/Frient Motion Sensor"
       },
-      "class": "sensor",
+      "class": "homealarm",
       "capabilities": [
         "alarm_motion",
         "measure_luminance",
@@ -7074,7 +7274,7 @@
       "name": {
         "en": "Feller Edizio Due"
       },
-      "class": "other",
+      "class": "remote",
       "capabilities": [],
       "images": {
         "large": "/drivers/feller-switch/assets/images/large.png",
@@ -7462,9 +7662,9 @@
     {
       "id": "generic-open-close",
       "name": {
-        "en": "<Generic Open-Close>"
+        "en": "<Generic Open-Close Sensor>"
       },
-      "class": "sensor",
+      "class": "homealarm",
       "capabilities": [
         "alarm_contact",
         "measure_battery"
@@ -7727,7 +7927,7 @@
       "name": {
         "en": "<Generic Siren>"
       },
-      "class": "other",
+      "class": "homealarm",
       "capabilities": [],
       "images": {
         "large": "/drivers/generic-siren/assets/images/large.png",
@@ -7843,9 +8043,150 @@
     },
     {
       "name": {
+        "en": "<Generic Thermostat>"
+      },
+      "class": "thermostat",
+      "capabilities": [
+        "measure_temperature",
+        "target_temperature",
+        "onoff"
+      ],
+      "images": {
+        "large": "/drivers/generic-thermostat/assets/images/large.png",
+        "small": "/drivers/generic-thermostat/assets/images/small.png"
+      },
+      "icon": "/drivers/generic-thermostat/assets/icon.svg",
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Calibration Settings"
+          },
+          "children": [
+            {
+              "id": "temperature_offset",
+              "type": "number",
+              "label": {
+                "en": "Temperature calibration"
+              },
+              "value": 0,
+              "hint": {
+                "en": "If a sensor is not properly calibrated it will read slightly wrong values. Using this setting you can adjust the sensor readings, i.e if you set a value of -2.5 and the sensor reports 20, the sensor will show a value of 17.5 within Homey."
+              }
+            }
+          ]
+        },
+        {
+          "id": "deconz",
+          "type": "group",
+          "label": {
+            "en": "deCONZ"
+          },
+          "children": [
+            {
+              "id": "ignore-reachable",
+              "type": "checkbox",
+              "label": {
+                "en": "Ignore if unreachable"
+              },
+              "value": false,
+              "hint": {
+                "en": "In Zigbee networks there are no active connections and thus deCONZ does not know if this device is still there as long as it does not communicate. Therefore a device gets marked as unreachable if it does not report for a longer period of time. This is perfectly fine for most devices as they report their status periodically, but if this devices doesn't do this, you can prevent that it get's reported as unavailable using this setting."
+              }
+            }
+          ]
+        },
+        {
+          "id": "info",
+          "type": "group",
+          "label": {
+            "en": "Info"
+          },
+          "children": [
+            {
+              "id": "modelid",
+              "type": "label",
+              "label": {
+                "en": "Model"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "manufacturername",
+              "type": "label",
+              "label": {
+                "en": "Manufacturer"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "swversion",
+              "type": "label",
+              "label": {
+                "en": "Firmware"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "ids",
+              "type": "label",
+              "label": {
+                "en": "Api Id's"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "mac",
+              "type": "label",
+              "label": {
+                "en": "MAC"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "lastseen",
+              "type": "label",
+              "label": {
+                "en": "Last Seen"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "lastUpdated",
+              "type": "label",
+              "label": {
+                "en": "Last Updated"
+              },
+              "value": "Unknown"
+            }
+          ]
+        }
+      ],
+      "id": "generic-thermostat"
+    },
+    {
+      "name": {
         "en": "<Generic Switch>"
       },
-      "class": "other",
+      "class": "remote",
       "capabilities": [
         "measure_battery"
       ],
@@ -8154,6 +8495,158 @@
     },
     {
       "name": {
+        "en": "Heiman/Lidl/Silvercrest Motion Sensor"
+      },
+      "class": "homealarm",
+      "capabilities": [
+        "alarm_motion",
+        "measure_battery"
+      ],
+      "energy": {
+        "batteries": [
+          "CR2450"
+        ]
+      },
+      "images": {
+        "large": "/drivers/heiman-motion-sensor/assets/images/large.png",
+        "small": "/drivers/heiman-motion-sensor/assets/images/small.png"
+      },
+      "icon": "/drivers/heiman-motion-sensor/assets/icon.svg",
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
+      "settings": [
+        {
+          "id": "no_motion_timeout",
+          "type": "number",
+          "label": {
+            "en": "No motion timeout"
+          },
+          "min": 0,
+          "max": 3600,
+          "value": 0,
+          "hint": {
+            "en": "The sensor reports when there is no more motion detected. Using this setting you can increase the time (in seconds) until the motion alarm gets disabled."
+          }
+        },
+        {
+          "id": "secondary_no_motion_timeout",
+          "type": "number",
+          "label": {
+            "en": "Secondary no motion timeout"
+          },
+          "min": 0,
+          "max": 3600,
+          "value": 0,
+          "hint": {
+            "en": "Triggers an secondary no motion event after the motion alarm has been disabled. Usefull to generate Philips Hue like behaviour easily."
+          }
+        },
+        {
+          "id": "deconz",
+          "type": "group",
+          "label": {
+            "en": "deCONZ"
+          },
+          "children": [
+            {
+              "id": "ignore-reachable",
+              "type": "checkbox",
+              "label": {
+                "en": "Ignore if unreachable"
+              },
+              "value": false,
+              "hint": {
+                "en": "In Zigbee networks there are no active connections and thus deCONZ does not know if this device is still there as long as it does not communicate. Therefore a device gets marked as unreachable if it does not report for a longer period of time. This is perfectly fine for most devices as they report their status periodically, but if this devices doesn't do this, you can prevent that it get's reported as unavailable using this setting."
+              }
+            }
+          ]
+        },
+        {
+          "id": "info",
+          "type": "group",
+          "label": {
+            "en": "Info"
+          },
+          "children": [
+            {
+              "id": "modelid",
+              "type": "label",
+              "label": {
+                "en": "Model"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "manufacturername",
+              "type": "label",
+              "label": {
+                "en": "Manufacturer"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "swversion",
+              "type": "label",
+              "label": {
+                "en": "Firmware"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "ids",
+              "type": "label",
+              "label": {
+                "en": "Api Id's"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "mac",
+              "type": "label",
+              "label": {
+                "en": "MAC"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "lastseen",
+              "type": "label",
+              "label": {
+                "en": "Last Seen"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "lastUpdated",
+              "type": "label",
+              "label": {
+                "en": "Last Updated"
+              },
+              "value": "Unknown"
+            }
+          ]
+        }
+      ],
+      "id": "heiman-motion-sensor"
+    },
+    {
+      "name": {
         "en": "Heiman Smoke/Fire Sensor"
       },
       "class": "sensor",
@@ -8408,7 +8901,7 @@
       "name": {
         "en": "Philips Hue Dimmer Switch"
       },
-      "class": "other",
+      "class": "remote",
       "capabilities": [
         "measure_battery"
       ],
@@ -8533,7 +9026,7 @@
       "name": {
         "en": "Philips Hue Motion Sensor"
       },
-      "class": "sensor",
+      "class": "homealarm",
       "capabilities": [
         "alarm_motion",
         "measure_luminance",
@@ -8758,7 +9251,7 @@
       "name": {
         "en": "Philips Hue Outdoor Motion Sensor"
       },
-      "class": "sensor",
+      "class": "homealarm",
       "capabilities": [
         "alarm_motion",
         "measure_luminance",
@@ -8981,9 +9474,134 @@
     },
     {
       "name": {
+        "en": "Philips Hue Smart Button"
+      },
+      "class": "remote",
+      "capabilities": [
+        "measure_battery"
+      ],
+      "energy": {
+        "batteries": [
+          "CR2032"
+        ]
+      },
+      "images": {
+        "large": "/drivers/hue-smart-button/assets/images/large.png",
+        "small": "/drivers/hue-smart-button/assets/images/small.png"
+      },
+      "icon": "/drivers/hue-smart-button/assets/icon.svg",
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
+      "settings": [
+        {
+          "id": "deconz",
+          "type": "group",
+          "label": {
+            "en": "deCONZ"
+          },
+          "children": [
+            {
+              "id": "ignore-reachable",
+              "type": "checkbox",
+              "label": {
+                "en": "Ignore if unreachable"
+              },
+              "value": false,
+              "hint": {
+                "en": "In Zigbee networks there are no active connections and thus deCONZ does not know if this device is still there as long as it does not communicate. Therefore a device gets marked as unreachable if it does not report for a longer period of time. This is perfectly fine for most devices as they report their status periodically, but if this devices doesn't do this, you can prevent that it get's reported as unavailable using this setting."
+              }
+            }
+          ]
+        },
+        {
+          "id": "info",
+          "type": "group",
+          "label": {
+            "en": "Info"
+          },
+          "children": [
+            {
+              "id": "modelid",
+              "type": "label",
+              "label": {
+                "en": "Model"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "manufacturername",
+              "type": "label",
+              "label": {
+                "en": "Manufacturer"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "swversion",
+              "type": "label",
+              "label": {
+                "en": "Firmware"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "ids",
+              "type": "label",
+              "label": {
+                "en": "Api Id's"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "mac",
+              "type": "label",
+              "label": {
+                "en": "MAC"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "lastseen",
+              "type": "label",
+              "label": {
+                "en": "Last Seen"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "lastUpdated",
+              "type": "label",
+              "label": {
+                "en": "Last Updated"
+              },
+              "value": "Unknown"
+            }
+          ]
+        }
+      ],
+      "id": "hue-smart-button"
+    },
+    {
+      "name": {
         "en": "Philips Hue Tap"
       },
-      "class": "other",
+      "class": "remote",
       "capabilities": [],
       "images": {
         "large": "/drivers/hue-tap/assets/images/large.png",
@@ -9101,7 +9719,7 @@
       "name": {
         "en": "Jung 4-Gang Switch"
       },
-      "class": "other",
+      "class": "remote",
       "capabilities": [
         "measure_battery"
       ],
@@ -9363,7 +9981,7 @@
       "name": {
         "en": "Mi Button"
       },
-      "class": "other",
+      "class": "remote",
       "capabilities": [
         "measure_battery"
       ],
@@ -9614,7 +10232,7 @@
       "name": {
         "en": "Mi Magnet"
       },
-      "class": "sensor",
+      "class": "homealarm",
       "capabilities": [
         "alarm_contact",
         "measure_battery"
@@ -9751,7 +10369,7 @@
       "name": {
         "en": "Mi Motion"
       },
-      "class": "sensor",
+      "class": "homealarm",
       "capabilities": [
         "alarm_motion",
         "measure_battery"
@@ -10718,7 +11336,7 @@
       "name": {
         "en": "Sonoff snzb-01"
       },
-      "class": "other",
+      "class": "remote",
       "capabilities": [
         "measure_battery"
       ],
@@ -11000,7 +11618,7 @@
       "name": {
         "en": "Sonoff snzb-03"
       },
-      "class": "sensor",
+      "class": "homealarm",
       "capabilities": [
         "alarm_motion",
         "measure_battery"
@@ -11152,7 +11770,7 @@
       "name": {
         "en": "Sonoff snzb-04"
       },
-      "class": "sensor",
+      "class": "homealarm",
       "capabilities": [
         "alarm_contact",
         "measure_battery"
@@ -11289,7 +11907,7 @@
       "name": {
         "en": "Symfonisk Remote"
       },
-      "class": "other",
+      "class": "remote",
       "capabilities": [
         "measure_battery"
       ],
@@ -11322,6 +11940,33 @@
         }
       ],
       "settings": [
+        {
+          "id": "throttling",
+          "type": "number",
+          "label": {
+            "en": "Throttling"
+          },
+          "hint": {
+            "en": "This device sends a lot of rotation events which is not reasonable to be used in flows. Instead, this setting defines the interval in which rotation events are emitted. The amount of events that have been skipped is noted as the 'event count' token"
+          },
+          "units": {
+            "en": "Milliseconds"
+          },
+          "value": 250,
+          "min": 1,
+          "max": 2500
+        },
+        {
+          "id": "scale",
+          "type": "number",
+          "label": {
+            "en": "Scale"
+          },
+          "hint": {
+            "en": "The amount of emited rotation events can be used as indicator for the relative rotation. Use this scale parameter to get an appropriate 'relative rotation' for you use case. Example: Let's assume a normal rotation of 90° takes one second and emits 4 events and you wan't this to be the equivalent of 0.5 for dimming a light to 50% so you would set the scaling to 0.128."
+          },
+          "value": 0.01
+        },
         {
           "id": "deconz",
           "type": "group",
@@ -11414,7 +12059,7 @@
       "name": {
         "en": "Tint rgb remote"
       },
-      "class": "other",
+      "class": "remote",
       "capabilities": [
         "hue_angle"
       ],
@@ -11540,7 +12185,7 @@
       "name": {
         "en": "Tradfri Motion Sensor"
       },
-      "class": "sensor",
+      "class": "homealarm",
       "capabilities": [
         "alarm_motion",
         "dark",
@@ -11821,7 +12466,7 @@
       "name": {
         "en": "Tradfri Remote Control"
       },
-      "class": "other",
+      "class": "remote",
       "capabilities": [
         "measure_battery"
       ],
@@ -12064,7 +12709,7 @@
       "name": {
         "en": "Tradfri Square Dimmer"
       },
-      "class": "other",
+      "class": "remote",
       "capabilities": [
         "measure_battery"
       ],
@@ -12189,7 +12834,7 @@
       "name": {
         "en": "TRADFRI wireless dimmer"
       },
-      "class": "other",
+      "class": "remote",
       "capabilities": [
         "measure_battery"
       ],
@@ -12315,7 +12960,7 @@
       "name": {
         "en": "Trust ZCTS-808"
       },
-      "class": "sensor",
+      "class": "homealarm",
       "capabilities": [
         "alarm_contact",
         "measure_battery"
@@ -12452,7 +13097,7 @@
       "name": {
         "en": "Trust ZPIR 8000"
       },
-      "class": "sensor",
+      "class": "homealarm",
       "capabilities": [
         "alarm_motion",
         "measure_battery"
@@ -12731,7 +13376,7 @@
       "name": {
         "en": "Trust ZYCT-202"
       },
-      "class": "other",
+      "class": "remote",
       "capabilities": [
         "measure_battery"
       ],

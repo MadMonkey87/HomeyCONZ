@@ -79,7 +79,7 @@
           "max": 21,
           "value": 0,
           "hint": {
-            "en": "Note that the sensitivity gets applied the next time the sensor performs a handshake with the conbee. This might take up to some time!"
+            "en": "Note that the sensitivity gets applied the next time the sensor performs a handshake with the conbee. This might take up to some time! Hint: 0 = most sensitive and 21 = least sensitive!"
           }
         },
         {

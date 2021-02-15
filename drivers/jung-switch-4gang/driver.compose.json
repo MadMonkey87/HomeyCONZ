@@ -2,7 +2,7 @@
   "name": {
     "en": "Jung 4-Gang Switch"
   },
-  "class": "other",
+  "class": "remote",
   "capabilities": [
     "measure_battery"
   ],

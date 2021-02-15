@@ -2,7 +2,7 @@
   "name": {
     "en": "Mi Motion"
   },
-  "class": "sensor",
+  "class": "homealarm",
   "capabilities": [
     "alarm_motion",
     "measure_battery"

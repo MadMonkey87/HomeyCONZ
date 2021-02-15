@@ -2,7 +2,7 @@
   "name": {
     "en": "Tradfri Remote Control"
   },
-  "class": "other",
+  "class": "remote",
   "capabilities": [
     "measure_battery"
   ],
