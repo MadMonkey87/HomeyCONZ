@@ -11952,7 +11952,7 @@
           "units": {
             "en": "Milliseconds"
           },
-          "value": 1000,
+          "value": 250,
           "min": 1,
           "max": 2500
         },
@@ -11965,7 +11965,7 @@
           "hint": {
             "en": "The amount of emited rotation events can be used as indicator for the relative rotation. Use this scale parameter to get an appropriate 'relative rotation' for you use case. Example: Let's assume a normal rotation of 90° takes one second and emits 4 events and you wan't this to be the equivalent of 0.5 for dimming a light to 50% so you would set the scaling to 0.128."
           },
-          "value": 0.5
+          "value": 0.1
         },
         {
           "id": "deconz",
