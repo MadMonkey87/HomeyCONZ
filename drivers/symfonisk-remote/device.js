@@ -3,39 +3,42 @@
 const Sensor = require('../Sensor')
 const Homey = require('homey')
 const { util } = require('../../util')
+var locks = require('locks');
 
 class SymfoniskRemote extends Sensor {
 
 	onInit() {
 		super.onInit()
 
-		this.clockwiseCount = 0;
-		this.counterClockwiseCount = 0;
+		this.mutex = locks.createMutex();
+
+		this.clockwiseCount = 1;
+		this.counterClockwiseCount = 1;
 		this.mode = 'none';
 
 		this.throttle = this.getSetting('throttling');
 		if (!this.throttle) {
-			device.setSettings({ 'throttling': 1000 });
-			this.throttle = 1000;
+			device.setSettings({ 'throttling': 500 });
+			this.throttle = 500;
 		}
 
 		this.scale = this.getSetting('scale');
 		if (!this.scale) {
-			device.setSettings({ 'scale': 0.5 });
-			this.scale = 0.5;
+			device.setSettings({ 'scale': 0.01 });
+			this.scale = 0.01;
 		}
 
-		this.triggerClockwiseThrottled = util.throttle(() => {
-			this.log('rotatingClockwise', this.clockwiseCount, this.clockwiseCount * this.scale)
-			this.triggerRotating.trigger(this, { count: this.clockwiseCount, amount: this.clockwiseCount * this.scale }, { direction: 'clockwise' });
-			this.clockwiseCount = 0;
-		}, this.throttle);
+		this.triggerClockwiseThrottled =
+			util.throttle(() => {
+				this.triggerRotating.trigger(this, { count: this.clockwiseCount, amount: this.clockwiseCount * this.scale }, { direction: 'clockwise' });
+				this.clockwiseCount = 1;
+			}, this.throttle);
 
-		this.triggerCounterClockwiseThrottled = util.throttle(() => {
-			this.log('rotatingCounterClockwise', this.counterClockwiseCount, this.counterClockwiseCount * -this.scale);
-			this.triggerRotating.trigger(this, { count: this.counterClockwiseCount, amount: this.counterClockwiseCount * -this.scale }, { direction: 'counterClockwise' });
-			this.counterClockwiseCount = 0;
-		}, this.throttle);
+		this.triggerCounterClockwiseThrottled =
+			util.throttle(() => {
+				this.triggerRotating.trigger(this, { count: this.counterClockwiseCount, amount: this.counterClockwiseCount * -this.scale }, { direction: 'counterClockwise' });
+				this.counterClockwiseCount = 1;
+			}, this.throttle);
 
 		this.setTriggers();
 
@@ -44,86 +47,63 @@ class SymfoniskRemote extends Sensor {
 
 	async onSettings(oldSettingsObj, newSettingsObj, changedKeysArr) {
 		this.throttle = newSettingsObj['throttling'];
+		this.scale = newSettingsObj['scale'];
 		this.log('changed throtting to ' + this.throttle);
+		this.log('changed scaling to ' + this.scale);
 	}
 
 	fireEvent(number) {
-		switch (this.mode) {
-			case 'rotatingClockwise':
-				if (number == 2001) {
-					this.clockwiseCount++;
-					this.triggerClockwiseThrottled();
-					this.resetMode();
-					return;
-				} else if (number == 2003) {
-					this.clearModeReset();
-					this.mode = 'none';
-					this.triggerClockwiseThrottled();
-					this.triggerEndRotating.trigger(this, null, { direction: 'clockwise' });
-					return;
-				} else if (number == 3001) {
-					this.resetMode();
-					// ignore: the device always sents both events, relevant is only the one of the current direction indicated by the first event
-					return;
-				}
-				break;
-			case 'rotatingCounterClockwise':
-				if (number == 3001) {
-					this.counterClockwiseCount++;
-					this.triggerCounterClockwiseThrottled();
-					return;
-				} else if (number == 3003) {
-					this.clearModeReset();
-					this.mode = 'none';
-					this.triggerCounterClockwiseThrottled();
-					this.triggerEndRotating.trigger(this, null, { direction: 'counterClockwise' });
-					return;
-				} else if (number == 2001) {
-					this.resetMode();
-					// ignore: the device always sents both events, relevant is only the one of the current direction indicated by the first event
-					return;
-				}
-				break;
-			case 'none':
-				if (number == 2001) {
-					this.mode = 'rotatingClockwise';
-					this.triggerStartRotating.trigger(this, null, { direction: 'clockwise' });
-					this.resetMode();
-					return;
-				} else if (number == 3001) {
-					this.mode = 'rotatingCounterClockwise';
-					this.triggerStartRotating.trigger(this, null, { direction: 'counterClockwise' });
-					this.resetMode();
-					return;
-				}
-				break;
-		}
 
+		let device = this;
 		const tokens = this.getSwitchEventTokens(number);
-		const state = { buttonIndex: tokens.buttonIndex.toString(), actionIndex: tokens.actionIndex.toString() };
 
-		if (state.buttonIndex == 1) {
+		if (tokens.buttonIndex === 2 || tokens.buttonIndex === 3) {
+			// locking is needed to ensure the order of the incoming events is correct
+			device.mutex.lock(function () {
+				switch (device.mode) {
+					case 'rotatingClockwise':
+						if (number == 2001) {
+							device.clockwiseCount++;
+							device.triggerClockwiseThrottled();
+						} else if (number == 2003 || number == 3003) {
+							device.mode = 'none';
+							device.triggerClockwiseThrottled();
+							device.triggerEndRotating.trigger(device, null, { direction: 'clockwise' });
+						} else if (number == 3001) {
+							// ignore: the device always sents both events, relevant is only the one of the current direction indicated by the first event
+						}
+						break;
+					case 'rotatingCounterClockwise':
+						if (number == 3001) {
+							device.counterClockwiseCount++;
+							device.triggerCounterClockwiseThrottled();
+						} else if (number == 2003 || number == 3003) {
+							device.mode = 'none';
+							device.triggerCounterClockwiseThrottled();
+							device.triggerEndRotating.trigger(device, null, { direction: 'counterClockwise' });
+						} else if (number == 2001) {
+							// ignore: the device always sents both events, relevant is only the one of the current direction indicated by the first event
+						}
+						break;
+					case 'none':
+						if (number == 2001) {
+							device.mode = 'rotatingClockwise';
+							device.triggerClockwiseThrottled();
+							device.triggerStartRotating.trigger(device, null, { direction: 'clockwise' });
+						} else if (number == 3001) {
+							device.mode = 'rotatingCounterClockwise';
+							device.triggerCounterClockwiseThrottled();
+							device.triggerStartRotating.trigger(device, null, { direction: 'counterClockwise' });
+						}
+						break;
+				}
+				device.mutex.unlock();
+			});
+		} else {
+			const state = { buttonIndex: tokens.buttonIndex.toString(), actionIndex: tokens.actionIndex.toString() };
+
 			this.log('symphonisk switch event (' + number + ') button: ' + tokens.buttonIndex + ', action: ' + tokens.action);
 			this.triggerRaw.trigger(this, tokens, state);
-		}
-	}
-
-	// the device does not always send the "rotationStopped" event and thus we try to emulate it
-	resetMode() {
-		if (this.resetModeTimer) {
-			clearTimeout(this.resetModeTimer);
-		}
-		this.resetModeTimer = setTimeout(() => {
-			this.mode = 'none';
-			this.resetModeTimer = null;
-			// todo: direction
-			this.triggerEndRotating.trigger(this, null, { direction: 'counterClockwise' });
-		 }, this.throttle);
-	}
-
-	clearModeReset() {
-		if (this.resetModeTimer) {
-			clearTimeout(this.resetModeTimer);
 		}
 	}
 

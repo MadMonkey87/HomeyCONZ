@@ -21,7 +21,7 @@ Almost there. Now you can install app using `athom app install` command being in
 - [x] deCONZ groups
 - [x] Motion sensors: Philips, Xiaomi, Aqara, TRÅDFRI, Trust, Develco, Frient, Heiman, Silvercrest
 - [x] Temperature/Humidity sensors: Xiaomi, Aqara
-- [x] Buttons: Mi, Aqara, Aqara gyro, TRÅDFRI, 
+- [x] Buttons: Mi, Aqara, Aqara gyro, TRÅDFRI
 - [x] Switches: Aqara, TRÅDFRI, Philips, Trust, Feller
 - [x] Contact sensors: Xiaomi, Aqara, Trust
 - [x] Remotes: TRÅDFRI, Tint
@@ -33,3 +33,4 @@ Almost there. Now you can install app using `athom app install` command being in
 - [x] Aqara Vibration sensor
 - [x] TRÅDFRI signal repeater
 - [x] Mi Light sensor
+- [x] Silvercrest Christmas Tree light
