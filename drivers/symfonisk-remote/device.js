@@ -30,14 +30,12 @@ class SymfoniskRemote extends Sensor {
 
 		this.triggerClockwiseThrottled =
 			util.throttle(() => {
-				this.log('rotatingClockwise', this.clockwiseCount, this.clockwiseCount * this.scale)
 				this.triggerRotating.trigger(this, { count: this.clockwiseCount, amount: this.clockwiseCount * this.scale }, { direction: 'clockwise' });
 				this.clockwiseCount = 1;
 			}, this.throttle);
 
 		this.triggerCounterClockwiseThrottled =
 			util.throttle(() => {
-				this.log('rotatingCounterClockwise', this.counterClockwiseCount, this.counterClockwiseCount * -this.scale);
 				this.triggerRotating.trigger(this, { count: this.counterClockwiseCount, amount: this.counterClockwiseCount * -this.scale }, { direction: 'counterClockwise' });
 				this.counterClockwiseCount = 1;
 			}, this.throttle);
@@ -67,12 +65,10 @@ class SymfoniskRemote extends Sensor {
 						if (number == 2001) {
 							device.clockwiseCount++;
 							device.triggerClockwiseThrottled();
-							device.log(number, device.mode)
 						} else if (number == 2003 || number == 3003) {
 							device.mode = 'none';
 							device.triggerClockwiseThrottled();
 							device.triggerEndRotating.trigger(device, null, { direction: 'clockwise' });
-							device.log(number, device.mode)
 						} else if (number == 3001) {
 							// ignore: the device always sents both events, relevant is only the one of the current direction indicated by the first event
 						}
@@ -81,12 +77,10 @@ class SymfoniskRemote extends Sensor {
 						if (number == 3001) {
 							device.counterClockwiseCount++;
 							device.triggerCounterClockwiseThrottled();
-							device.log(number, device.mode)
 						} else if (number == 2003 || number == 3003) {
 							device.mode = 'none';
 							device.triggerCounterClockwiseThrottled();
 							device.triggerEndRotating.trigger(device, null, { direction: 'counterClockwise' });
-							device.log(number, device.mode)
 						} else if (number == 2001) {
 							// ignore: the device always sents both events, relevant is only the one of the current direction indicated by the first event
 						}
@@ -96,12 +90,10 @@ class SymfoniskRemote extends Sensor {
 							device.mode = 'rotatingClockwise';
 							device.triggerClockwiseThrottled();
 							device.triggerStartRotating.trigger(device, null, { direction: 'clockwise' });
-							device.log(number, device.mode)
 						} else if (number == 3001) {
 							device.mode = 'rotatingCounterClockwise';
 							device.triggerCounterClockwiseThrottled();
 							device.triggerStartRotating.trigger(device, null, { direction: 'counterClockwise' });
-							device.log(number, device.mode)
 						}
 						break;
 				}
