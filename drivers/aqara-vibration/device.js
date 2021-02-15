@@ -46,11 +46,14 @@ class AqaraVibration extends Sensor {
 		if (name == 'tilt_angle') {
 			let relative_angle = value - this.getCapabilityValue('tilt_angle')
 			this.setCapabilityValue('relative_tilt_angle', relative_angle)
-			this.timeout = setTimeout(() => {
-				this.setCapabilityValue('tilt_alarm', false)
-				this.timeout = null
-			}, this.getSetting('no_tilt_timeout') * 1000)
-			this.setCapabilityValue('tilt_alarm', true)
+
+			if (relative_angle != 0) {
+				this.timeout = setTimeout(() => {
+					this.setCapabilityValue('tilt_alarm', false)
+					this.timeout = null
+				}, this.getSetting('no_tilt_timeout') * 1000)
+				this.setCapabilityValue('tilt_alarm', true)
+			}
 		}
 		if (name == 'vibration_alarm') {
 			let oldVibrationAlarm = this.getCapabilityValue('vibration_alarm')
