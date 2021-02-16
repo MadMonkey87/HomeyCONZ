@@ -7,7 +7,7 @@ class GenericThermostatDriver extends Driver {
 	onInit() {
 		super.onInit()
 
-		this.log('GenericThermostatDriver has been initiated')
+		this.log(this.getName(), ' has been initiated')
 	}
 
 	onPairListDevices(data, callback) {
