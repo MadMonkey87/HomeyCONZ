@@ -496,7 +496,7 @@ class deCONZ extends Homey.App {
 			} else if (response.startsWith('[')) {
 				callback(null, JSON.parse(response)[0])
 			} else {
-				Homey.app.sendUsageData('invalid-discovery', response)
+				Homey.app.queueUsageData('invalid-discovery', response)
 				callback('invalid response', null)
 			}
 		})
@@ -1106,6 +1106,10 @@ class deCONZ extends Homey.App {
 				}
 			})
 		}
+	}
+
+	queueUsageData(type, content) {
+		this.usageDataQueue.push({ type: type, content })
 	}
 
 	dequeueUsageData() {
