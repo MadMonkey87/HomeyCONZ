@@ -1,6 +1,6 @@
 {
   "name": {
-    "en": "<Generic Thermostat>"
+    "en": "Bitron Thermostat"
   },
   "class": "thermostat",
   "capabilities": [
