@@ -7,6 +7,7 @@ class GenericThermostat extends Sensor {
 	onInit() {
 		super.onInit()
 
+
 		this.registerTargetTemperatureListener()
 		this.registerOnOffListener()
 
@@ -14,19 +15,23 @@ class GenericThermostat extends Sensor {
 	}
 
 	registerTargetTemperatureListener() {
-		this.registerCapabilityListener('target_temperature', (value, opts, callback) => {
-			this.putSensorConfig({ config: { heatsetpoint: value * 100 } }, (err, result) => {
-				callback(err, result)
+		if (capabilities.includes('target_temperature')) {
+			this.registerCapabilityListener('target_temperature', (value, opts, callback) => {
+				this.putSensorConfig({ config: { heatsetpoint: value * 100 } }, (err, result) => {
+					callback(err, result)
+				})
 			})
-		})
+		}
 	}
 
 	registerOnOffListener() {
-		this.registerCapabilityListener('onoff', (value, opts, callback) => {
-			this.putSensorConfig({ config: { on: value } }, (err, result) => {
-				callback(err, result)
+		if (capabilities.includes('onoff')) {
+			this.registerCapabilityListener('onoff', (value, opts, callback) => {
+				this.putSensorConfig({ config: { on: value } }, (err, result) => {
+					callback(err, result)
+				})
 			})
-		})
+		}
 	}
 
 }

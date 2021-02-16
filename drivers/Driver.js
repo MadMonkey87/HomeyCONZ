@@ -115,7 +115,6 @@ class Driver extends Homey.Driver {
 							linked_sensors.push(temperatureMeasurementSensor[0])
 							additionalCapabilities.push('measure_temperature')
 						}
-
 					}
 					let capabilities = (matchTable[light.type] || ['onoff']).concat(additionalCapabilities)
 
@@ -166,9 +165,11 @@ class Driver extends Homey.Driver {
 				const mac = sensor.uniqueid.split('-')[0]
 				var capabilities = []
 
-				if(sensor.config.hasOwnProperty('battery')){
+				if(sensor.config && sensor.config.hasOwnProperty('battery')){
 					capabilities.push('measure_battery')
 				}
+
+				onAddCustomSensorCapabilities(sensor, capabilities)
 
 				return {
 					name: sensor.name,
@@ -185,6 +186,10 @@ class Driver extends Homey.Driver {
 			})
 			callback(null, filtered)
 		})
+	}
+
+	onAddCustomSensorCapabilities (sensor, capabilities){
+		// override if needed
 	}
 
 	onRepair(socket, device) {

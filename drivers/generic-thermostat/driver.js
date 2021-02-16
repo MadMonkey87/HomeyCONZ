@@ -14,6 +14,18 @@ class GenericThermostatDriver extends Driver {
 		this.getSensorsByCondition(device => device.type == 'ZHAThermostat', callback)
 	}
 
+	onAddCustomSensorCapabilities(sensor, capabilities) {
+
+		if (sensor.config && sensor.config.hasOwnProperty('heatsetpoint')) {
+			capabilities.push('target_temperature')
+		}
+
+		if (sensor.config && sensor.config.hasOwnProperty('on')) {
+			capabilities.push('onoff')
+		}
+
+	}
+
 }
 
 module.exports = GenericThermostatDriver
