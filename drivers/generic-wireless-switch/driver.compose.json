@@ -3,9 +3,7 @@
     "en": "<Generic Switch>"
   },
   "class": "remote",
-  "capabilities": [
-    "measure_battery"
-  ],
+  "capabilities": [],
   "energy": {
     "batteries": [
       "OTHER"

@@ -164,6 +164,11 @@ class Driver extends Homey.Driver {
 
 				const sensor = entry[1]
 				const mac = sensor.uniqueid.split('-')[0]
+				var capabilities = []
+
+				if(sensor.config.hasOwnProperty('battery')){
+					capabilities.push('measure_battery')
+				}
 
 				return {
 					name: sensor.name,
@@ -173,7 +178,8 @@ class Driver extends Homey.Driver {
 					},
 					settings: {
 						id: sensorsEntries.filter(d => d[1].uniqueid.startsWith(mac)).map(d => d[0])
-					}
+					},
+					capabilities: capabilities
 
 				}
 			})
