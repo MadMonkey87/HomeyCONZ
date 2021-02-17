@@ -347,6 +347,9 @@ class deCONZ extends Homey.App {
 			if (!!error) {
 				callback(error, null)
 			} else {
+				Homey.ManagerSettings.set('lastBackupDate', new Date().toLocaleDateString("de-CH"), (err, settings) => {
+					if (err) callback(err, null)
+				})
 				callback(null, success)
 			}
 		})
@@ -362,7 +365,8 @@ class deCONZ extends Homey.App {
 					let backups = [];
 					fileNames.forEach(fileName => {
 						backups.push({
-							name: fs.statSync(util.appDataFolder + fileName).ctime,
+							name: fs.statSync(util.appDataFolder + fileName),
+							date: Homey.ManagerSettings.get('lastBackupDate'),// fs.statSync(util.appDataFolder + fileName).ctime,
 							size: util.getFileSizeInBytes(util.appDataFolder + fileName)
 						})
 					})
