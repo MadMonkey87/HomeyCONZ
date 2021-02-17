@@ -41,7 +41,7 @@ class Driver extends Homey.Driver {
 			let none = []
 			let onoff = ['onoff']
 			let dim = ['onoff', 'dim']
-			let blinds = ['windowcoverings_set', 'windowcoverings_closed']
+			let blinds = ['windowcoverings_set', 'windowcoverings_closed', 'blinds_stop']
 			let ct = ['onoff', 'dim', 'light_temperature']
 			let extendedColor = ['onoff', 'dim', 'light_temperature', 'light_mode', 'light_saturation', 'light_hue']
 			let dimmableColor = ['onoff', 'dim', 'light_mode', 'light_saturation', 'light_hue']
