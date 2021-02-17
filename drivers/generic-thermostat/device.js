@@ -11,7 +11,7 @@ class GenericThermostat extends Sensor {
 		this.registerTargetTemperatureListener()
 		this.registerOnOffListener()
 
-		this.log(this.getName(), 'has been initiated')
+		this.log(this.constructor.name, 'has been initiated')
 	}
 
 	registerTargetTemperatureListener() {
