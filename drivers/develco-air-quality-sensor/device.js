@@ -16,6 +16,7 @@ class DevelcoAirQualitySensor extends Sensor {
 		if (name === 'measure_voc' && value != this.getCapabilityValue(name)) {
 			this.vocChanged.trigger(this, { measure_voc: value });
 		}
+
 		super.setCapabilityValue(name, value)
 	}
 

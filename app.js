@@ -878,7 +878,13 @@ class deCONZ extends Homey.App {
 
 		if (state.hasOwnProperty('airqualityppb')) {
 			if (deviceSupports('measure_voc')) {
-				device.setCapabilityValue('measure_voc')
+				device.setCapabilityValue('measure_voc', state.airqualityppb)
+			}
+		}
+
+		if (state.hasOwnProperty('airquality')) {
+			if (deviceSupports('measure_air_quality')) {
+				device.setCapabilityValue('measure_air_quality', state.airquality)
 			}
 		}
 
