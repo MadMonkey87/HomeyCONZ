@@ -32,6 +32,14 @@ class Light extends DeconzDevice {
 			this.registerCTListener()
 		}
 
+		if (capabilities.includes('windowcoverings_set')) {
+			this.registerLiftListener()
+		}
+
+		if (capabilities.includes('windowcoverings_closed')) {
+			this.registerOpenListener()
+		}
+
 		if (capabilities.includes('light_hue') && capabilities.includes('light_saturation')) {
 			this.registerColorListener()
 		}
@@ -75,6 +83,18 @@ class Light extends DeconzDevice {
 				return this.error(error)
 			}
 			Homey.app.updateState(this, state, true)
+		})
+	}
+
+	registerLiftListener() {
+		this.registerCapabilityListener('windowcoverings_set', (value, opts, callback) => {
+			this.setLift(value, callback)
+		})
+	}
+
+	registerOpenListener() {
+		this.registerCapabilityListener('windowcoverings_closed', (value, opts, callback) => {
+			this.setOpen(value, callback)
 		})
 	}
 
@@ -178,6 +198,14 @@ class Light extends DeconzDevice {
 
 	setColorTemperature(value, callback) {
 		this.put(this.address, { ct: value }, callback)
+	}
+
+	setLift(value, callback) {
+		this.put(this.address, { lift: value }, callback)
+	}
+
+	setOpen(value, callback) {
+		this.put(this.address, { open: value }, callback)
 	}
 
 	put(path, data, callback) {

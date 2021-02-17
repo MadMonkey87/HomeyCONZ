@@ -6,9 +6,7 @@ const { http } = require('../../nbhttp')
 class Driver extends Homey.Driver {
 
 	onInit() {
-		// this.host = Homey.ManagerSettings.get('host')
-		// this.apikey = Homey.ManagerSettings.get('apikey')
-		// this.port = Homey.ManagerSettings.get('port')
+
 	}
 
 	getLightsList(callback) {
@@ -43,6 +41,7 @@ class Driver extends Homey.Driver {
 			let none = []
 			let onoff = ['onoff']
 			let dim = ['onoff', 'dim']
+			let blinds = ['windowcoverings_set', 'windowcoverings_closed']
 			let ct = ['onoff', 'dim', 'light_temperature']
 			let extendedColor = ['onoff', 'dim', 'light_temperature', 'light_mode', 'light_saturation', 'light_hue']
 			let dimmableColor = ['onoff', 'dim', 'light_mode', 'light_saturation', 'light_hue']
@@ -55,7 +54,7 @@ class Driver extends Homey.Driver {
 				'Color light': extendedColor,
 				'Smart plug': onoff,
 				'On/Off plug-in unit': onoff,
-				'Window covering device': dim,
+				'Window covering device': blinds,
 				'Range extender': none,
 				'Color dimmable light': dimmableColor
 			}
@@ -165,7 +164,7 @@ class Driver extends Homey.Driver {
 				const mac = sensor.uniqueid.split('-')[0]
 				var capabilities = []
 
-				if(sensor.config && sensor.config.hasOwnProperty('battery')){
+				if (sensor.config && sensor.config.hasOwnProperty('battery')) {
 					capabilities.push('measure_battery')
 				}
 
@@ -188,7 +187,7 @@ class Driver extends Homey.Driver {
 		})
 	}
 
-	onAddCustomSensorCapabilities (sensor, capabilities){
+	onAddCustomSensorCapabilities(sensor, capabilities) {
 		// override if needed
 	}
 

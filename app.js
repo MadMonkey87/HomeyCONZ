@@ -888,6 +888,18 @@ class deCONZ extends Homey.App {
 			}
 		}
 
+		if (state.hasOwnProperty('lift')) {
+			if (deviceSupports('windowcoverings_set')) {
+				device.setCapabilityValue('windowcoverings_set', state.lift)
+			}
+		}
+
+		if (state.hasOwnProperty('open')) {
+			if (deviceSupports('windowcoverings_closed')) {
+				device.setCapabilityValue('windowcoverings_closed', state.open)
+			}
+		}
+
 		if (state.hasOwnProperty('lastupdated') && device.getSetting('lastUpdated') != null) {
 			device.setSettings({ lastUpdated: state.lastupdated });
 		}

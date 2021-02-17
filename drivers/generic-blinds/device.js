@@ -10,13 +10,6 @@ class GenericBlinds extends Light {
 		this.log(this.getName() + 'has been initiated')
 	}
 	
-	setCapabilityValue(name, value) {
-		if (name === 'onoff') {
-			super.setCapabilityValue(name, !value)
-		} else if (name === 'dim') {
-			super.setCapabilityValue(name, 1 - value)
-		}
-	}
 }
 
 module.exports = GenericBlinds
