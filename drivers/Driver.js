@@ -169,7 +169,7 @@ class Driver extends Homey.Driver {
 					capabilities.push('measure_battery')
 				}
 
-				onAddCustomSensorCapabilities(sensor, capabilities)
+				this.onAddCustomSensorCapabilities(sensor, capabilities)
 
 				return {
 					name: sensor.name,

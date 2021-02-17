@@ -1,10 +1,202 @@
 {
   "triggers": [
     {
+      "id": "rotation_start",
+      "title": {
+        "en": "Start Rotating"
+      },
+      "args": [
+        {
+          "type": "dropdown",
+          "name": "direction",
+          "title": {
+            "en": "Direction"
+          },
+          "values": [
+            {
+              "id": "-1",
+              "label": {
+                "en": "Any"
+              }
+            },
+            {
+              "id": "clockwise",
+              "label": {
+                "en": "Clockwise"
+              }
+            },
+            {
+              "id": "counterClockwise",
+              "label": {
+                "en": "Counter Clockwise"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rotating",
+      "title": {
+        "en": "Rotating"
+      },
+      "hint": {
+        "en": "This device sends a lot of events which is not very performant if you need to react on everyone of them. Instead throttling is used which only triggers this card once every second but then provides and 'event count' that tell you how many emits were omitted. You can use this to derive how much or how fast the rotation was. Note that you can adapt this behaviour in the device settings."
+      },
+      "tokens": [
+        {
+          "name": "amount",
+          "type": "number",
+          "title": {
+            "en": "relative rotation"
+          },
+          "example": 0.5
+        },
+        {
+          "name": "count",
+          "type": "number",
+          "title": {
+            "en": "event count"
+          },
+          "example": 0.5
+        }
+      ],
+      "args": [
+        {
+          "type": "dropdown",
+          "name": "direction",
+          "title": {
+            "en": "Direction"
+          },
+          "values": [
+            {
+              "id": "-1",
+              "label": {
+                "en": "Any"
+              }
+            },
+            {
+              "id": "clockwise",
+              "label": {
+                "en": "Clockwise"
+              }
+            },
+            {
+              "id": "counterClockwise",
+              "label": {
+                "en": "Counter Clockwise"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rotating_end",
+      "title": {
+        "en": "End Rotating"
+      },
+      "args": [
+        {
+          "type": "dropdown",
+          "name": "direction",
+          "title": {
+            "en": "Direction"
+          },
+          "values": [
+            {
+              "id": "-1",
+              "label": {
+                "en": "Any"
+              }
+            },
+            {
+              "id": "clockwise",
+              "label": {
+                "en": "Clockwise"
+              }
+            },
+            {
+              "id": "counterClockwise",
+              "label": {
+                "en": "Counter Clockwise"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "raw_switch_event",
       "title": {
-        "en": "Button pressed"
-      }
+        "en": "Button Event"
+      },
+      "tokens": [
+        {
+          "name": "rawEvent",
+          "type": "number",
+          "title": {
+            "en": "event"
+          },
+          "example": 1001
+        },
+        {
+          "name": "buttonIndex",
+          "type": "number",
+          "title": {
+            "en": "button index"
+          },
+          "example": 1
+        },
+        {
+          "name": "actionIndex",
+          "type": "number",
+          "title": {
+            "en": "action index"
+          },
+          "example": 1
+        },
+        {
+          "name": "action",
+          "type": "string",
+          "title": {
+            "en": "action"
+          },
+          "example": "initial_press"
+        }
+      ],
+      "args": [
+        {
+          "type": "dropdown",
+          "name": "action",
+          "values": [
+            {
+              "id": "-1",
+              "label": {
+                "en": "Any Action"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "Single Press"
+              }
+            },
+            {
+              "id": "4",
+              "label": {
+                "en": "Double Press"
+              }
+            },
+            {
+              "id": "5",
+              "label": {
+                "en": "Tripple Press"
+              }
+            }
+          ]
+        }
+      ]
     }
   ]
 }
