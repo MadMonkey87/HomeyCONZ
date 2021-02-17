@@ -1,12 +1,12 @@
 {
-    "type": "text",
-    "uiComponent": "sensor",
-    "icon": "assets/images/measure_VOC.svg",
-    "title": {
-      "en": "Air Quality",
-      "de": "Luftqualität"
-    },
-    "getable": true,
-    "setable": false,
-    "insights": false,
-  }
+  "type": "string",
+  "uiComponent": "sensor",
+  "icon": "assets/images/measure_VOC.svg",
+  "title": {
+    "en": "Air Quality",
+    "de": "Luftqualität"
+  },
+  "getable": true,
+  "setable": false,
+  "insights": false
+}
