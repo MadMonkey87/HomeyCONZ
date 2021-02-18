@@ -1,0 +1,10 @@
+{
+  "triggers": [
+    {
+      "id": "raw_switch_event",
+      "title": {
+        "en": "Button pressed"
+      }
+    }
+  ]
+}

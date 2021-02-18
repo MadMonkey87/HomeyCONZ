@@ -347,6 +347,9 @@ class deCONZ extends Homey.App {
 			if (!!error) {
 				callback(error, null)
 			} else {
+				Homey.ManagerSettings.set('lastBackupDate', new Date().toLocaleDateString("de-CH"), (err, settings) => {
+					if (err) callback(err, null)
+				})
 				callback(null, success)
 			}
 		})
@@ -362,7 +365,8 @@ class deCONZ extends Homey.App {
 					let backups = [];
 					fileNames.forEach(fileName => {
 						backups.push({
-							name: fs.statSync(util.appDataFolder + fileName).ctime,
+							name: fs.statSync(util.appDataFolder + fileName),
+							date: Homey.ManagerSettings.get('lastBackupDate'),// fs.statSync(util.appDataFolder + fileName).ctime,
 							size: util.getFileSizeInBytes(util.appDataFolder + fileName)
 						})
 					})
@@ -496,7 +500,7 @@ class deCONZ extends Homey.App {
 			} else if (response.startsWith('[')) {
 				callback(null, JSON.parse(response)[0])
 			} else {
-				Homey.app.sendUsageData('invalid-discovery', response)
+				Homey.app.queueUsageData('invalid-discovery', response)
 				callback('invalid response', null)
 			}
 		})
@@ -872,6 +876,18 @@ class deCONZ extends Homey.App {
 			}
 		}
 
+		if (state.hasOwnProperty('airqualityppb')) {
+			if (deviceSupports('measure_voc')) {
+				device.setCapabilityValue('measure_voc', state.airqualityppb)
+			}
+		}
+
+		if (state.hasOwnProperty('airquality')) {
+			if (deviceSupports('measure_air_quality')) {
+				device.setCapabilityValue('measure_air_quality', state.airquality)
+			}
+		}
+
 		if (state.hasOwnProperty('lastupdated') && device.getSetting('lastUpdated') != null) {
 			device.setSettings({ lastUpdated: state.lastupdated });
 		}
@@ -1100,6 +1116,10 @@ class deCONZ extends Homey.App {
 				}
 			})
 		}
+	}
+
+	queueUsageData(type, content) {
+		this.usageDataQueue.push({ type: type, content })
 	}
 
 	dequeueUsageData() {

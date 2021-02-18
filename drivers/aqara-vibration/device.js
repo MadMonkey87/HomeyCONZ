@@ -4,16 +4,16 @@ const Sensor = require('../Sensor')
 const Homey = require('homey')
 
 class AqaraVibration extends Sensor {
-	
+
 	onInit() {
 		super.onInit()
-				
+
 		this.setTriggers()
 		this.setConditions()
-		
-		this.log(this.getName(), 'has been initiated')	
+
+		this.log(this.getName(), 'has been initiated')
 	}
-	
+
 	setTriggers() {
 		this.tiltAlarmOn = new Homey.FlowCardTriggerDevice('tilt_alarm_on').register()
 		this.tiltAlarmOff = new Homey.FlowCardTriggerDevice('tilt_alarm_off').register()
@@ -40,47 +40,52 @@ class AqaraVibration extends Sensor {
 			callback(null, args.device.getCapabilityValue('relative_tilt_angle') > args.value)
 		}).register()
 	}
-	
+
 	setCapabilityValue(name, value) {
 		super.setCapabilityValue(name, value)
 		if (name == 'tilt_angle') {
 			let relative_angle = value - this.getCapabilityValue('tilt_angle')
 			this.setCapabilityValue('relative_tilt_angle', relative_angle)
-			this.timeout = setTimeout(() => {
-				this.setCapabilityValue('tilt_alarm', false)
-				this.timeout = null
-			}, this.getSetting('no_tilt_timeout') * 1000)
-			this.setCapabilityValue('tilt_alarm', true)
+
+			if (relative_angle != 0) {
+				this.timeout = setTimeout(() => {
+					this.setCapabilityValue('tilt_alarm', false)
+					this.timeout = null
+				}, this.getSetting('no_tilt_timeout') * 1000)
+				this.setCapabilityValue('tilt_alarm', true)
+			}
 		}
 		if (name == 'vibration_alarm') {
+			let oldVibrationAlarm = this.getCapabilityValue('vibration_alarm')
 			this.vibrationAlarmToggle.trigger(this)
-			if (value) {
-				this.vibrationAlarmOn.trigger(this, {strength: super.getCapabilityValue('vibration_strength')})
-			} else {
+			if (value && !oldVibrationAlarm) {
+				this.vibrationAlarmOn.trigger(this, { strength: super.getCapabilityValue('vibration_strength') })
+			} else if (!value && oldVibrationAlarm) {
 				this.vibrationAlarmOff.trigger(this)
 			}
 		}
 		if (name == 'tilt_alarm') {
+			let oldTiltAlarm = this.getCapabilityValue('tilt_alarm')
 			this.tiltAlarmToggle.trigger(this)
-			if (value) {
+			if (value && !oldTiltAlarm) {
 				this.tiltAlarmOn.trigger(this, {
 					angle: this.getCapabilityValue('tilt_angle'),
 					relative_angle: this.getCapabilityValue('relative_tilt_angle')
 				})
-			} else {
+			} else if (!value && oldTiltAlarm) {
 				this.tiltAlarmOff.trigger(this)
 			}
 		}
 	}
 
-	async onSettings( oldSettingsObj, newSettingsObj, changedKeysArr ) {
-		this.putSensorConfig({config:{sensitivity:newSettingsObj.sensitivity}}, (error, data) => {
+	async onSettings(oldSettingsObj, newSettingsObj, changedKeysArr) {
+		this.putSensorConfig({ config: { sensitivity: newSettingsObj.sensitivity } }, (error, data) => {
 			if (error) {
 				throw new Error(error);
 			}
 		})
 	}
-	
+
 }
 
 module.exports = AqaraVibration

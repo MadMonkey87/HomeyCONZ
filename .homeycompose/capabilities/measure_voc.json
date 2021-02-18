@@ -1,0 +1,22 @@
+{
+    "type": "number",
+    "uiComponent": "sensor",
+    "icon": "assets/images/measure_VOC.svg",
+    "title": {
+      "en": "VOC",
+      "de": "VOC"
+    },
+    "desc": {
+      "en": "volatile organic compounds",
+      "de": "flüchtige organische Verbindungen"
+    },
+    "getable": true,
+    "setable": false,
+    "insights": true,
+    "chartType": "spline",
+    "decimals": 2,
+    "units": {
+        "en": "ppb",
+        "de": "ppb"
+    }
+  }

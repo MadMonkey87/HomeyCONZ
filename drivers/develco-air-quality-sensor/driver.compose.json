@@ -1,12 +1,19 @@
 {
   "name": {
-    "en": "<Generic Switch>"
+    "en": "Develco/Frient Air Quality Sensor"
   },
-  "class": "remote",
-  "capabilities": [],
+  "class": "sensor",
+  "capabilities": [
+    "measure_temperature",
+    "measure_humidity",
+    "measure_battery",
+    "measure_voc",
+    "measure_air_quality"
+  ],
   "energy": {
     "batteries": [
-      "OTHER"
+      "AA",
+      "AA"
     ]
   },
   "images": {
@@ -34,10 +41,10 @@
   ],
   "settings": [
     {
-      "$extends":  "ignore-reachable"
+      "$extends": "ignore-reachable"
     },
     {
-      "$extends":  "info"
+      "$extends": "info"
     }
   ]
 }

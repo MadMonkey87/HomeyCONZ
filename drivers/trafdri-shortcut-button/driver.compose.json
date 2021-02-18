@@ -1,12 +1,14 @@
 {
   "name": {
-    "en": "<Generic Switch>"
+    "en": "Tradfri shortcut button"
   },
   "class": "remote",
-  "capabilities": [],
+  "capabilities": [
+    "measure_battery"
+  ],
   "energy": {
     "batteries": [
-      "OTHER"
+      "CR2032"
     ]
   },
   "images": {
@@ -32,7 +34,7 @@
       "id": "repair"
     }
   ],
-  "settings": [
+  "settings":[
     {
       "$extends":  "ignore-reachable"
     },

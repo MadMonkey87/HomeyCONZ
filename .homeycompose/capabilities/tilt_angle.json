@@ -8,5 +8,6 @@
   "setable": false,
   "uiComponent": "sensor",
   "uiQuickAction": false,
-  "icon": "/drivers/aqara-vibration/assets/tilt_angle.svg"
+  "icon": "/drivers/aqara-vibration/assets/tilt_angle.svg",
+  "insights": true
 }

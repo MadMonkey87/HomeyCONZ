@@ -347,7 +347,7 @@
                     <div class="sk-cube sk-cube9"></div>
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">deCONZ for Homey v1.22.1</h5>
+                    <h5 class="card-title">deCONZ for Homey v1.23.3</h5>
                     <p class="card-text">Thank you for using this app! Please feel free to discuss in the <a
                             style="text-decoration: underline;"
                             href="https://community.athom.com/t/app-deconz/29390">community</a> or
@@ -755,7 +755,7 @@
                 Homey.api('GET', '/backups', {}, function (error, data) {
                     if (data.length > 0) {
                         document.getElementById('backupSize').innerText = data[0].size + ' bytes'
-                        document.getElementById('backupTimestamp').innerText = data[0].name
+                        document.getElementById('backupTimestamp').innerText = data[0].date
                         document.getElementById('backupAvailable').style.display = 'grid'
                     } else {
                         document.getElementById('noBackupAvailable').style.display = 'grid'

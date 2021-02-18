@@ -7,5 +7,6 @@
   "setable": false,
   "uiComponent": "sensor",
   "uiQuickAction": false,
-  "icon": "/drivers/aqara-vibration/assets/tilt_alarm.svg"
+  "icon": "/drivers/aqara-vibration/assets/tilt_alarm.svg",
+  "insights": true
 }

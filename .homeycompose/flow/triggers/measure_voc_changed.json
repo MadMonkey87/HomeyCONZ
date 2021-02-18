@@ -1,0 +1,26 @@
+{
+    "title": {
+        "en": "The VOC value has changed",
+        "de": "Der VOC-Wert hat sich geändert"
+    },
+    "tokens": [
+        {
+            "name": "measure_voc",
+            "title": {
+              "en": "VOC",
+              "de": "VOC"
+            },
+            "type": "number",
+            "example": 2
+        }
+    ],
+    "args": [
+        {
+          "name": "device",
+          "type": "device",
+          "filter": "driver_id=develco-air-quality-sensor"
+        }
+    ]
+}
+    
+  

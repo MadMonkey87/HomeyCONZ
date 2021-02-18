@@ -1,0 +1,203 @@
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/app/de.dresden-elektronik.deconz/settings/css/bootstrap.css">
+</head>
+
+<div class="alert alert-danger" role="alert" id="apiError" style="display: none">
+    <div class="ApiErrorShow"></div>
+</div>
+
+<body style="margin: 0; padding: 0">
+
+    <div class="card" style="margin-left: 10px; margin-right: 10px; margin-top: 10px; padding: 0">
+        <div class="card-body">
+            <p>If you needed to re-pair the device in DeConz it will became unavailable in homey. Ensure that the same
+                device is connected to DeConz again and that it is reachable before clicking on 'repair'</p>
+
+            <div class="row">
+                <div class="col-sm">
+                    <button type="button" class="btn btn-primary" style="width: 125px;"
+                        id="repairButton">Repair</button>
+                    <img src="/app/de.dresden-elektronik.deconz/settings/images/ok.svg" id="repairSuccess" style="display: none;">
+                    <img src="/app/de.dresden-elektronik.deconz/settings/images/cancel.svg" id="repairFailure" style="display: none;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" style="margin-left: 10px; margin-right: 10px; margin-top: 10px; padding: 0">
+        <div class="card-body">
+            <p>A device can get marked as 'unreachable' in DeConz which will make it unavailable in Homey too. If you
+                think this is not the case you can force the device to be available again or you can ignore this
+                behaviour of DeConz permanently (can be changed in advanced device settings).</p>
+            <div class="row">
+                <div class="col-sm">
+                    <div class="btn-group d-flex" role="group">
+                        <button type="button" id="ignoreButton" class="btn btn-primary">Ignore</button>
+                        <button type="button" id="ignorePermanentlyButton" class="btn btn-secondary">Ignore
+                            permanently</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="card" style="margin-left: 10px; margin-right: 10px; margin-top: 10px; padding: 0">
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <div class="form-group">
+                        <small class="form-text text-muted">Device</small>
+                        <label id="infoDevice" style="font-weight: bold; font-size: 18px;">-</label>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="form-group">
+                        <small class="form-text text-muted">Model</small>
+                        <label id="infoModel" style="font-weight: bold; font-size: 18px;">-</label>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="form-group">
+                        <small class="form-text text-muted">Api ids</small>
+                        <label id="infoApiId" style="font-weight: bold; font-size: 18px;">-</label>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="form-group">
+                        <small class="form-text text-muted">MAC address</small>
+                        <label id="infoMac" style="font-weight: bold; font-size: 18px;">-</label>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="form-group">
+                        <small class="form-text text-muted">Ignore reachable</small>
+                        <label id="infoIgnoreReachable" style="font-weight: bold; font-size: 18px;">-</label>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="form-group">
+                        <small class="form-text text-muted">Last Seen</small>
+                        <label id="infoLastSeen" style="font-weight: bold; font-size: 18px;">-</label>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="form-group">
+                        <small class="form-text text-muted">Last Updated</small>
+                        <label id="infoLastUpdate" style="font-weight: bold; font-size: 18px;">-</label>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+        const repairButton = document.getElementById('repairButton')
+        const ignoreButton = document.getElementById('ignoreButton')
+        const ignorePermanentlyButton = document.getElementById('ignorePermanentlyButton')
+        const apiError = document.getElementById('apiError')
+        const title = document.getElementsByClassName('ApiErrorShow')[0]
+        const repairSuccess = document.getElementById('repairSuccess')
+        const repairFailure = document.getElementById('repairFailure')
+
+        Homey.setTitle('Repair Device')
+
+        updateDevice()
+        setInterval(updateDevice, 3000)
+
+        repairButton.addEventListener('click', (e) => {
+            clearErrors()
+            repairButton.disabled = true
+            Homey.emit('repair', null, function (error, result) {
+                if (result.error) {
+                    repairSuccess.style.display = 'none'
+                    repairFailure.style.display = 'inline'
+                    showError(false, result.message)
+                } else {
+                    repairSuccess.style.display = 'inline'
+                    repairFailure.style.display = 'none'
+                    showSuccess(false, result.message)
+                    Homey.nextView()
+                }
+            })
+        })
+
+        ignoreButton.addEventListener('click', (e) => {
+            clearErrors()
+            ignoreButton.disabled = true
+            Homey.emit('ignore', null, function (error, result) {
+                ignoreButton.disabled = false
+                if (error) {
+                    showError(false, error)
+                } else {
+                    showSuccess(false, result)
+                    Homey.nextView()
+                }
+            })
+        })
+
+        ignorePermanentlyButton.addEventListener('click', (e) => {
+            clearErrors()
+            ignorePermanentlyButton.disabled = true
+            Homey.emit('ignorePermanent', null, function (error, result) {
+                ignorePermanentlyButton.disabled = false
+                if (error) {
+                    showError(false, error)
+                } else {
+                    showSuccess(false, result)
+                    Homey.nextView()
+                }
+            })
+        })
+
+        function updateDevice() {
+            Homey.emit('getDeviceInfo', null, function (error, result) {
+                if (result) {
+                    document.getElementById('infoDevice').innerHTML = result.device
+                    document.getElementById('infoModel').innerHTML = result.model
+                    document.getElementById('infoApiId').innerHTML = result.apiId
+                    document.getElementById('infoMac').innerHTML = result.mac
+                    document.getElementById('infoIgnoreReachable').innerHTML = result.ignoreReachable
+                    document.getElementById('infoLastSeen').innerHTML = result.lastSeen
+                    document.getElementById('infoLastUpdate').innerHTML = result.lastUpdate
+                }
+            })
+        }
+
+        function showError(alert, message) {
+            apiError.style.display = 'grid'
+            apiError.classList.remove('alert-success')
+            apiError.classList.add('alert-danger')
+            title.innerHTML = message
+            if (alert) {
+                Homey.alert(message)
+            }
+        }
+
+        function showSuccess(alert, message) {
+            apiError.style.display = 'grid'
+            apiError.classList.remove('alert-danger')
+            apiError.classList.add('alert-success')
+            title.innerHTML = message
+            if (alert) {
+                Homey.alert(message)
+            }
+        }
+
+        function clearErrors() {
+            apiError.style.display = 'none'
+        }
+
+    </script>
+</body>
+
+</html>
