@@ -1,5 +1,5 @@
 {
-    "type": "text",
+    "type": "string",
     "uiComponent": "sensor",
     "icon": "assets/images/measure_VOC.svg",
     "title": {
@@ -8,5 +8,5 @@
     },
     "getable": true,
     "setable": false,
-    "insights": false,
+    "insights": false
   }
