@@ -1,13 +1,14 @@
 'use strict'
 
 const Sensor = require('../Sensor')
+const Homey = require('homey');
 
 class DevelcoAirQualitySensor extends Sensor {
 
 	onInit() {
 		super.onInit()
 
-		initializeTriggers()
+		this.initializeTriggers()
 
 		this.log(this.getName(), 'has been initiated')
 	}
