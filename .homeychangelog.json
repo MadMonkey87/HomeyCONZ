@@ -125,7 +125,7 @@
   "1.22.1": {
     "en": "Generic support for thermostats, support new action card to simulate incoming messages, throttling for symfonisk rotation events, fixed a bug that would not correctly check for deConz updates, support new hue dimmer switch model, support hue smart button"
   },
-  "1.23.0": {
+  "1.23.3": {
     "en": "Support for Ikea shortcut button, Support for Develco/Frient air quality sensor & humidity sensor, Aqara vibration sensor improvements, improved generic sensors capability handling, support for Bitron thermostat, display correct backup date"
   },
   "1.24.0": {
