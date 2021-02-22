@@ -92,7 +92,7 @@ class Light extends DeconzDevice {
 
 	registerLiftListener() {
 		this.registerCapabilityListener('windowcoverings_set', (value, opts, callback) => {
-			this.setLift(value, callback)
+			this.setLift(100 - value * 100, callback)
 		})
 	}
 

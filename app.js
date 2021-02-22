@@ -343,7 +343,7 @@ class deCONZ extends Homey.App {
 	}
 
 	downloadBackup(callback) {
-		http.downloadToFile(`http://${this.host}/deCONZ.tar.gz`, util.appDataFolder + 'deCONZ.tar.gz', (error, success) => {
+		http.downloadToFile(`http://${this.host}/deCONZ.tar.gz.dat`, util.appDataFolder + 'deCONZ.tar.gz.dat', (error, success) => {
 			if (!!error) {
 				callback(error, null)
 			} else {
@@ -391,7 +391,7 @@ class deCONZ extends Homey.App {
 							callback(e, null)
 						}
 						else {
-							callback(null, { name: 'deCONZ.tar.gz', type: 'application/octet-stream', content: data })
+							callback(null, { name: 'deCONZ.tar.gz.dat', type: 'application/octet-stream', content: data })
 						}
 					})
 				}

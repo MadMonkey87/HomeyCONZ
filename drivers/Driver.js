@@ -76,8 +76,12 @@ class Driver extends Homey.Driver {
 
 					var linked_sensors = []
 					var additionalCapabilities = []
+
+
 					if (sensors && isMainLight) {
 						let filteredSensors = Object.entries(sensors).filter(d => d[1].uniqueid.startsWith(mac))
+
+						this.log('adding additional sensors', filteredSensors)
 
 						let powerMeasurementSensor = filteredSensors.find(s => s[1].state.hasOwnProperty('power'))
 						if (powerMeasurementSensor) {
@@ -103,7 +107,7 @@ class Driver extends Homey.Driver {
 							additionalCapabilities.push('meter_power')
 						}
 
-						let batteryMeasurementSensor = filteredSensors.find(s => s[1].config.hasOwnProperty('battery'))
+						let batteryMeasurementSensor = filteredSensors.find(s => s[1].config.hasOwnProperty('battery') || s[1].type == 'ZHABattery')
 						if (batteryMeasurementSensor) {
 							linked_sensors.push(batteryMeasurementSensor[0])
 							additionalCapabilities.push('measure_battery')
