@@ -7937,7 +7937,15 @@
               "id": "ids",
               "type": "label",
               "label": {
-                "en": "Api Id's"
+                "en": "Api Id"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "sensorids",
+              "type": "label",
+              "label": {
+                "en": "Sensor Id's"
               },
               "value": "Unknown"
             },

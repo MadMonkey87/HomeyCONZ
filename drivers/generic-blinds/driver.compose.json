@@ -32,7 +32,7 @@
       "$extends": "ignore-reachable"
     },
     {
-      "$extends": "info"
+      "$extends": "light-info"
     }
   ]
 }
