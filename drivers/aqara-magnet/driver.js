@@ -10,7 +10,7 @@ class AqaraMagnetDriver extends Driver {
 	}
 	
 	onPairListDevices(data, callback) {
-		this.getSensorsByCondition(device => device.modelid === 'lumi.sensor_magnet.aq2', callback)
+		this.getSensorsByCondition(device => device.modelid === 'lumi.sensor_magnet.aq2' || device.modelid === 'lumi.sensor_magnet.agl02', callback)
 	}
 	
 }
