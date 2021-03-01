@@ -22,6 +22,14 @@ class GenericBlinds extends Light {
 		this.log(this.getName() + 'has been initiated')
 	}
 
+	setLift(value, callback) {
+		super.setLift(100 - value, callback);
+	}
+
+	setOpen(value, callback) {
+		super.setOpen(!value, callback)
+	}
+
 }
 
 module.exports = GenericBlinds
