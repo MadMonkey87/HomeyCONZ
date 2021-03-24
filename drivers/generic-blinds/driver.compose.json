@@ -2,11 +2,8 @@
   "name": {
     "en": "<Generic Blinds>"
   },
-  "class": "windowcoverings",
-  "capabilities": [
-    "onoff",
-    "dim"
-  ],
+  "class": "blinds",
+  "capabilities": [],
   "images": {
     "large": "{{driverAssetsPath}}/images/large.png",
     "small": "{{driverAssetsPath}}/images/small.png"
@@ -32,10 +29,10 @@
   ],
   "settings": [
     {
-      "$extends":  "ignore-reachable"
+      "$extends": "ignore-reachable"
     },
     {
-      "$extends":  "info"
+      "$extends": "light-info"
     }
   ]
 }

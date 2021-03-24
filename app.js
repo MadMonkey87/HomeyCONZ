@@ -343,7 +343,7 @@ class deCONZ extends Homey.App {
 	}
 
 	downloadBackup(callback) {
-		http.downloadToFile(`http://${this.host}/deCONZ.tar.gz`, util.appDataFolder + 'deCONZ.tar.gz', (error, success) => {
+		http.downloadToFile(`http://${this.host}/deCONZ.tar.gz.dat`, util.appDataFolder + 'deCONZ.tar.gz.dat', (error, success) => {
 			if (!!error) {
 				callback(error, null)
 			} else {
@@ -391,7 +391,7 @@ class deCONZ extends Homey.App {
 							callback(e, null)
 						}
 						else {
-							callback(null, { name: 'deCONZ.tar.gz', type: 'application/octet-stream', content: data })
+							callback(null, { name: 'deCONZ.tar.gz.dat', type: 'application/octet-stream', content: data })
 						}
 					})
 				}
@@ -886,6 +886,23 @@ class deCONZ extends Homey.App {
 			if (deviceSupports('measure_air_quality')) {
 				device.setCapabilityValue('measure_air_quality', state.airquality)
 			}
+		}
+
+		if (state.hasOwnProperty('lift')) {
+			if (deviceSupports('windowcoverings_set')) {
+				device.setCapabilityValue('windowcoverings_set', 1 - (state.lift / 100))
+			}
+		}
+
+		if (state.hasOwnProperty('open')) {
+			if (deviceSupports('windowcoverings_closed')) {
+				device.setCapabilityValue('windowcoverings_closed', state.open)
+			}
+		}
+
+		//ZHABattery devices
+		if (state.hasOwnProperty('battery') && deviceSupports('measure_battery')) {
+			device.setCapabilityValue('measure_battery', state.battery)
 		}
 
 		if (state.hasOwnProperty('lastupdated') && device.getSetting('lastUpdated') != null) {

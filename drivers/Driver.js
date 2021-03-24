@@ -6,9 +6,7 @@ const { http } = require('../../nbhttp')
 class Driver extends Homey.Driver {
 
 	onInit() {
-		// this.host = Homey.ManagerSettings.get('host')
-		// this.apikey = Homey.ManagerSettings.get('apikey')
-		// this.port = Homey.ManagerSettings.get('port')
+
 	}
 
 	getLightsList(callback) {
@@ -43,6 +41,7 @@ class Driver extends Homey.Driver {
 			let none = []
 			let onoff = ['onoff']
 			let dim = ['onoff', 'dim']
+			let blinds = ['windowcoverings_set', 'windowcoverings_closed', 'blinds_stop']
 			let ct = ['onoff', 'dim', 'light_temperature']
 			let extendedColor = ['onoff', 'dim', 'light_temperature', 'light_mode', 'light_saturation', 'light_hue']
 			let dimmableColor = ['onoff', 'dim', 'light_mode', 'light_saturation', 'light_hue']
@@ -55,7 +54,7 @@ class Driver extends Homey.Driver {
 				'Color light': extendedColor,
 				'Smart plug': onoff,
 				'On/Off plug-in unit': onoff,
-				'Window covering device': dim,
+				'Window covering device': blinds,
 				'Range extender': none,
 				'Color dimmable light': dimmableColor
 			}
@@ -77,8 +76,12 @@ class Driver extends Homey.Driver {
 
 					var linked_sensors = []
 					var additionalCapabilities = []
+
+
 					if (sensors && isMainLight) {
 						let filteredSensors = Object.entries(sensors).filter(d => d[1].uniqueid.startsWith(mac))
+
+						this.log('adding additional sensors', filteredSensors)
 
 						let powerMeasurementSensor = filteredSensors.find(s => s[1].state.hasOwnProperty('power'))
 						if (powerMeasurementSensor) {
@@ -104,7 +107,7 @@ class Driver extends Homey.Driver {
 							additionalCapabilities.push('meter_power')
 						}
 
-						let batteryMeasurementSensor = filteredSensors.find(s => s[1].config.hasOwnProperty('battery'))
+						let batteryMeasurementSensor = filteredSensors.find(s => s[1].config.hasOwnProperty('battery') || s[1].type == 'ZHABattery')
 						if (batteryMeasurementSensor) {
 							linked_sensors.push(batteryMeasurementSensor[0])
 							additionalCapabilities.push('measure_battery')

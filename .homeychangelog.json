@@ -127,5 +127,8 @@
   },
   "1.23.3": {
     "en": "Support for Ikea shortcut button, Support for Develco/Frient air quality sensor & humidity sensor, Aqara vibration sensor improvements, improved generic sensors capability handling, support for Bitron thermostat, display correct backup date"
+  },
+  "1.24.0": {
+    "en": "Improved support for blinds, support for new aqara models"
   }
 }
