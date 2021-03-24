@@ -13967,9 +13967,7 @@
         "en": "Trust ZYCT-202"
       },
       "class": "remote",
-      "capabilities": [
-        "measure_battery"
-      ],
+      "capabilities": [],
       "energy": {
         "batteries": [
           "CR2450"
