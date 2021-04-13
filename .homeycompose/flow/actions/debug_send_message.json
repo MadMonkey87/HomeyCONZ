@@ -6,6 +6,9 @@
     "hint": {
         "en": "Simulates an incoming websocket message. This can be useful for a few tests. Only use this if you know what you're doing."
     },
+    "titleFormatted": {
+        "en": "Simulate incoming message '[[message]]'"
+    },
     "args": [
         {
             "type": "text",

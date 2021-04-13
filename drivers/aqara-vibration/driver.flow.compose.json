@@ -75,21 +75,24 @@
     {
       "id": "is_vibration_alarm_active",
       "title": {
-        "en": "Is vibration !{{|not}} detected"
+        "en": "When vibration is !{{|not}} detected"
       },
       "args": []
     },
     {
       "id": "is_tilt_alarm_active",
       "title": {
-        "en": "Is tilt !{{|not}} detected"
+        "en": "When the tilt alarm is !{{|not}} detected"
       },
       "args": []
     },
     {
       "id": "is_vibration_strength_greater_than",
       "title": {
-        "en": "Is vibration strength !{{greater|lower}}"
+        "en": "When the vibration strength is !{{greater|lower}}"
+      },
+      "titleFormatted": {
+        "en": "When the vibration strength is !{{greater|lower}} than [[value]]"
       },
       "args": [
         {
@@ -101,7 +104,10 @@
     {
       "id": "is_tilt_angle_greater_than",
       "title": {
-        "en": "Is tilt angle !{{greater|lower}}"
+        "en": "When the tilt angle is !{{greater|lower}}"
+      },
+      "titleFormatted": {
+        "en": "When the tilt angle is !{{greater|lower}} than [[value]]"
       },
       "args": [
         {
@@ -113,7 +119,10 @@
     {
       "id": "is_relative_tilt_angle_greater_than",
       "title": {
-        "en": "Is relative tilt angle !{{greater|lower}}"
+        "en": "When the relative tilt angle is !{{greater|lower}}"
+      },
+      "titleFormatted": {
+        "en": "When the relative tilt angle is !{{greater|lower}} than [[value]]"
       },
       "args": [
         {

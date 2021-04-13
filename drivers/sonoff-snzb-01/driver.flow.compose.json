@@ -5,6 +5,9 @@
       "title": {
         "en": "Event"
       },
+      "titleFormatted": {
+        "en": "On [[action]]"
+      },
       "tokens": [
         {
           "name": "rawEvent",

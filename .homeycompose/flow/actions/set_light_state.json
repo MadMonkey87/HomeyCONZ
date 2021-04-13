@@ -6,6 +6,9 @@
   "hint": {
     "en": "Apply one or more light commands that all will be applied natively which will get you a smoother expirience than doing so with separate commands."
   },
+  "titleFormatted": {
+    "en": "Set combined state: power: [[power]], brightness: [[brightness_mode]]->([[brightness]]/[[relative_increasement_brightness]]), saturation: [[saturation_mode]] -> ([[saturation]]/[[relative_increasement_saturation]]), hue: [[hue_mode]] -> ([[hue]]/[[relative_increasement_hue]]), color temperature: [[ct_mode]] -> ([[ct]]/[[relative_increasement_ct]]), color mode: [[colormode]] within [[transitiontime]]"
+  },
   "args": [
     {
       "name": "device",

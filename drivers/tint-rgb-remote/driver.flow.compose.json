@@ -21,6 +21,9 @@
       "title": {
         "en": "Button pressed"
       },
+      "titleFormatted": {
+        "en": "When '[[button]]' has been pressed"
+      },
       "tokens": [
         {
           "name": "rawEvent",

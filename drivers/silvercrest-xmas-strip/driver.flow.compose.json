@@ -5,6 +5,9 @@
       "title": {
         "en": "Apply Effect"
       },
+      "titleFormatted": {
+        "en": "Set effect to [[effect]] (speed: [[effect_speed]], colors: [[effect_color_1]], [[effect_color_2]], [[effect_color_3]], [[effect_color_4]], [[effect_color_5]], [[effect_color_6]])"
+      },
       "args": [
         {
           "type": "dropdown",

@@ -118,7 +118,9 @@ class GroupDriver extends Driver {
 						Object.entries(scenes).forEach(entry => {
 							const key = entry[0];
 							const scene = entry[1];
-							result.push({ name: scene.name, id: key });
+							if (query && scene.name.toLowerCase().includes(query.toLowerCase())) {
+								result.push({ name: scene.name, id: key });
+							}
 						});
 						resolve(result);
 					})

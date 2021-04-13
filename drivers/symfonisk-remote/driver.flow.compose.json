@@ -5,6 +5,9 @@
       "title": {
         "en": "Start Rotating"
       },
+      "titleFormatted": {
+        "en": "When [[direction]] rotation starts"
+      },
       "args": [
         {
           "type": "dropdown",
@@ -61,6 +64,9 @@
           "example": 0.5
         }
       ],
+      "titleFormatted": {
+        "en": "When [[direction]] rotation continues"
+      },
       "args": [
         {
           "type": "dropdown",
@@ -96,6 +102,9 @@
       "title": {
         "en": "End Rotating"
       },
+      "titleFormatted": {
+        "en": "When [[direction]] rotation ends"
+      },
       "args": [
         {
           "type": "dropdown",
@@ -130,6 +139,9 @@
       "id": "raw_switch_event",
       "title": {
         "en": "Button Event"
+      },
+      "titleFormatted": {
+        "en": "On [[action]]"
       },
       "tokens": [
         {

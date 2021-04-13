@@ -1,8 +1,8 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "de.dresden-elektronik.deconz",
-  "version": "1.24.0",
-  "compatibility": ">=4.0.0",
+  "version": "1.25.0",
+  "compatibility": ">=5.0.0",
   "brandColor": "#55626b",
   "sdk": 2,
   "name": {
@@ -429,6 +429,9 @@
         "title": {
           "en": "Button Event"
         },
+        "titleFormatted": {
+          "en": "When [[action]] on [[button]]"
+        },
         "tokens": [
           {
             "name": "rawEvent",
@@ -523,6 +526,9 @@
         "id": "raw_switch_event",
         "title": {
           "en": "Button Event"
+        },
+        "titleFormatted": {
+          "en": "When [[action]] on [[button]]"
         },
         "tokens": [
           {
@@ -844,6 +850,9 @@
         "title": {
           "en": "Event"
         },
+        "titleFormatted": {
+          "en": "When [[action]] on [[button]]"
+        },
         "tokens": [
           {
             "name": "rawEvent",
@@ -962,6 +971,9 @@
         "id": "raw_switch_event",
         "title": {
           "en": "Event"
+        },
+        "titleFormatted": {
+          "en": "When [[action]] on [[button]]"
         },
         "tokens": [
           {
@@ -1093,6 +1105,9 @@
         "id": "raw_switch_event",
         "title": {
           "en": "Event"
+        },
+        "titleFormatted": {
+          "en": "When [[action]] on [[button]]"
         },
         "tokens": [
           {
@@ -1369,6 +1384,9 @@
         "title": {
           "en": "Button Event"
         },
+        "titleFormatted": {
+          "en": "When [[action]] on [[button]]"
+        },
         "tokens": [
           {
             "name": "rawEvent",
@@ -1458,6 +1476,9 @@
         "title": {
           "en": "Button Event"
         },
+        "titleFormatted": {
+          "en": "When [[action]] on [[button]]"
+        },
         "tokens": [
           {
             "name": "rawEvent",
@@ -1528,6 +1549,9 @@
         "id": "raw_switch_event",
         "title": {
           "en": "Button Event"
+        },
+        "titleFormatted": {
+          "en": "When [[action]] on [[button]]"
         },
         "tokens": [
           {
@@ -1618,6 +1642,9 @@
         "title": {
           "en": "Button Event"
         },
+        "titleFormatted": {
+          "en": "When [[action]] on [[button]]"
+        },
         "tokens": [
           {
             "name": "rawEvent",
@@ -1688,6 +1715,9 @@
         "id": "raw_switch_event",
         "title": {
           "en": "Button Event"
+        },
+        "titleFormatted": {
+          "en": "When [[action]] on [[button]]"
         },
         "tokens": [
           {
@@ -1796,6 +1826,9 @@
         "title": {
           "en": "Button Event"
         },
+        "titleFormatted": {
+          "en": "When [[action]] on [[button]]"
+        },
         "tokens": [
           {
             "name": "rawEvent",
@@ -1885,6 +1918,9 @@
         "title": {
           "en": "Event"
         },
+        "titleFormatted": {
+          "en": "When [[action]] on [[button]]"
+        },
         "tokens": [
           {
             "name": "rawEvent",
@@ -1923,7 +1959,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=feller-switch"
+            "filter": "driver_id=foh-switch"
           },
           {
             "type": "dropdown",
@@ -2028,6 +2064,9 @@
         "id": "raw_switch_event",
         "title": {
           "en": "Event"
+        },
+        "titleFormatted": {
+          "en": "When [[action]] on [[button]]"
         },
         "tokens": [
           {
@@ -2214,6 +2253,9 @@
         "title": {
           "en": "Event"
         },
+        "titleFormatted": {
+          "en": "On [[action]]"
+        },
         "tokens": [
           {
             "name": "rawEvent",
@@ -2296,6 +2338,9 @@
         "id": "raw_switch_event",
         "title": {
           "en": "Event"
+        },
+        "titleFormatted": {
+          "en": "When [[action]] on [[button]]"
         },
         "tokens": [
           {
@@ -2391,6 +2436,9 @@
         "id": "raw_switch_event",
         "title": {
           "en": "Event"
+        },
+        "titleFormatted": {
+          "en": "When [[button]] has been pressed"
         },
         "tokens": [
           {
@@ -2565,6 +2613,9 @@
         "title": {
           "en": "Event"
         },
+        "titleFormatted": {
+          "en": "On [[action]]"
+        },
         "tokens": [
           {
             "name": "rawEvent",
@@ -2642,6 +2693,9 @@
         "title": {
           "en": "Start Rotating"
         },
+        "titleFormatted": {
+          "en": "When [[direction]] rotation starts"
+        },
         "args": [
           {
             "type": "device",
@@ -2703,6 +2757,9 @@
             "example": 0.5
           }
         ],
+        "titleFormatted": {
+          "en": "When [[direction]] rotation continues"
+        },
         "args": [
           {
             "type": "device",
@@ -2743,6 +2800,9 @@
         "title": {
           "en": "End Rotating"
         },
+        "titleFormatted": {
+          "en": "When [[direction]] rotation ends"
+        },
         "args": [
           {
             "type": "device",
@@ -2782,6 +2842,9 @@
         "id": "raw_switch_event",
         "title": {
           "en": "Button Event"
+        },
+        "titleFormatted": {
+          "en": "On [[action]]"
         },
         "tokens": [
           {
@@ -2882,6 +2945,9 @@
         "id": "raw_switch_event",
         "title": {
           "en": "Button pressed"
+        },
+        "titleFormatted": {
+          "en": "When '[[button]]' has been pressed"
         },
         "tokens": [
           {
@@ -3159,6 +3225,9 @@
         "title": {
           "en": "Button Event"
         },
+        "titleFormatted": {
+          "en": "When [[action]] on [[button]]"
+        },
         "tokens": [
           {
             "name": "rawEvent",
@@ -3338,7 +3407,7 @@
       {
         "id": "is_vibration_alarm_active",
         "title": {
-          "en": "Is vibration !{{|not}} detected"
+          "en": "When vibration is !{{|not}} detected"
         },
         "args": [
           {
@@ -3351,7 +3420,7 @@
       {
         "id": "is_tilt_alarm_active",
         "title": {
-          "en": "Is tilt !{{|not}} detected"
+          "en": "When the tilt alarm is !{{|not}} detected"
         },
         "args": [
           {
@@ -3364,7 +3433,10 @@
       {
         "id": "is_vibration_strength_greater_than",
         "title": {
-          "en": "Is vibration strength !{{greater|lower}}"
+          "en": "When the vibration strength is !{{greater|lower}}"
+        },
+        "titleFormatted": {
+          "en": "When the vibration strength is !{{greater|lower}} than [[value]]"
         },
         "args": [
           {
@@ -3381,7 +3453,10 @@
       {
         "id": "is_tilt_angle_greater_than",
         "title": {
-          "en": "Is tilt angle !{{greater|lower}}"
+          "en": "When the tilt angle is !{{greater|lower}}"
+        },
+        "titleFormatted": {
+          "en": "When the tilt angle is !{{greater|lower}} than [[value]]"
         },
         "args": [
           {
@@ -3398,7 +3473,10 @@
       {
         "id": "is_relative_tilt_angle_greater_than",
         "title": {
-          "en": "Is relative tilt angle !{{greater|lower}}"
+          "en": "When the relative tilt angle is !{{greater|lower}}"
+        },
+        "titleFormatted": {
+          "en": "When the relative tilt angle is !{{greater|lower}} than [[value]]"
         },
         "args": [
           {
@@ -3431,6 +3509,9 @@
         "hint": {
           "en": "Simulates an incoming websocket message. This can be useful for a few tests. Only use this if you know what you're doing."
         },
+        "titleFormatted": {
+          "en": "Simulate incoming message '[[message]]'"
+        },
         "args": [
           {
             "type": "text",
@@ -3448,6 +3529,9 @@
         },
         "hint": {
           "en": "Apply one or more light commands that all will be applied natively which will get you a smoother expirience than doing so with separate commands."
+        },
+        "titleFormatted": {
+          "en": "Set combined state: power: [[power]], brightness: [[brightness_mode]]->([[brightness]]/[[relative_increasement_brightness]]), saturation: [[saturation_mode]] -> ([[saturation]]/[[relative_increasement_saturation]]), hue: [[hue_mode]] -> ([[hue]]/[[relative_increasement_hue]]), color temperature: [[ct_mode]] -> ([[ct]]/[[relative_increasement_ct]]), color mode: [[colormode]] within [[transitiontime]]"
         },
         "args": [
           {
@@ -3768,6 +3852,9 @@
         },
         "hint": {
           "en": "Apply one or more light commands that all will be applied natively which will get you a smoother expirience than doing so with separate commands."
+        },
+        "titleFormatted": {
+          "en": "Set combined state: power: [[power]], brightness: [[brightness_mode]]->([[brightness]]/[[relative_increasement_brightness]]), saturation: [[saturation_mode]] -> ([[saturation]]/[[relative_increasement_saturation]]), hue: [[hue_mode]] -> ([[hue]]/[[relative_increasement_hue]]), color temperature: [[ct_mode]] -> ([[ct]]/[[relative_increasement_ct]]), color mode: [[colormode]] within [[transitiontime]]"
         },
         "args": [
           {
@@ -4124,6 +4211,9 @@
         "title": {
           "en": "Recall a scene"
         },
+        "titleFormatted": {
+          "en": "Set [[scene]]"
+        },
         "args": [
           {
             "type": "device",
@@ -4171,6 +4261,9 @@
         "title": {
           "en": "set relative brightness (advanced)"
         },
+        "titleFormatted": {
+          "en": "Set the relative brightness to [[relative_brightness]] within [[transitiontime]]"
+        },
         "args": [
           {
             "type": "device",
@@ -4212,6 +4305,9 @@
         "title": {
           "en": "set relative color temperature (advanced)"
         },
+        "titleFormatted": {
+          "en": "Set the relative color temperature to [[relative_ct]] within [[transitiontime]]"
+        },
         "args": [
           {
             "type": "device",
@@ -4251,6 +4347,9 @@
         "id": "apply_effect",
         "title": {
           "en": "Apply Effect"
+        },
+        "titleFormatted": {
+          "en": "Set effect to [[effect]] (speed: [[effect_speed]], colors: [[effect_color_1]], [[effect_color_2]], [[effect_color_3]], [[effect_color_4]], [[effect_color_5]], [[effect_color_6]])"
         },
         "args": [
           {
@@ -7741,10 +7840,10 @@
       "class": "remote",
       "capabilities": [],
       "images": {
-        "large": "/drivers/feller-switch/assets/images/large.png",
-        "small": "/drivers/feller-switch/assets/images/small.png"
+        "large": "/drivers/foh-switch/assets/images/large.png",
+        "small": "/drivers/foh-switch/assets/images/small.png"
       },
-      "icon": "/drivers/feller-switch/assets/icon.svg",
+      "icon": "/drivers/foh-switch/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -7850,7 +7949,7 @@
           ]
         }
       ],
-      "id": "feller-switch"
+      "id": "foh-switch"
     },
     {
       "name": {

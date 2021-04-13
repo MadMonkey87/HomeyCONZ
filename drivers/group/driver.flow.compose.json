@@ -5,6 +5,9 @@
       "title": {
         "en": "Recall a scene"
       },
+      "titleFormatted": {
+        "en": "Set [[scene]]"
+      },
       "args": [
         {
           "type": "autocomplete",
@@ -32,6 +35,9 @@
       "deprecated": true,
       "title": {
         "en": "set relative brightness (advanced)"
+      },
+      "titleFormatted": {
+        "en": "Set the relative brightness to [[relative_brightness]] within [[transitiontime]]"
       },
       "args": [
         {
@@ -68,6 +74,9 @@
       "deprecated": true,
       "title": {
         "en": "set relative color temperature (advanced)"
+      },
+      "titleFormatted": {
+        "en": "Set the relative color temperature to [[relative_ct]] within [[transitiontime]]"
       },
       "args": [
         {

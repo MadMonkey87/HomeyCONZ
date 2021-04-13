@@ -347,7 +347,7 @@ class deCONZ extends Homey.App {
 			if (!!error) {
 				callback(error, null)
 			} else {
-				Homey.ManagerSettings.set('lastBackupDate', new Date().toLocaleDateString("de-CH"), (err, settings) => {
+				Homey.ManagerSettings.set('lastBackupDate', new Date().toLocaleString("de-CH"), (err, settings) => {
 					if (err) callback(err, null)
 				})
 				callback(null, success)
