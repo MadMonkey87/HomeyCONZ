@@ -8,15 +8,14 @@ assignees: MadMonkey87
 ---
 
 **Device Name & Manufacturer**
-<!--- Aqara Cube --->
+Aqara Cube
 
 **Device Description Link**
-<!--- https://www.aqara.com/us/cube.html --->
+https://www.aqara.com/us/cube.html
 
 **Device state as reported by deConz**
-<!--- Is this device a light or a sensor resource? How does it look like trough the api? IF YOU DO NOT KNOW THESE DETAILS PLEASE GO TO THE APP CONFIG IN HOMEY => ADVANCED => SCROLL DOWN TO 'USAGE DATA', CLICK 'COPY TO CLIPBOARD' AND PASTE THE CONTENT HERE--->
+Is this device a light or a sensor resource? How does it look like trough the api? IF YOU DO NOT KNOW THESE DETAILS PLEASE GO TO THE APP CONFIG IN HOMEY => ADVANCED => SCROLL DOWN TO 'USAGE DATA', CLICK 'COPY TO CLIPBOARD' AND PASTE THE CONTENT HERE
 
-<!---
 sensor resource
 {
   "config": {
@@ -39,7 +38,6 @@ sensor resource
   "type": "ZHADoorLock",
   "uniqueid": "xx:xx:xx:xx:xx:xx:xx:xx-xx-0101"
 }
---->
 
 **Additional context**
-<!--- Anything that might help, i.e what status values are possible, or a link to a documentation, images etc. --->
+Anything that might help, i.e what status values are possible, or a link to a documentation, images etc.
