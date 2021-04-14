@@ -14,6 +14,15 @@ class GenericDoorLockDriver extends Driver {
 		this.getSensorsByCondition(device => device.type === 'ZHADoorLock', callback)
 	}
 
+	onAddCustomSensorCapabilities(sensor, capabilities) {
+		if (sensor.config && sensor.config.hasOwnProperty('lock')) {
+			capabilities.push('locked')
+		}
+
+		if (sensor.state && sensor.state.hasOwnProperty('lockstate')) {
+			capabilities.push('lock_state')
+		}
+	}
 }
 
 module.exports = GenericDoorLockDriver
