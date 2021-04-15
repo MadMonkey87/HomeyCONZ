@@ -6,12 +6,8 @@ This app for [Athom Homey](https://homey.app/en-us/) adds support for [deCONZ](h
 
 # Installation information
 
-Before we start. Clone this repo to your local machine.
-
-Then, first we need to get NPM.
-On macOS, e.g., you can use [brew](http://brew.sh): `brew install node`.
-Then via NPM you should install cli for Homey: `npm i -g athom-cli`.
-Almost there. Now you can install app using `athom app install` command being in the app's root directory.
+The easiest way is to get the latest version directly from the store from here: https://homey.app/de-ch/app/de.dresden-elektronik.deconz/deCONZ/.
+Pre-Release versions are available over here: https://homey.app/de-ch/app/de.dresden-elektronik.deconz/deCONZ/test.
 
 # Supported devices
 
@@ -20,18 +16,21 @@ Almost there. Now you can install app using `athom app install` command being in
 - [x] Plugs
 - [x] Thermostats
 - [x] deCONZ groups
+- [x] Door locks
+- [x] Sirens/Alarm devices
 - [x] Motion sensors: Philips, Xiaomi, Aqara, TRÅDFRI, Trust, Develco, Frient, Heiman, Silvercrest
-- [x] Temperature/Humidity sensors: Xiaomi, Aqara
-- [x] Buttons: Mi, Aqara, Aqara gyro, TRÅDFRI
-- [x] Switches: Aqara, TRÅDFRI, Philips, Trust, Feller
+- [x] Temperature/Humidity sensors: Xiaomi, Aqara, Develco
+- [x] Buttons & Switches: Mi, Aqara, Aqara gyro, TRÅDFRI, Philips, Trust, Feller, Jung and a generic driver to support all others
 - [x] Contact sensors: Xiaomi, Aqara, Trust
 - [x] Remotes: TRÅDFRI, Tint
 - [x] Leakage sensor: Aqara, Develco, Zipato, Frient
 - [x] Smoke sensor: Honeywell, Trust, Heimann, Develco, Frient
 - [x] CO sensor: Heimann
-
+- [x] Relay: Sonoff, Philips, Aqara
 - [x] Aqara Cube
 - [x] Aqara Vibration sensor
 - [x] TRÅDFRI signal repeater
 - [x] Mi Light sensor
 - [x] Silvercrest Christmas Tree light
+- [x] Frient VOC sensor
+- [x] ...and many more! If your device isn't supported yet feel free to create a request

@@ -10656,7 +10656,7 @@
                 "en": "Device Mode"
               },
               "hint": {
-                "en": "Note that the sensitivity gets applied the next time the sensor performs a handshake with the conbee. This might take up to some time!"
+                "en": "Note that the device mode gets applied the next time the device performs a handshake with the conbee. This might take up to some time!"
               },
               "values": [
                 {
