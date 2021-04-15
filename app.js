@@ -956,6 +956,10 @@ class deCONZ extends Homey.App {
 		if (config.hasOwnProperty('lock') && deviceСapabilities.includes('locked')) {
 			device.setCapabilityValue('locked', config.lock)
 		}
+
+		if (config.hasOwnProperty('devicemode') && device.getSetting('devicemode') != null) {
+			device.setSettings({ devicemode: config.devicemode });
+		}
 	}
 
 	updateDeviceInfo(device, data) {

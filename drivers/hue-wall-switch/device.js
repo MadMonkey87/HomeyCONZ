@@ -32,6 +32,14 @@ class HueWallSwitch extends Sensor {
 				(args.action === '-1' || args.action === state.actionIndex));
 		});
 	}
+
+	async onSettings( oldSettingsObj, newSettingsObj, changedKeysArr ) {
+		this.putSensorConfig( { config: { devicemode: newSettingsObj.devicemode } }, (error, data) => {
+			if (error) {
+				throw new Error(error);
+			}
+		})
+	}
 	
 }
 
