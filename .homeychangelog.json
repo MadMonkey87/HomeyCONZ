@@ -135,6 +135,6 @@
     "en": "Preparations for SDK upgrade, fix drop down filter for the scene selection, backup shows date & time"
   },
   "1.26.0": {
-    "en": "Generic Door Lock driver"
+    "en": "Generic Door Lock driver, Hue Wall Switch support"
   }
 }

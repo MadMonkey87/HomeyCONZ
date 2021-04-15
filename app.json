@@ -2438,6 +2438,119 @@
           "en": "Event"
         },
         "titleFormatted": {
+          "en": "When [[action]] on [[button]]"
+        },
+        "hint": {
+          "en": "Important: in the device settings you can set the mode of this switch. This setting defines what buttons are available and what events are supported. Keep this in mind when using this flow card as not all buttons/events might be supported depending on your settings!"
+        },
+        "tokens": [
+          {
+            "name": "rawEvent",
+            "type": "number",
+            "title": {
+              "en": "event"
+            },
+            "example": 1001
+          },
+          {
+            "name": "buttonIndex",
+            "type": "number",
+            "title": {
+              "en": "button index"
+            },
+            "example": 1
+          },
+          {
+            "name": "actionIndex",
+            "type": "number",
+            "title": {
+              "en": "action index"
+            },
+            "example": 1
+          },
+          {
+            "name": "action",
+            "type": "string",
+            "title": {
+              "en": "action"
+            },
+            "example": "initial_press"
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hue-wall-switch"
+          },
+          {
+            "type": "dropdown",
+            "name": "button",
+            "values": [
+              {
+                "id": "-1",
+                "label": {
+                  "en": "Any Button"
+                }
+              },
+              {
+                "id": "1",
+                "label": {
+                  "en": "Button 1"
+                }
+              },
+              {
+                "id": "2",
+                "label": {
+                  "en": "Button 2"
+                }
+              }
+            ]
+          },
+          {
+            "type": "dropdown",
+            "name": "action",
+            "values": [
+              {
+                "id": "-1",
+                "label": {
+                  "en": "Any Action"
+                }
+              },
+              {
+                "id": "0",
+                "label": {
+                  "en": "Initial Press"
+                }
+              },
+              {
+                "id": "1",
+                "label": {
+                  "en": "Hold"
+                }
+              },
+              {
+                "id": "2",
+                "label": {
+                  "en": "Release (Single Press)"
+                }
+              },
+              {
+                "id": "3",
+                "label": {
+                  "en": "Release (After Hold)"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "raw_switch_event",
+        "title": {
+          "en": "Event"
+        },
+        "titleFormatted": {
           "en": "When [[button]] has been pressed"
         },
         "tokens": [
@@ -8079,6 +8192,124 @@
     },
     {
       "name": {
+        "en": "<Generic Door Lock>"
+      },
+      "class": "lock",
+      "capabilities": [],
+      "images": {
+        "large": "/drivers/generic-door-lock/assets/images/large.png",
+        "small": "/drivers/generic-door-lock/assets/images/small.png"
+      },
+      "icon": "/drivers/generic-door-lock/assets/icon.svg",
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
+      "settings": [
+        {
+          "id": "deconz",
+          "type": "group",
+          "label": {
+            "en": "deCONZ"
+          },
+          "children": [
+            {
+              "id": "ignore-reachable",
+              "type": "checkbox",
+              "label": {
+                "en": "Ignore if unreachable"
+              },
+              "value": false,
+              "hint": {
+                "en": "In Zigbee networks there are no active connections and thus deCONZ does not know if this device is still there as long as it does not communicate. Therefore a device gets marked as unreachable if it does not report for a longer period of time. This is perfectly fine for most devices as they report their status periodically, but if this devices doesn't do this, you can prevent that it get's reported as unavailable using this setting."
+              }
+            }
+          ]
+        },
+        {
+          "id": "info",
+          "type": "group",
+          "label": {
+            "en": "Info"
+          },
+          "children": [
+            {
+              "id": "modelid",
+              "type": "label",
+              "label": {
+                "en": "Model"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "manufacturername",
+              "type": "label",
+              "label": {
+                "en": "Manufacturer"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "swversion",
+              "type": "label",
+              "label": {
+                "en": "Firmware"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "ids",
+              "type": "label",
+              "label": {
+                "en": "Api Id's"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "mac",
+              "type": "label",
+              "label": {
+                "en": "MAC"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "lastseen",
+              "type": "label",
+              "label": {
+                "en": "Last Seen"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "lastUpdated",
+              "type": "label",
+              "label": {
+                "en": "Last Updated"
+              },
+              "value": "Unknown"
+            }
+          ]
+        }
+      ],
+      "id": "generic-door-lock"
+    },
+    {
+      "name": {
         "en": "<Generic Lamp>"
       },
       "class": "light",
@@ -10278,6 +10509,129 @@
         }
       ],
       "id": "hue-tap"
+    },
+    {
+      "name": {
+        "en": "Hue Wall Switch"
+      },
+      "class": "remote",
+      "capabilities": [],
+      "energy": {
+        "batteries": [
+          "CR2032"
+        ]
+      },
+      "images": {
+        "large": "/drivers/hue-wall-switch/assets/images/large.png",
+        "small": "/drivers/hue-wall-switch/assets/images/small.png"
+      },
+      "icon": "/drivers/hue-wall-switch/assets/icon.svg",
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "repair"
+        }
+      ],
+      "settings": [
+        {
+          "id": "deconz",
+          "type": "group",
+          "label": {
+            "en": "deCONZ"
+          },
+          "children": [
+            {
+              "id": "ignore-reachable",
+              "type": "checkbox",
+              "label": {
+                "en": "Ignore if unreachable"
+              },
+              "value": false,
+              "hint": {
+                "en": "In Zigbee networks there are no active connections and thus deCONZ does not know if this device is still there as long as it does not communicate. Therefore a device gets marked as unreachable if it does not report for a longer period of time. This is perfectly fine for most devices as they report their status periodically, but if this devices doesn't do this, you can prevent that it get's reported as unavailable using this setting."
+              }
+            }
+          ]
+        },
+        {
+          "id": "info",
+          "type": "group",
+          "label": {
+            "en": "Info"
+          },
+          "children": [
+            {
+              "id": "modelid",
+              "type": "label",
+              "label": {
+                "en": "Model"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "manufacturername",
+              "type": "label",
+              "label": {
+                "en": "Manufacturer"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "swversion",
+              "type": "label",
+              "label": {
+                "en": "Firmware"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "ids",
+              "type": "label",
+              "label": {
+                "en": "Api Id's"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "mac",
+              "type": "label",
+              "label": {
+                "en": "MAC"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "lastseen",
+              "type": "label",
+              "label": {
+                "en": "Last Seen"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "lastUpdated",
+              "type": "label",
+              "label": {
+                "en": "Last Updated"
+              },
+              "value": "Unknown"
+            }
+          ]
+        }
+      ],
+      "id": "hue-wall-switch"
     },
     {
       "name": {
@@ -14453,6 +14807,42 @@
         "en": "°"
       },
       "decimals": 0
+    },
+    "lock_state": {
+      "type": "enum",
+      "title": {
+        "en": "Lock state (extended)"
+      },
+      "icon": "/drivers/aqara-cube/assets/side_up.svg",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "values": [
+        {
+          "id": "locked",
+          "title": {
+            "en": "Locked"
+          }
+        },
+        {
+          "id": "unlocked",
+          "title": {
+            "en": "Unlocked"
+          }
+        },
+        {
+          "id": "undefined",
+          "title": {
+            "en": "Undefined"
+          }
+        },
+        {
+          "id": "not fully locked",
+          "title": {
+            "en": "Not fully locked"
+          }
+        }
+      ]
     },
     "measure_air_quality": {
       "type": "string",
