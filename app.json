@@ -1959,7 +1959,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=foh-switch"
+            "filter": "driver_id=feller-switch"
           },
           {
             "type": "dropdown",
@@ -7966,10 +7966,10 @@
       "class": "remote",
       "capabilities": [],
       "images": {
-        "large": "/drivers/foh-switch/assets/images/large.png",
-        "small": "/drivers/foh-switch/assets/images/small.png"
+        "large": "/drivers/feller-switch/assets/images/large.png",
+        "small": "/drivers/feller-switch/assets/images/small.png"
       },
-      "icon": "/drivers/foh-switch/assets/icon.svg",
+      "icon": "/drivers/feller-switch/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -8075,7 +8075,7 @@
           ]
         }
       ],
-      "id": "foh-switch"
+      "id": "feller-switch"
     },
     {
       "name": {
