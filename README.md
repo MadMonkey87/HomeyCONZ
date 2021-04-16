@@ -34,3 +34,17 @@ Pre-Release versions are available over [here](https://homey.app/de-ch/app/de.dr
 - [x] Silvercrest Christmas Tree light
 - [x] Frient VOC sensor
       ...and many more! If your device isn't supported yet feel free to create a request
+
+# Features
+- [x] Receive real-time push notifications
+- [x] Optional polling
+- [x] Check for DeConz updates (also for marthocs' docker image)
+- [x] Store backups on your homey
+- [x] Wide support for devices
+- [x] More reliable zigbee network in comparisation to add the devices directly to Homey
+- [x] Automatically restore the connection if your DeConz gateway get's a different ip
+- [x] Hardware settings for devices supporting it (i.e motion sensor sensitivity)
+- [x] Easily repair broken devices or replacements
+- [x] Easy setup & lots of configuration possabilities
+
+![Supported Devices](https://github.com/MadMonkey87/HomeyCONZ/screenshots/SupportedDevices.jpg "Supported Devices")
