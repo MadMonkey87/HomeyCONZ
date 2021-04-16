@@ -133,5 +133,8 @@
   },
   "1.25.1": {
     "en": "Preparations for SDK upgrade, fix drop down filter for the scene selection, backup shows date & time"
+  },
+  "1.26.1": {
+    "en": "Generic Door Lock driver, Hue Wall Switch support, Sonoff ZB Mini Support"
   }
 }

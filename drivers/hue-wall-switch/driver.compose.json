@@ -1,0 +1,87 @@
+{
+  "name": {
+    "en": "Hue Wall Switch"
+  },
+  "class": "remote",
+  "capabilities": [],
+  "energy": {
+    "batteries": [
+      "CR2032"
+    ]
+  },
+  "images": {
+    "large": "{{driverAssetsPath}}/images/large.png",
+    "small": "{{driverAssetsPath}}/images/small.png"
+  },
+  "icon": "{{driverAssetsPath}}/icon.svg",
+  "pair": [
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+        "next": "add_devices"
+      }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ],
+  "repair": [
+    {
+      "id": "repair"
+    }
+  ],
+  "settings": [
+    {
+      "$extends": "ignore-reachable"
+    },
+    {
+      "$extends": "info"
+    },
+    {
+      "type": "group",
+      "label": {
+        "en": "Hardware Settings"
+      },
+      "children": [
+        {
+          "id": "devicemode",
+          "type": "dropdown",
+          "label": {
+            "en": "Device Mode"
+          },
+          "hint": {
+            "en": "Note that the device mode gets applied the next time the device performs a handshake with the conbee. This might take up to some time!"
+          },
+          "values": [
+            {
+              "id": "singlerocker",
+              "label": {
+                "en": "Single Rocker"
+              }
+            },
+            {
+              "id": "singlepushbutton",
+              "label": {
+                "en": "Single Push Button"
+              }
+            },
+            {
+              "id": "dualrocker",
+              "label": {
+                "en": "Dual Rocker"
+              }
+            },
+            {
+              "id": "dualpushbutton",
+              "label": {
+                "en": "Dual Push Button"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

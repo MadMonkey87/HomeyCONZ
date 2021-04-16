@@ -905,6 +905,15 @@ class deCONZ extends Homey.App {
 			device.setCapabilityValue('measure_battery', state.battery)
 		}
 
+		if (state.hasOwnProperty('lockstate ')) {
+			if (deviceSupports('lock_state')) {
+				device.setCapabilityValue('lock_state', state.lockstate)
+			}
+			if (deviceSupports('locked')) {
+				device.setCapabilityValue('locked', state.lockstate === 'locked')
+			}
+		}
+
 		if (state.hasOwnProperty('lastupdated') && device.getSetting('lastUpdated') != null) {
 			device.setSettings({ lastUpdated: state.lastupdated });
 		}
@@ -942,6 +951,14 @@ class deCONZ extends Homey.App {
 
 		if (config.hasOwnProperty('reachable')) {
 			(config.reachable || device.getSetting('ignore-reachable') === true) ? device.setAvailable() : device.setUnavailable('Unreachable')
+		}
+
+		if (config.hasOwnProperty('lock') && deviceСapabilities.includes('locked')) {
+			device.setCapabilityValue('locked', config.lock)
+		}
+
+		if (config.hasOwnProperty('devicemode') && device.getSetting('devicemode') != null) {
+			device.setSettings({ devicemode: config.devicemode });
 		}
 	}
 

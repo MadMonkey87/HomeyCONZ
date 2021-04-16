@@ -1,0 +1,36 @@
+{
+  "type": "enum",
+  "title": {
+    "en": "Lock state (extended)"
+  },
+  "icon": "/drivers/aqara-cube/assets/side_up.svg",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "values": [
+    {
+      "id": "locked",
+      "title": {
+        "en": "Locked"
+      }
+    },
+    {
+      "id": "unlocked",
+      "title": {
+        "en": "Unlocked"
+      }
+    },
+    {
+      "id": "undefined",
+      "title": {
+        "en": "Undefined"
+      }
+    },
+    {
+      "id": "not fully locked",
+      "title": {
+        "en": "Not fully locked"
+      }
+    }
+  ]
+}
