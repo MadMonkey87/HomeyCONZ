@@ -136,5 +136,8 @@
   },
   "1.26.1": {
     "en": "Generic Door Lock driver, Hue Wall Switch support, Sonoff ZB Mini Support"
+  },
+  "1.27.0": {
+    "en": "Support for newer Aqara models, support for Heiman hs1rc-ef"
   }
 }
