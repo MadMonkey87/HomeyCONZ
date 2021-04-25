@@ -1,8 +1,8 @@
 <html>
 
 <head>
-    <!--<script type="text/javascript" src="/homey.js" data-origin="settings"></script>-->
-    <script src='https://cdn.staticaly.com/gh/robertklep/homey-mocks/v0.0.4/homey-settings-mock.js'></script>
+    <script type="text/javascript" src="/homey.js" data-origin="settings"></script>
+    <!--<script src='https://cdn.staticaly.com/gh/robertklep/homey-mocks/v0.0.4/homey-settings-mock.js'></script>-->
 
     <!--<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
@@ -314,8 +314,9 @@
                                 <div class="col">
                                     <label>By Homey device</label>
                                     <div class="dropdown dropup">
-                                        <button class="btn btn-primary" type="button" id="realtimeFilterByHomeyDeviceButton"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                        <button class="btn btn-primary" type="button"
+                                            id="realtimeFilterByHomeyDeviceButton" data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false"
                                             style="width: 100%; text-align: left;">
                                         </button>
                                         <div class="dropdown-menu" style="width: 100%;"
@@ -324,7 +325,8 @@
                                     </div>
                                     <div class="form-group" style="margin-top: 15px;">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" id="realtimeFilterByHomeyDevice" placeholder="Search...">
+                                            <input type="text" class="form-control" id="realtimeFilterByHomeyDevice"
+                                                placeholder="Search...">
                                         </div>
                                     </div>
                                 </div>
@@ -334,8 +336,9 @@
                                 <div class="col">
                                     <label>By api device (not yet connected device)</label>
                                     <div class="dropdown dropup">
-                                        <button class="btn btn-primary" type="button" id="realtimeFilterByApiDeviceButton"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                        <button class="btn btn-primary" type="button"
+                                            id="realtimeFilterByApiDeviceButton" data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false"
                                             style="width: 100%; text-align: left;">
                                         </button>
                                         <div class="dropdown-menu" style="width: 100%;"
@@ -344,7 +347,8 @@
                                     </div>
                                     <div class="form-group" style="margin-top: 15px;">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" id="realtimeFilterByApiDevice" placeholder="Search...">
+                                            <input type="text" class="form-control" id="realtimeFilterByApiDevice"
+                                                placeholder="Search...">
                                         </div>
                                     </div>
                                 </div>
@@ -554,6 +558,10 @@
             const pollStateManuallyButton = document.getElementById('pollStateManuallyButton')
             const pollingDropDown = document.getElementById('pollingDropDown')
             const realtimeEvents = document.getElementById('realtimeEvents')
+            const realtimeFilterByApiDeviceDropdownMenu = document.getElementById('realtimeFilterByApiDeviceDropdownMenu')
+            const realtimeFilterByApiDeviceDropdownButton = document.getElementById('realtimeFilterByApiDeviceDropdownButton')
+            const realtimeFilterByHomeyDeviceDropdownMenu = document.getElementById('realtimeFilterByHomeyDeviceDropdownMenu')
+            const realtimeFilterByHomeyDeviceDropdownButton = document.getElementById('realtimeFilterByHomeyDeviceDropdownButton')
 
             function showError(alert, message) {
                 apiError.style.display = 'grid'
@@ -873,6 +881,16 @@
                 }
             })
 
+            document.getElementById('realtimeFilter').addEventListener('click', (e) => {
+                document.getElementById('realtimeFilterByHomeyDevice').value = '';
+                document.getElementById('realtimeFilterByApiDevice').value = '';
+                loadHomeyDevices();
+                loadApiDevices();
+            })
+
+            document.getElementById('realtimeFilterByHomeyDevice').addEventListener('blur', (e) => { loadHomeyDevices() });
+            document.getElementById('realtimeFilterByApiDevice').addEventListener('blur', (e) => { loadApiDevices() });
+
             document.getElementById('realtimeClear').addEventListener('click', (e) => {
                 document.getElementById('realtimeEvents').innerHTML = '';
             })
@@ -885,6 +903,36 @@
                 document.execCommand('copy')
                 document.body.removeChild(el)
             })
+
+            function loadHomeyDevices() {
+                const query = document.getElementById('realtimeFilterByHomeyDevice').value;
+                Homey.api('GET', '/devices?query=' + query, {}, function (error, data) {
+                    let html = '';
+                    for (var i = 0; i < data.length; i++) {
+                        html += `
+                                    <a style="font-style:bold; overflow: auto;" class="dropdown-item" href="#" onclick="selectInsight({title:'${data[i].name}',id:'${data[i].id}',uri:'${data[i].uri}',units:'${data[i].units}',color:'${data[i].color}',booleanBasedCapability:${data[i].booleanBasedCapability}})">
+                                        ${data[i].name}
+                                    </a>
+                                `;
+                    }
+                    realtimeFilterByHomeyDeviceDropdownMenu.innerHTML = html;
+                })
+            }
+
+            function loadApiDevices() {
+                const query = document.getElementById('realtimeFilterByApiDevice').value;
+                Homey.api('GET', '/apidevices?query=' + query, {}, function (error, data) {
+                    let html = '';
+                    for (var i = 0; i < data.length; i++) {
+                        html += `
+                                    <a style="font-style:bold; overflow: auto;" class="dropdown-item" href="#" onclick="selectInsight({title:'${data[i].name}',id:'${data[i].id}',uri:'${data[i].uri}',units:'${data[i].units}',color:'${data[i].color}',booleanBasedCapability:${data[i].booleanBasedCapability}})">
+                                        ${data[i].name}
+                                    </a>
+                                `;
+                    }
+                    realtimeFilterByApiDeviceDropdownMenu.innerHTML = html;
+                })
+            }
 
             function saveAll() {
                 Homey.set('host', ip.value, (err, settings) => {

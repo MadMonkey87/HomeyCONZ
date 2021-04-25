@@ -411,7 +411,7 @@ class deCONZ extends Homey.App {
 			Object.entries(drivers).forEach(entry => {
 				const id = entry[0]
 				const driver = entry[1]
-				driver.devices.forEach(device => {
+				driver.getDevices().forEach(device => {
 					let settings = device.getSettings();
 					devices.push({
 						name: device.getName(),
@@ -419,13 +419,52 @@ class deCONZ extends Homey.App {
 					});
 				})
 			})
-			return devices
+			callback(null, devices
 				.filter(e => !query || e.name.toLowerCase().includes(query.toLowerCase()))
 				.sort((i, j) =>
 					('' + i.name).localeCompare(j.name)
-				)
+				))
 		} catch (e) {
 			this.log('error while getting devices', e)
+			callback(e, null)
+		}
+	}
+
+	getApiDevices(query, callback) {
+		try {
+			http.get(`http://${this.host}:${this.port}/api/${this.apikey}`, (error, response) => {
+				if (!!error) {
+					callback(error, null)
+					return
+				}
+				let devices = [];
+
+				Object.entries(state.groups).forEach(entry => {
+					const key = entry[0]
+					const group = entry[1]
+					devices.push({ id: key, name: group.name, type: 'group' })
+				})
+
+				Object.entries(state.lights).forEach(entry => {
+					const key = entry[0]
+					const light = entry[1]
+					devices.push({ id: key, name: light.name, type: 'light' })
+				})
+
+				Object.entries(state.sensors).forEach(entry => {
+					const key = entry[0]
+					const sensor = entry[1]
+					devices.push({ id: key, name: sensor.name, type: 'sensor' })
+				})
+
+				callback(null, devices
+					.filter(e => !query || e.name.toLowerCase().includes(query.toLowerCase()))
+					.sort((i, j) =>
+						('' + i.name).localeCompare(j.name)
+					))
+			})
+		} catch (e) {
+			this.log('error while getting api devices', e)
 			callback(e, null)
 		}
 	}

@@ -136,4 +136,18 @@ module.exports = [
 			})
 		}
 	},
+	{
+		method: 'GET',
+		path: '/apidevices',
+		public: false,
+		fn: function (args, callback) {
+			Homey.app.getApiDevices(args.query.query, (err, result) => {
+				if (err) {
+					callback(err, null)
+				} else {
+					callback(null, result)
+				}
+			})
+		}
+	},
 ]
