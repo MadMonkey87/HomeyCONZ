@@ -470,9 +470,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-button"
-            }
+            "filter": "driver_id=aqara-button"
           },
           {
             "type": "dropdown",
@@ -570,9 +568,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-button-gyro"
-            }
+            "filter": "driver_id=aqara-button-gyro"
           },
           {
             "type": "dropdown",
@@ -645,9 +641,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-cube"
-            }
+            "filter": "driver_id=aqara-cube"
           }
         ]
       },
@@ -660,9 +654,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-cube"
-            }
+            "filter": "driver_id=aqara-cube"
           }
         ]
       },
@@ -675,9 +667,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-cube"
-            }
+            "filter": "driver_id=aqara-cube"
           }
         ]
       },
@@ -690,9 +680,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-cube"
-            }
+            "filter": "driver_id=aqara-cube"
           }
         ]
       },
@@ -705,9 +693,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-cube"
-            }
+            "filter": "driver_id=aqara-cube"
           }
         ]
       },
@@ -720,9 +706,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-cube"
-            }
+            "filter": "driver_id=aqara-cube"
           }
         ],
         "tokens": [
@@ -753,9 +737,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-cube"
-            }
+            "filter": "driver_id=aqara-cube"
           }
         ],
         "tokens": [
@@ -786,9 +768,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-cube"
-            }
+            "filter": "driver_id=aqara-cube"
           }
         ],
         "tokens": [
@@ -837,9 +817,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-cube"
-            }
+            "filter": "driver_id=aqara-cube"
           }
         ]
       },
@@ -863,9 +841,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-motion"
-            }
+            "filter": "driver_id=aqara-motion"
           }
         ]
       },
@@ -915,9 +891,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-opple-1gang"
-            }
+            "filter": "driver_id=aqara-opple-1gang"
           },
           {
             "type": "dropdown",
@@ -1039,9 +1013,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-opple-2gang"
-            }
+            "filter": "driver_id=aqara-opple-2gang"
           },
           {
             "type": "dropdown",
@@ -1175,9 +1147,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-opple-3gang"
-            }
+            "filter": "driver_id=aqara-opple-3gang"
           },
           {
             "type": "dropdown",
@@ -1286,9 +1256,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-relay"
-            }
+            "filter": "driver_id=aqara-relay"
           }
         ]
       },
@@ -1301,9 +1269,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-smart-plug"
-            }
+            "filter": "driver_id=aqara-smart-plug"
           }
         ]
       },
@@ -1326,9 +1292,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-vibration"
-            }
+            "filter": "driver_id=aqara-vibration"
           }
         ]
       },
@@ -1359,9 +1323,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-vibration"
-            }
+            "filter": "driver_id=aqara-vibration"
           }
         ]
       },
@@ -1374,9 +1336,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-vibration"
-            }
+            "filter": "driver_id=aqara-vibration"
           }
         ]
       },
@@ -1389,9 +1349,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-vibration"
-            }
+            "filter": "driver_id=aqara-vibration"
           }
         ]
       },
@@ -1404,9 +1362,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-vibration"
-            }
+            "filter": "driver_id=aqara-vibration"
           }
         ]
       },
@@ -1419,9 +1375,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-vibration"
-            }
+            "filter": "driver_id=aqara-vibration"
           }
         ]
       },
@@ -1471,9 +1425,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-wall-switch-double-rocker"
-            }
+            "filter": "driver_id=aqara-wall-switch-double-rocker"
           },
           {
             "type": "dropdown",
@@ -1565,9 +1517,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-wall-switch-single-rocker"
-            }
+            "filter": "driver_id=aqara-wall-switch-single-rocker"
           },
           {
             "type": "dropdown",
@@ -1641,9 +1591,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-wireless-switch-2016-double-rocker"
-            }
+            "filter": "driver_id=aqara-wireless-switch-2016-double-rocker"
           },
           {
             "type": "dropdown",
@@ -1735,9 +1683,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-wireless-switch-2016-single-rocker"
-            }
+            "filter": "driver_id=aqara-wireless-switch-2016-single-rocker"
           },
           {
             "type": "dropdown",
@@ -1811,9 +1757,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-wireless-switch-2018-double-rocker"
-            }
+            "filter": "driver_id=aqara-wireless-switch-2018-double-rocker"
           },
           {
             "type": "dropdown",
@@ -1923,9 +1867,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-wireless-switch-2018-single-rocker"
-            }
+            "filter": "driver_id=aqara-wireless-switch-2018-single-rocker"
           },
           {
             "type": "dropdown",
@@ -2017,9 +1959,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "feller-switch"
-            }
+            "filter": "driver_id=feller-switch"
           },
           {
             "type": "dropdown",
@@ -2116,9 +2056,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "generic-plug"
-            }
+            "filter": "driver_id=generic-plug"
           }
         ]
       },
@@ -2168,9 +2106,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "generic-wireless-switch"
-            }
+            "filter": "driver_id=generic-wireless-switch"
           },
           {
             "type": "dropdown",
@@ -2318,7 +2254,7 @@
           "en": "Event"
         },
         "titleFormatted": {
-          "en": "When [[button]] has been pressed [[device]]"
+          "en": "When [[button]] has been pressed"
         },
         "tokens": [
           {
@@ -2358,9 +2294,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "heiman-hs1rc-ef"
-            }
+            "filter": "driver_id=heiman-hs1rc-ef"
           },
           {
             "type": "dropdown",
@@ -2446,9 +2380,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "hue-smart-button"
-            }
+            "filter": "driver_id=hue-smart-button"
           },
           {
             "type": "dropdown",
@@ -2534,9 +2466,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "hue-tap"
-            }
+            "filter": "driver_id=hue-tap"
           },
           {
             "type": "dropdown",
@@ -2637,9 +2567,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "hue-wall-switch"
-            }
+            "filter": "driver_id=hue-wall-switch"
           },
           {
             "type": "dropdown",
@@ -2749,9 +2677,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "jung-switch-4gang"
-            }
+            "filter": "driver_id=jung-switch-4gang"
           },
           {
             "type": "dropdown",
@@ -2825,9 +2751,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "mi-button"
-            }
+            "filter": "driver_id=mi-button"
           }
         ]
       },
@@ -2840,9 +2764,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "mi-smart-plug"
-            }
+            "filter": "driver_id=mi-smart-plug"
           }
         ]
       },
@@ -2855,9 +2777,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "mi-socket"
-            }
+            "filter": "driver_id=mi-socket"
           }
         ]
       },
@@ -2870,9 +2790,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "sonoff-basic"
-            }
+            "filter": "driver_id=sonoff-basic"
           }
         ]
       },
@@ -2885,9 +2803,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "sonoff-s31-lite-zb"
-            }
+            "filter": "driver_id=sonoff-s31-lite-zb"
           }
         ]
       },
@@ -2937,9 +2853,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "sonoff-snzb-01"
-            }
+            "filter": "driver_id=sonoff-snzb-01"
           },
           {
             "type": "dropdown",
@@ -2982,9 +2896,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "sonoff-zbmini"
-            }
+            "filter": "driver_id=sonoff-zbmini"
           }
         ]
       },
@@ -3000,9 +2912,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "symfonisk-remote"
-            }
+            "filter": "driver_id=symfonisk-remote"
           },
           {
             "type": "dropdown",
@@ -3066,9 +2976,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "symfonisk-remote"
-            }
+            "filter": "driver_id=symfonisk-remote"
           },
           {
             "type": "dropdown",
@@ -3111,9 +3019,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "symfonisk-remote"
-            }
+            "filter": "driver_id=symfonisk-remote"
           },
           {
             "type": "dropdown",
@@ -3190,9 +3096,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "symfonisk-remote"
-            }
+            "filter": "driver_id=symfonisk-remote"
           },
           {
             "type": "dropdown",
@@ -3245,9 +3149,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "tint-rgb-remote"
-            }
+            "filter": "driver_id=tint-rgb-remote"
           }
         ]
       },
@@ -3297,9 +3199,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "tint-rgb-remote"
-            }
+            "filter": "driver_id=tint-rgb-remote"
           },
           {
             "type": "dropdown",
@@ -3396,9 +3296,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "tradfri-plug"
-            }
+            "filter": "driver_id=tradfri-plug"
           }
         ]
       },
@@ -3411,9 +3309,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "tradfri-remote-control"
-            }
+            "filter": "driver_id=tradfri-remote-control"
           }
         ]
       },
@@ -3426,9 +3322,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "tradfri-remote-control"
-            }
+            "filter": "driver_id=tradfri-remote-control"
           }
         ]
       },
@@ -3441,9 +3335,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "tradfri-remote-control"
-            }
+            "filter": "driver_id=tradfri-remote-control"
           }
         ]
       },
@@ -3456,9 +3348,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "tradfri-remote-control"
-            }
+            "filter": "driver_id=tradfri-remote-control"
           }
         ]
       },
@@ -3471,9 +3361,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "tradfri-remote-control"
-            }
+            "filter": "driver_id=tradfri-remote-control"
           }
         ]
       },
@@ -3486,9 +3374,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "tradfri-remote-control"
-            }
+            "filter": "driver_id=tradfri-remote-control"
           }
         ]
       },
@@ -3501,9 +3387,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "tradfri-remote-control"
-            }
+            "filter": "driver_id=tradfri-remote-control"
           }
         ]
       },
@@ -3517,9 +3401,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "tradfri-wireless-dimmer"
-            }
+            "filter": "driver_id=tradfri-wireless-dimmer"
           }
         ]
       },
@@ -3533,9 +3415,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "tradfri-wireless-dimmer"
-            }
+            "filter": "driver_id=tradfri-wireless-dimmer"
           }
         ]
       },
@@ -3548,9 +3428,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "trafdri-shortcut-button"
-            }
+            "filter": "driver_id=trafdri-shortcut-button"
           }
         ]
       },
@@ -3600,9 +3478,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "trust-zyct-202"
-            }
+            "filter": "driver_id=trust-zyct-202"
           },
           {
             "type": "dropdown",
@@ -3671,9 +3547,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-cube"
-            }
+            "filter": "driver_id=aqara-cube"
           }
         ]
       },
@@ -3686,9 +3560,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-cube"
-            }
+            "filter": "driver_id=aqara-cube"
           }
         ]
       },
@@ -3701,9 +3573,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-cube"
-            }
+            "filter": "driver_id=aqara-cube"
           }
         ]
       },
@@ -3716,9 +3586,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-cube"
-            }
+            "filter": "driver_id=aqara-cube"
           }
         ]
       },
@@ -3731,9 +3599,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-cube"
-            }
+            "filter": "driver_id=aqara-cube"
           }
         ]
       },
@@ -3746,9 +3612,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-cube"
-            }
+            "filter": "driver_id=aqara-cube"
           }
         ]
       },
@@ -3761,9 +3625,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-vibration"
-            }
+            "filter": "driver_id=aqara-vibration"
           }
         ]
       },
@@ -3776,9 +3638,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-vibration"
-            }
+            "filter": "driver_id=aqara-vibration"
           }
         ]
       },
@@ -3794,9 +3654,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-vibration"
-            }
+            "filter": "driver_id=aqara-vibration"
           },
           {
             "name": "value",
@@ -3816,9 +3674,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-vibration"
-            }
+            "filter": "driver_id=aqara-vibration"
           },
           {
             "name": "value",
@@ -3838,9 +3694,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "aqara-vibration"
-            }
+            "filter": "driver_id=aqara-vibration"
           },
           {
             "name": "value",
@@ -4547,9 +4401,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "generic-lamp"
-            }
+            "filter": "driver_id=generic-lamp"
           }
         ]
       },
@@ -4562,9 +4414,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "generic-lamp"
-            }
+            "filter": "driver_id=generic-lamp"
           }
         ]
       },
@@ -4580,9 +4430,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "group"
-            }
+            "filter": "driver_id=group"
           },
           {
             "type": "autocomplete",
@@ -4602,9 +4450,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "group"
-            }
+            "filter": "driver_id=group"
           }
         ]
       },
@@ -4617,9 +4463,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "group"
-            }
+            "filter": "driver_id=group"
           }
         ]
       },
@@ -4636,9 +4480,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "group"
-            }
+            "filter": "driver_id=group"
           },
           {
             "type": "range",
@@ -4682,9 +4524,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "group"
-            }
+            "filter": "driver_id=group"
           },
           {
             "type": "range",
@@ -4727,9 +4567,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": {
-              "driverId": "silvercrest-xmas-strip"
-            }
+            "filter": "driver_id=silvercrest-xmas-strip"
           },
           {
             "type": "dropdown",
