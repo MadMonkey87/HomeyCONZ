@@ -1,8 +1,8 @@
 <html>
 
 <head>
-    <script type="text/javascript" src="/homey.js" data-origin="settings"></script>
-    <!--<script src='https://cdn.staticaly.com/gh/robertklep/homey-mocks/v0.0.4/homey-settings-mock.js'></script>-->
+    <!--<script type="text/javascript" src="/homey.js" data-origin="settings"></script>-->
+    <script src='https://cdn.staticaly.com/gh/robertklep/homey-mocks/v0.0.4/homey-settings-mock.js'></script>
 
     <!--<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
@@ -299,6 +299,76 @@
                 </div>
             </div>
 
+            <div class="modal fade" id="filterDebugDeviceModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Apply Filter</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="row">
+                                <div class="col">
+                                    <label>By Homey device</label>
+                                    <div class="dropdown dropup">
+                                        <button class="btn btn-primary" type="button" id="realtimeFilterByHomeyDeviceButton"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                            style="width: 100%; text-align: left;">
+                                        </button>
+                                        <div class="dropdown-menu" style="width: 100%;"
+                                            id="realtimeFilterByHomeyDeviceDropdownMenu">
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="margin-top: 15px;">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="realtimeFilterByHomeyDevice" placeholder="Search...">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <label>By api device (not yet connected device)</label>
+                                    <div class="dropdown dropup">
+                                        <button class="btn btn-primary" type="button" id="realtimeFilterByApiDeviceButton"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                            style="width: 100%; text-align: left;">
+                                        </button>
+                                        <div class="dropdown-menu" style="width: 100%;"
+                                            id="realtimeFilterByApiDeviceDropdownMenu">
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="margin-top: 15px;">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="realtimeFilterByApiDevice" placeholder="Search...">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm">
+                                    <div class="form-group">
+                                        <label>Id's</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="realtimeFilter">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="card glass" style="margin-top: 10px;">
                 <div class="card-body">
                     <h5 class="card-title">Realtime Events</h5>
@@ -309,7 +379,8 @@
                             <div class="btn-group d-flex" role="group" style="height: 38px;">
                                 <button type="button" class="btn btn-primary" id="realtimeRecording"><i
                                         class="fa fa-play"></i></button>
-                                <button type="button" class="btn btn-secondary" id="realtimeFilter"><i
+                                <button type="button" class="btn btn-secondary" id="realtimeFilter"
+                                    data-target="#filterDebugDeviceModal" data-toggle="modal"><i
                                         class="fa fa-filter"></i></button>
                                 <button type="button" class="btn btn-secondary" id="realtimeCopy"><i
                                         class="fa fa-clipboard"></i></button>
@@ -320,8 +391,7 @@
                     </div>
 
                     <p id="realtimeEvents"
-                        style="font-style:italic; padding: 15px; background: #6c757d; color: white; border-radius: 0.25rem; margin-top: 15px; height: 500px;overflow-y: scroll">
-
+                        style="font-style:italic; background: #6c757d; color: white; border-radius: 0.25rem; margin-top: 15px; height: 500px;overflow-y: scroll">
                     </p>
                 </div>
             </div>
@@ -906,12 +976,11 @@
 
             Homey.on('realtime_sensor_event', function (data) {
                 if (record) {
-                    realtimeEvents.innerHTML = JSON.stringify(data) + '</br></br>' + realtimeEvents.innerHTML;
+                    realtimeEvents.innerHTML = '<div class="message-item">' + JSON.stringify(data) + '</div>' + realtimeEvents.innerHTML;
                 }
             });
 
             Homey.ready()
-
         }
 
     </script>

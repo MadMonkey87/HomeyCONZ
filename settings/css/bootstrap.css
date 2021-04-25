@@ -9096,3 +9096,10 @@ label{
   background-color: rgb(106, 115, 122) !important;
   background-image: none !important;
 }
+
+.message-item{
+  padding: 15px;
+}
+.message-item:nth-child(2n){
+  background: #88949e
+}

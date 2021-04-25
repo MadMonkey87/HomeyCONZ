@@ -404,6 +404,32 @@ class deCONZ extends Homey.App {
 		}
 	}
 
+	getDevices(query, callback) {
+		try {
+			let devices = [];
+			let drivers = Homey.ManagerDrivers.getDrivers();
+			Object.entries(drivers).forEach(entry => {
+				const id = entry[0]
+				const driver = entry[1]
+				driver.devices.forEach(device => {
+					let settings = device.getSettings();
+					devices.push({
+						name: device.getName(),
+						ids: settings.ids
+					});
+				})
+			})
+			return devices
+				.filter(e => !query || e.name.toLowerCase().includes(query.toLowerCase()))
+				.sort((i, j) =>
+					('' + i.name).localeCompare(j.name)
+				)
+		} catch (e) {
+			this.log('error while getting devices', e)
+			callback(e, null)
+		}
+	}
+
 	test(host, port, apikey, callback) {
 		const wsState = this.websocket && this.websocket.readyState === 1
 		http.get(`http://${host}:${port}/config/${apikey}`, (error, response) => {

@@ -122,4 +122,18 @@ module.exports = [
 			})
 		}
 	},
+	{
+		method: 'GET',
+		path: '/devices',
+		public: false,
+		fn: function (args, callback) {
+			Homey.app.getDevices(args.query.query, (err, result) => {
+				if (err) {
+					callback(err, null)
+				} else {
+					callback(null, result)
+				}
+			})
+		}
+	},
 ]
