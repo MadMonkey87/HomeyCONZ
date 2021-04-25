@@ -179,6 +179,8 @@ class deCONZ extends Homey.App {
 		} else if (data.attr && data.attr.modelid !== 'ConBee') {
 			this.log('Update for unregistered device', data)
 		}
+
+		Homey.ManagerApi.realtime('realtime_sensor_event', data).catch(this.error);
 	}
 
 	webSocketConnectTo() {

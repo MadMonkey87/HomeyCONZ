@@ -275,7 +275,8 @@
                                 <div class="dropdown dropup">
                                     <button class="btn btn-primary dropdown-toggle" type="button" id="pollingDropDown"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                        style="border-top-right-radius: 0; border-bottom-right-radius: 0; margin-right: 0;" disabled>
+                                        style="border-top-right-radius: 0; border-bottom-right-radius: 0; margin-right: 0;"
+                                        disabled>
                                         every 15 min
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="pollingDropDown">
@@ -294,6 +295,13 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div class="card glass" style="margin-top: 10px;">
+                <div class="card-body">
+                    <h5 class="card-title">Realtime Events</h5>
+                    <p class="card-text">...</p>
                 </div>
             </div>
 
@@ -850,6 +858,10 @@
             updateBackup()
 
             setTimeout(function () { updateDetails() }, 1000);
+
+            Homey.on('realtime_sensor_event', function (data) {
+                Homey.alert(data);
+            });
 
             Homey.ready()
 
