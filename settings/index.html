@@ -16,6 +16,7 @@
     <script src="js/jquery-3.5.1.slim.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/animation.css">
 </head>
@@ -301,7 +302,27 @@
             <div class="card glass" style="margin-top: 10px;">
                 <div class="card-body">
                     <h5 class="card-title">Realtime Events</h5>
-                    <p class="card-text">...</p>
+                    <p class="card-text">Monitor sensor reportings in real time which can be required when requesting
+                        support new devices or for bug analysis.</p>
+                    <div class="row col-9">
+                        <div class="col-sm">
+                            <div class="btn-group d-flex" role="group" style="height: 38px;">
+                                <button type="button" class="btn btn-primary" id="realtimeRecording"><i
+                                        class="fa fa-play"></i></button>
+                                <button type="button" class="btn btn-secondary" id="realtimeFilter"><i
+                                        class="fa fa-filter"></i></button>
+                                <button type="button" class="btn btn-secondary" id="realtimeCopy"><i
+                                        class="fa fa-clipboard"></i></button>
+                                <button type="button" class="btn btn-secondary" id="realtimeClear"><i
+                                        class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p id="realtimeEvents"
+                        style="font-style:italic; padding: 15px; background: #6c757d; color: white; border-radius: 0.25rem; margin-top: 15px; height: 500px;overflow-y: scroll">
+
+                    </p>
                 </div>
             </div>
 
@@ -330,7 +351,7 @@
                         </div>
                     </div>
                     <p id="supportDetails"
-                        style="font-style:italic; padding: 15px; background: #6c757d; color: white; border-radius: 0.25rem; margin-top: 15px; height: 100%;overflow-y: scroll">
+                        style="font-style:italic; padding: 15px; background: #6c757d; color: white; border-radius: 0.25rem; margin-top: 15px; height: 500px;overflow-y: scroll">
                     </p>
                 </div>
             </div>
@@ -462,6 +483,7 @@
             const checkDeConzDockerUpdate = document.getElementById('checkDeConzDockerUpdate')
             const pollStateManuallyButton = document.getElementById('pollStateManuallyButton')
             const pollingDropDown = document.getElementById('pollingDropDown')
+            const realtimeEvents = document.getElementById('realtimeEvents')
 
             function showError(alert, message) {
                 apiError.style.display = 'grid'
@@ -771,6 +793,29 @@
                 })
             }
 
+            let record = false;
+            document.getElementById('realtimeRecording').addEventListener('click', (e) => {
+                record = !record;
+                if (record) {
+                    document.getElementById('realtimeRecording').innerHTML = '<i class="fa fa-pause"></i>';
+                } else {
+                    document.getElementById('realtimeRecording').innerHTML = '<i class="fa fa-play"></i>';
+                }
+            })
+
+            document.getElementById('realtimeClear').addEventListener('click', (e) => {
+                document.getElementById('realtimeEvents').innerHTML = '';
+            })
+
+            document.getElementById('realtimeCopy').addEventListener('click', (e) => {
+                const el = document.createElement('textarea')
+                el.value = document.getElementById('realtimeEvents').innerHTML
+                document.body.appendChild(el)
+                el.select()
+                document.execCommand('copy')
+                document.body.removeChild(el)
+            })
+
             function saveAll() {
                 Homey.set('host', ip.value, (err, settings) => {
                     if (err) return Homey.alert(err)
@@ -860,7 +905,9 @@
             setTimeout(function () { updateDetails() }, 1000);
 
             Homey.on('realtime_sensor_event', function (data) {
-                Homey.alert(data);
+                if (record) {
+                    realtimeEvents.innerHTML = JSON.stringify(data) + '</br></br>' + realtimeEvents.innerHTML;
+                }
             });
 
             Homey.ready()
