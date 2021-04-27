@@ -47,4 +47,4 @@ Pre-Release versions are available over [here](https://homey.app/de-ch/app/de.dr
 - [x] Easily repair broken devices or replacements
 - [x] Easy setup & lots of configuration possabilities
 
-![Supported Devices](https://github.com/MadMonkey87/HomeyCONZ/screenshots/SupportedDevices.jpg "Supported Devices")
+![Supported Devices](https://raw.githubusercontent.com/MadMonkey87/HomeyCONZ/master/screenshots/SupportedDevices.jpg "Supported Devices")
