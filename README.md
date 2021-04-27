@@ -2,7 +2,7 @@
 
 This app for [Athom Homey](https://homey.app/en-us/) adds support for [deCONZ](https://www.dresden-elektronik.de/funk/software/deconz.html)'s [[RaspBee](https://www.phoscon.de/en/raspbee)/[ConBee](https://www.phoscon.de/en/conbee)] child devices.
 
-[![current version](https://img.shields.io/badge/version-1.26.1-<COLOR>.svg)](https://shields.io/)
+[![current version](https://img.shields.io/badge/version-1.27.0-<COLOR>.svg)](https://shields.io/)
 
 # Installation information
 
@@ -47,4 +47,4 @@ Pre-Release versions are available over [here](https://homey.app/de-ch/app/de.dr
 - [x] Easily repair broken devices or replacements
 - [x] Easy setup & lots of configuration possabilities
 
-![Supported Devices](https://github.com/MadMonkey87/HomeyCONZ/screenshots/SupportedDevices.jpg "Supported Devices")
+![Supported Devices](https://raw.githubusercontent.com/MadMonkey87/HomeyCONZ/master/screenshots/SupportedDevices.jpg "Supported Devices")

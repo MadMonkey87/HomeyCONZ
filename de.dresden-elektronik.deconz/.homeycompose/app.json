@@ -1,0 +1,55 @@
+{
+  "id": "de.dresden-elektronik.deconz",
+  "version": "1.27.0",
+  "compatibility": ">=5.0.0",
+  "brandColor": "#55626b",
+  "sdk": 2,
+  "name": {
+    "en": "deCONZ"
+  },
+  "description": {
+    "en": "Adds support for deCONZ's [raspbee/conbee] child devices"
+  },
+  "category": [
+    "appliances",
+    "security",
+    "climate",
+    "energy"
+  ],
+  "permissions": [],
+  "images": {
+    "large": "/assets/images/large.png",
+    "small": "/assets/images/small.png"
+  },
+  "author": {
+    "name": "Philippe Wechsler"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "fantomnotabene"
+      },
+      {
+        "name": "Skorpion"
+      },
+      {
+        "name": "k4mrat"
+      },
+      {
+        "name": "MadMonkey87"
+      }
+    ]
+  },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "madmonkey87"
+      }
+    }
+  },
+  "bugs": {
+    "url": "https://github.com/madmonkey87/HomeyCONZ/issues/new?assignees=MadMonkey87&labels=bug&template=bug_report.md&title=Bug"
+  },
+  "source": "https://github.com/madmonkey87/HomeyCONZ",
+  "homeyCommunityTopicId": 29390
+}
