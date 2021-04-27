@@ -472,7 +472,7 @@ class deCONZ extends Homey.App {
 
 	test(host, port, apikey, callback) {
 		const wsState = this.websocket && this.websocket.readyState === 1
-		http.get(`http://${host}:${port}/config/${apikey}`, (error, response) => {
+		http.get(`http://${host}:${port}/api/${apikey}/config`, (error, response) => {
 			if (!!error) {
 				callback(error, null)
 			} else {
