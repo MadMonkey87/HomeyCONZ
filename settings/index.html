@@ -317,7 +317,7 @@
                                         <button class="btn btn-primary" type="button"
                                             id="realtimeFilterByHomeyDeviceButton" data-toggle="dropdown"
                                             aria-haspopup="true" aria-expanded="false"
-                                            style="width: 100%; text-align: left;">
+                                            style="width: 100%; text-align: left;">Select
                                         </button>
                                         <div class="dropdown-menu" style="width: 100%;"
                                             id="realtimeFilterByHomeyDeviceDropdownMenu">
@@ -339,7 +339,7 @@
                                         <button class="btn btn-primary" type="button"
                                             id="realtimeFilterByApiDeviceButton" data-toggle="dropdown"
                                             aria-haspopup="true" aria-expanded="false"
-                                            style="width: 100%; text-align: left;">
+                                            style="width: 100%; text-align: left;">Select
                                         </button>
                                         <div class="dropdown-menu" style="width: 100%;"
                                             id="realtimeFilterByApiDeviceDropdownMenu">
@@ -357,9 +357,13 @@
                             <div class="row">
                                 <div class="col-sm">
                                     <div class="form-group">
-                                        <label>Id's</label>
+                                        <label>Selected id's</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" id="realtimeFilter">
+                                            <input type="text" class="form-control" id="realtimeFilterIds">
+                                            <div class="input-group-append" id="realtimeFilterIdsClear">
+                                                <button class="btn btn-outline-secondary" type="button"><i
+                                                        class="fa fa-times"></i></button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -367,7 +371,8 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                id="saveSelectedFilter">Ok</button>
                         </div>
                     </div>
                 </div>
@@ -872,23 +877,43 @@
             }
 
             let record = false;
+            let selectedFilterIds = [];
+            let filterIds = [];
             document.getElementById('realtimeRecording').addEventListener('click', (e) => {
                 record = !record;
                 if (record) {
                     document.getElementById('realtimeRecording').innerHTML = '<i class="fa fa-pause"></i>';
+                    realtimeEvents.innerHTML = '<div class="message-item">recording started</div>';
                 } else {
                     document.getElementById('realtimeRecording').innerHTML = '<i class="fa fa-play"></i>';
+                    realtimeEvents.innerHTML = '<div class="message-item">recording stopped</div>' + realtimeEvents.innerHTML;
                 }
             })
 
             document.getElementById('realtimeFilter').addEventListener('click', (e) => {
+                filterIds = [...selectedFilterIds];
                 document.getElementById('realtimeFilterByHomeyDevice').value = '';
                 document.getElementById('realtimeFilterByApiDevice').value = '';
+                document.getElementById('realtimeFilterIds').value = JSON.stringify(filterIds);
                 loadHomeyDevices();
                 loadApiDevices();
             })
 
+            document.getElementById('realtimeFilterIds').addEventListener('blur', (e) => {
+                try {
+                    filterIds = JSON.parse(document.getElementById('realtimeFilterIds').value);
+                    document.getElementById('realtimeFilterIds').value = JSON.stringify(filterIds);
+                } catch (err) {
+                    Homey.alert('Invalid input')
+                }
+            });
+
+            document.getElementById('saveSelectedFilter').addEventListener('click', (e) => {
+                selectedFilterIds = [...filterIds];
+            })
+
             document.getElementById('realtimeFilterByHomeyDevice').addEventListener('blur', (e) => { loadHomeyDevices() });
+
             document.getElementById('realtimeFilterByApiDevice').addEventListener('blur', (e) => { loadApiDevices() });
 
             document.getElementById('realtimeClear').addEventListener('click', (e) => {
@@ -904,16 +929,36 @@
                 document.body.removeChild(el)
             })
 
+            document.getElementById('realtimeFilterIdsClear').addEventListener('click', (e) => {
+                filterIds = [];
+                document.getElementById('realtimeFilterIds').value = JSON.stringify(filterIds);
+            })
+
             function loadHomeyDevices() {
                 const query = document.getElementById('realtimeFilterByHomeyDevice').value;
                 Homey.api('GET', '/devices?query=' + query, {}, function (error, data) {
                     let html = '';
                     for (var i = 0; i < data.length; i++) {
+                        let ids = [];
+                        try {
+                            ids.push(JSON.parse(data[i].ids).map(e => parseInt(e)));
+                        } catch (error) {
+                            if (data[i].ids) {
+                                let id = parseInt(data[i].ids.replace('"', ''));
+                                if (!isNaN(id) && id > 0) {
+                                    ids.push(id);
+                                }
+                            }
+                        }
+
+                        let icon = ids.some(e => filterIds.includes(e)) ? 'fa fa-dot-circle-o' : 'fa fa-circle-o';
                         html += `
-                                    <a style="font-style:bold; overflow: auto;" class="dropdown-item" href="#" onclick="selectInsight({title:'${data[i].name}',id:'${data[i].id}',uri:'${data[i].uri}',units:'${data[i].units}',color:'${data[i].color}',booleanBasedCapability:${data[i].booleanBasedCapability}})">
+                                    <a style="font-style:bold; overflow: auto; height:38px" class="dropdown-item" href="#" onclick="selectRealTimeFilterIds('${ids.join()}')">
+                                        <i class="${icon}"></i>
                                         ${data[i].name}
                                     </a>
                                 `;
+
                     }
                     realtimeFilterByHomeyDeviceDropdownMenu.innerHTML = html;
                 })
@@ -924,14 +969,47 @@
                 Homey.api('GET', '/apidevices?query=' + query, {}, function (error, data) {
                     let html = '';
                     for (var i = 0; i < data.length; i++) {
+                        let icon = filterIds.includes(parseInt(data[i].id)) ? 'fa fa-dot-circle-o' : 'fa fa-circle-o';
                         html += `
-                                    <a style="font-style:bold; overflow: auto;" class="dropdown-item" href="#" onclick="selectInsight({title:'${data[i].name}',id:'${data[i].id}',uri:'${data[i].uri}',units:'${data[i].units}',color:'${data[i].color}',booleanBasedCapability:${data[i].booleanBasedCapability}})">
+                                    <a style="font-style:bold; overflow: auto; height:38px" class="dropdown-item" href="#" onclick="selectRealTimeFilterId(${data[i].id})">
+                                        <i class="${icon}"></i>
                                         ${data[i].name}
                                     </a>
                                 `;
                     }
                     realtimeFilterByApiDeviceDropdownMenu.innerHTML = html;
                 })
+            }
+
+            window.selectRealTimeFilterId = function (id) {
+                if (filterIds.includes(id)) {
+                    filterIds = filterIds.filter(function (value, index, arr) {
+                        return value != id;
+                    });
+                } else {
+                    filterIds.push(id);
+                }
+                filterIds = filterIds.sort();
+                document.getElementById('realtimeFilterIds').value = JSON.stringify(filterIds);
+                loadHomeyDevices();
+                loadApiDevices();
+            }
+
+            window.selectRealTimeFilterIds = function (ids) {
+                ids.split(',').map(e => parseInt(e)).forEach(id => {
+                    if (filterIds.includes(id)) {
+                        filterIds = filterIds.filter(function (value, index, arr) {
+                            return value != id;
+                        });
+                    } else {
+                        filterIds.push(id);
+                    }
+                })
+
+                filterIds = filterIds.sort();
+                document.getElementById('realtimeFilterIds').value = JSON.stringify(filterIds);
+                loadHomeyDevices();
+                loadApiDevices();
             }
 
             function saveAll() {
@@ -1023,7 +1101,7 @@
             setTimeout(function () { updateDetails() }, 1000);
 
             Homey.on('realtime_sensor_event', function (data) {
-                if (record) {
+                if (record && (selectedFilterIds.length == 0 || selectedFilterIds.includes(parseInt(data.id)))) {
                     realtimeEvents.innerHTML = '<div class="message-item">' + JSON.stringify(data) + '</div>' + realtimeEvents.innerHTML;
                 }
             });

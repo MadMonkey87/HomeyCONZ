@@ -437,6 +437,7 @@ class deCONZ extends Homey.App {
 					callback(error, null)
 					return
 				}
+				let state = JSON.parse(response)
 				let devices = [];
 
 				Object.entries(state.groups).forEach(entry => {
