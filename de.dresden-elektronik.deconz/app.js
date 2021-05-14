@@ -8,7 +8,17 @@ const fs = require('fs');
 
 class deCONZ extends Homey.App {
 
+	usageDataQueue = [];
+	
 	onInit() {
+
+		process.on('unhandledRejection', (error) => {
+			this.log('unhandled rejection', error);
+		});
+
+		process.on('unhandledException', (error) => {
+			this.log('unhandled exception', error);
+		});
 
 		// holds all devices that we have, added when a device gets initialized (see Sensor.registerInApp for example).
 		this.devices = {
@@ -1201,6 +1211,8 @@ class deCONZ extends Homey.App {
 			});
 	}
 
+
+
 	sendUsageDataFullState() {
 		if (this.sendUsageData) {
 			this.getFullState((err, result) => {
@@ -1208,12 +1220,16 @@ class deCONZ extends Homey.App {
 					this.log('Error while fetching full state', err)
 				} else {
 
-					this.usageDataQueue = []
+					this.log('queuing full state');
 
-					result.groups.forEach(e => this.usageDataQueue.push({ type: 'fullstate-group', content: e }))
-					result.lights.forEach(e => this.usageDataQueue.push({ type: 'fullstate-light', content: e }))
-					this.usageDataQueue.push({ type: 'fullstate-deconz', content: result.deCONZ })
-					result.sensors.forEach(e => this.usageDataQueue.push({ type: 'fullstate-sensor', content: e }))
+					let queue = Homey.app.usageDataQueue;
+					queue = []
+
+					result.groups.forEach(e => queue.push({ type: 'fullstate-group', content: e }))
+					result.lights.forEach(e => queue.push({ type: 'fullstate-light', content: e }))
+					queue.push({ type: 'fullstate-deconz', content: result.deCONZ })
+					result.sensors.forEach(e => queue.push({ type: 'fullstate-sensor', content: e }))
+					this.log('sending full state', queue.length);
 					this.dequeueUsageData()
 				}
 			})
@@ -1221,12 +1237,14 @@ class deCONZ extends Homey.App {
 	}
 
 	queueUsageData(type, content) {
-		this.usageDataQueue.push({ type: type, content })
+		let queue = Homey.app.usageDataQueue;
+		queue.push({ type: type, content })
 	}
 
 	dequeueUsageData() {
-		if (this.usageDataQueue.length > 0) {
-			let entry = this.usageDataQueue.pop()
+		let queue = Homey.app.usageDataQueue;
+		if (queue.length > 0) {
+			let entry = queue.pop()
 			this.uploadUsageData(entry.type, entry.content)
 			setTimeout(() => {
 				this.dequeueUsageData()
