@@ -9099,7 +9099,13 @@ label{
 
 .message-item{
   padding: 15px;
+  margin-bottom: 0px !important;
 }
 .message-item:nth-child(2n){
   background: #88949e
+}
+
+.timestamp{
+  color: rgb(47, 62, 73);
+  margin-bottom: 0px !important;
 }
