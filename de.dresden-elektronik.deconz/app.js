@@ -9,7 +9,7 @@ const fs = require('fs');
 class deCONZ extends Homey.App {
 
 	usageDataQueue = [];
-	
+
 	onInit() {
 
 		process.on('unhandledRejection', (error) => {
@@ -189,8 +189,8 @@ class deCONZ extends Homey.App {
 		} else if (data.attr && data.attr.modelid !== 'ConBee') {
 			this.log('Update for unregistered device', data)
 		}
-
-		Homey.ManagerApi.realtime('realtime_sensor_event', { id: data.id, timestamp: Date.now().toLocaleTimeString(), data: data }).catch(this.error);
+		let now = new Date();
+		Homey.ManagerApi.realtime('realtime_sensor_event', { id: data.id, timestamp: now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds(), data: data }).catch(this.error);
 	}
 
 	webSocketConnectTo() {

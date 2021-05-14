@@ -140,7 +140,7 @@
   "1.27.0": {
     "en": "Support for newer Aqara models, support for Heiman hs1rc-ef, see realtime events in the app config for debugging purposes"
   },
-  "1.27.1": {
+  "1.27.2": {
     "en": "small fixes"
   }
 }
