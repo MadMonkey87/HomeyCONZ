@@ -1104,7 +1104,7 @@
 
             Homey.on('realtime_sensor_event', function (data) {
                 if (record && (selectedFilterIds.length == 0 || selectedFilterIds.includes(parseInt(data.id)))) {
-                    realtimeEvents.innerHTML = '<div class="message-item">' + JSON.stringify(data) + '</div>' + realtimeEvents.innerHTML;
+                    realtimeEvents.innerHTML = '<div class="message-item"><p class="timestamp">' + data.timestamp + '</p><p>' + JSON.stringify(data.data) + '</p></div>' + realtimeEvents.innerHTML;
                 }
             });
 

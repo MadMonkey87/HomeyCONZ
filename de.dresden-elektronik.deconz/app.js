@@ -190,7 +190,7 @@ class deCONZ extends Homey.App {
 			this.log('Update for unregistered device', data)
 		}
 
-		Homey.ManagerApi.realtime('realtime_sensor_event', data).catch(this.error);
+		Homey.ManagerApi.realtime('realtime_sensor_event', { id: data.id, timestamp: Date.now().toLocaleTimeString(), data: data }).catch(this.error);
 	}
 
 	webSocketConnectTo() {
@@ -453,19 +453,19 @@ class deCONZ extends Homey.App {
 				Object.entries(state.groups).forEach(entry => {
 					const key = entry[0]
 					const group = entry[1]
-					devices.push({ id: key, name: group.name, type: 'group' })
+					devices.push({ id: key, name: group.name + '(group)', type: 'group' })
 				})
 
 				Object.entries(state.lights).forEach(entry => {
 					const key = entry[0]
 					const light = entry[1]
-					devices.push({ id: key, name: light.name, type: 'light' })
+					devices.push({ id: key, name: light.name + '(light)', type: 'light' })
 				})
 
 				Object.entries(state.sensors).forEach(entry => {
 					const key = entry[0]
 					const sensor = entry[1]
-					devices.push({ id: key, name: sensor.name, type: 'sensor' })
+					devices.push({ id: key, name: sensor.name + '(' + sensor.type + ')', type: 'sensor' })
 				})
 
 				callback(null, devices
