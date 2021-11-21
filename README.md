@@ -2,7 +2,7 @@
 
 This app for [Athom Homey](https://homey.app/en-us/) adds support for [deCONZ](https://www.dresden-elektronik.de/funk/software/deconz.html)'s [[RaspBee](https://www.phoscon.de/en/raspbee)/[ConBee](https://www.phoscon.de/en/conbee)] child devices.
 
-[![current version](https://img.shields.io/badge/version-1.27.2-<COLOR>.svg)](https://shields.io/)
+[![current version](https://img.shields.io/badge/version-1.29.0-<COLOR>.svg)](https://shields.io/)
 
 # Installation information
 
@@ -18,7 +18,7 @@ Pre-Release versions are available over [here](https://homey.app/de-ch/app/de.dr
 - [x] deCONZ groups
 - [x] Door locks
 - [x] Sirens/Alarm devices
-- [x] Motion sensors: Philips, Xiaomi, Aqara, TRÅDFRI, Trust, Develco, Frient, Heiman, Silvercrest
+- [x] Motion sensors: Philips, Xiaomi, Aqara, TRÅDFRI, Trust, Develco, Frient, Heiman, Silvercrest, Aeotec, Samsung
 - [x] Temperature/Humidity sensors: Xiaomi, Aqara, Develco
 - [x] Buttons & Switches: Mi, Aqara, Aqara gyro, TRÅDFRI, Philips, Trust, Feller, Jung and a generic driver to support all others
 - [x] Contact sensors: Xiaomi, Aqara, Trust
@@ -33,6 +33,7 @@ Pre-Release versions are available over [here](https://homey.app/de-ch/app/de.dr
 - [x] Mi Light sensor
 - [x] Silvercrest Christmas Tree light
 - [x] Frient VOC sensor
+- [x] Aeotec/Samsung multi purpose sensor
       ...and many more! If your device isn't supported yet feel free to create a request
 
 # Features
