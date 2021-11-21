@@ -10,7 +10,7 @@ class HeimanCoDetectorDriver extends Driver {
 	}
 	
 	onPairListDevices(data, callback) {
-		this.getSensorsByCondition(device => device.modelid === 'COSensor-EM', callback)
+		this.getSensorsByCondition(device => device.modelid === 'COSensor-EM' || device.modelid === 'COSensor-EF-3.0', callback)
 	}
 	
 }
