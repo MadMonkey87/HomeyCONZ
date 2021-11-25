@@ -714,8 +714,8 @@ class deCONZ extends Homey.App {
 				const group = entry[1]
 				const device = this.getDevice('groups', key)
 				if (device) {
-					if (group.action) {
-						this.updateState(device, group.action, true)
+					if (group.state) {
+						this.updateState(device, group.state, true)
 						device.setAvailable()
 					}
 				}
